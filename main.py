@@ -1,6 +1,13 @@
+from fastapi import FastAPI
+from uvicorn import run
+
+app = FastAPI(title="Тест")
+
+
+@app.get("/")
 def main():
-    print("Hello from test-helper!")
+    return "Hello from test-helper!"
 
 
 if __name__ == "__main__":
-    main()
+    run(app=app)
