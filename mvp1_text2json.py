@@ -18,7 +18,7 @@ class Answer(BaseModel):
 
 class Question(BaseModel):
     question: str = Field(description="Текст вопроса")
-    answers: list[str] = Field(
+    answers: list[Answer] = Field(
         description="Список  возможных ответов (без указания правильных)"
     )
 
@@ -126,7 +126,7 @@ structured_llm = llm.with_structured_output(Test)
 
 def parse_test(raw_text: str) -> Test:
     prompt = f"""
-    Извлеки из приведенного ниже текста все вопросы и варианты ответов.   
+    Извлеки из приведенного ниже текста все вопросы и варианты ответов.
 
     Текст:
     {raw_text}
