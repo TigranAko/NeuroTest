@@ -1,7 +1,7 @@
+import docx2txt
 from langchain_openrouter import ChatOpenRouter
 from pydantic import BaseModel, Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
-import docx2txt
 
 
 class OpenrouterConfig(BaseSettings):
@@ -149,16 +149,12 @@ def main():
 3). Mac OS
 4). OS/2
 """
-    test = docx2txt.process("./files/text_01_03.docx")
+    # test = docx2txt.process("./files/text_01_03.docx")
     try:
         data = parse_test(test)
-        print(data)
-        print(data.model_dump())
 
-        with open("files/text_01_03_data.txt", "w") as file:
-            file.write(str(data))
-        with open("files/text_01_03_dump.txt", "w") as file:
-            file.write(str(data.model_dump()))
+        with open("files/text_01_03.json", "w", encoding="utf-8") as file:
+            file.write(data.model_dump_json(indent=4))
 
     except Exception as e:
         print("Не удалось распознать ", e)
