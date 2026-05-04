@@ -1,4 +1,5 @@
 import docx2txt
+
 # TODO: Таблицы из файла *.docx плохо созраняются (обычным сплошным текстом)
 
 # text = docx2txt.process("./files/text_01_03.docx")
