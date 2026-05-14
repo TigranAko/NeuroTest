@@ -81,31 +81,6 @@ def format_answers(answers: list[Answer]) -> str:
     return "\n".join(f"{i}. {a.text}" for i, a in enumerate(answers, 1))
 
 
-# chain = (
-#     RunnablePassthrough.assign(search_results=lambda x: search.invoke(x["question"]))
-#     | RunnablePassthrough.assign(
-#         formatted_answers=lambda x: format_answers(x["answers"]),
-#         search_results_text=lambda x: "\n".join(
-#             r["content"] for r in x["search_results"]
-#         ),
-#     )
-#     | RunnablePassthrough.assign(
-#         result=lambda x: (
-#             prompt.partial(format_instructions=parser.get_format_instructions())
-#             | llm
-#             | parser
-#         ).invoke(
-#             {
-#                 "question": x["question"],
-#                 "answers": x["formatted_answers"],
-#                 "search_results": x["search_results_text"],
-#             }
-#         )
-#     )
-#     | RunnableLambda(lambda x: x["result"])
-# )
-# chain = RunnableLambda(process_single_questions)
-
 
 def process_single_questions(
     question_text: str, answers: list[dict["text", str]]
