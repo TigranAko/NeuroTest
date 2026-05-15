@@ -20,6 +20,32 @@ def main():
     return "Hello from test-helper!"
 
 
+@app.post("/files")
+async def downloand_user_file(test_file: UploadFile) -> dict[str, str]:
+    user_file: str = test_file.filename
+    file_title: str = "_".join(
+        user_file.split(".")[:-1]
+    )  #  Лишние точки заменяются на _
+    file_extension: str = user_file.split(".")[-1]
+    file_name: str = f"{file_title}.{file_extension}"
+    path: str = f"backend/files/{file_title}.{file_extension}"
+    content_type: str = test_file.content_type
+
+    async with aiofiles.open(
+        f"backend/files/{file_title}.{file_extension}", "wb"
+    ) as file:
+        while chunk := await test_file.read(1024):
+            await file.write(chunk)
+    return {
+        "input": user_file,
+        "title": file_title,
+        "extension": file_extension,
+        "full_name": file_name,
+        "path": path,
+        "content_type": content_type,
+    }
+
+
 @app.post("/file")
 async def upload_file(test_file: UploadFile):
     # TODO: нужно разделить на несколько эндпоинтов
