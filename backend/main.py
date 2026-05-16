@@ -5,7 +5,7 @@ from time import sleep
 import aiofiles
 import docx2txt
 from fastapi import FastAPI, UploadFile
-from mvp1_text2json import parse_test
+from mvp1_text2json import Test, parse_test
 from mvp2_json2answer import process_test
 from uvicorn import run
 
@@ -47,6 +47,17 @@ async def downloand_user_file(test_file: UploadFile) -> dict[str, str]:
 async def get_text_docx(file_path: str) -> dict[str, str]:
     text = docx2txt.process(file_path)
     return {"path": file_path, "text": text}
+
+
+@app.post("/files/json_text")
+async def create_json(file_title: str, text: str) -> Test:
+    """Создать JSON без ответов"""
+    questions_without_answers: Test = parse_test(text)
+    async with aiofiles.open(
+        f"backend/files/{file_title}.json", "w", encoding="utf-8"
+    ) as file:
+        await file.write(questions_without_answers.model_dump_json())
+    return questions_without_answers
 
 
 @app.post("/file")
