@@ -73,7 +73,7 @@ async def get_list_json_text_files() -> list[str]:
 async def create_json_answers(file_title: str) -> TestOutput:
     """Создать JSON с ответами"""
     async with aiofiles.open(
-        f"backend/files/{file_title}.json", encoding="utf-8"
+        f"backend/files/{file_title}_text.json", encoding="utf-8"
     ) as file:
         data = await file.read()
         data = json.loads(data)
