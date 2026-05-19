@@ -53,7 +53,7 @@ async def get_list_docx_files() -> list[str]:
 @app.post("/files/json_text")
 async def create_json(file_title: str) -> Test:
     """Создать JSON без ответов"""
-    text = docx2txt.process(f"{file_title}.docx")
+    text = docx2txt.process(f"backend/files/{file_title}.docx")
     questions_without_answers: Test = parse_test(text)
     async with aiofiles.open(
         f"backend/files/{file_title}_text.json", "w", encoding="utf-8"
