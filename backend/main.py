@@ -62,6 +62,13 @@ async def create_json(file_title: str) -> Test:
     return questions_without_answers
 
 
+@app.get("/files/json_text")
+async def get_list_json_text_files() -> list[str]:
+    """Получить список файлов с расширением .json но без ответов (промежуточные резульатаы)"""
+    dir = Path("backend/files/")
+    return [item.name for item in dir.iterdir() if item.name.endswith("_text.json")]
+
+
 @app.post("/files/json_answer")
 async def create_json_answers(file_title: str) -> TestOutput:
     """Создать JSON с ответами"""
