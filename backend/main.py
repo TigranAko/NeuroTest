@@ -87,6 +87,13 @@ async def create_json_answers(file_title: str) -> TestOutput:
     return answers
 
 
+@app.get("/files/json_answer")
+async def get_list_json_anwer_files() -> list[str]:
+    """Получить список файлов с расширением .json с ответами (Какие тесты уже есть)"""
+    dir = Path("backend/files/")
+    return [item.name for item in dir.iterdir() if item.name.endswith("_answers.json")]
+
+
 @app.post("/file")
 async def upload_file(test_file: UploadFile):
     # TODO: нужно разделить на несколько эндпоинтов
