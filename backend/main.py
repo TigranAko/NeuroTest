@@ -56,7 +56,7 @@ async def create_json(file_title: str) -> Test:
     text = docx2txt.process(f"{file_title}.docx")
     questions_without_answers: Test = parse_test(text)
     async with aiofiles.open(
-        f"backend/files/{file_title}.json", "w", encoding="utf-8"
+        f"backend/files/{file_title}_text.json", "w", encoding="utf-8"
     ) as file:
         await file.write(questions_without_answers.model_dump_json())
     return questions_without_answers
