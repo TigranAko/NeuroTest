@@ -91,4 +91,4 @@ async def get_list_json_anwer_files() -> list[str]:
 
 
 if __name__ == "__main__":
-    run(app=app)
+    run(app=app, host="0.0.0.0", port=8000)
