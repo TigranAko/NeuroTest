@@ -38,6 +38,8 @@ llm = ChatOpenRouter(
     base_url="https://openrouter.ai/api/v1",
     model="openrouter/free",
     temperature=0.1,
+    max_retries=3,
+    timeout=2 * 60 * 1000,  # две минуты
 )
 
 structured_llm = llm.with_structured_output(Test)
@@ -63,7 +65,7 @@ chain = prompt | structured_llm
 
 def parse_test(raw_text: str) -> Test:
     spliter = RecursiveCharacterTextSplitter(
-        chunk_size=3000,
+        chunk_size=4000,
         separators=["\n\n", "\n", " ", ""],
     )
     chunks = spliter.split_text(raw_text)
@@ -122,15 +124,15 @@ def main():
 3). Mac OS
 4). OS/2
 """
-    test = docx2txt.process("./files/text_01_03_20.docx")
-    try:
-        data = parse_test(test)
+    test = docx2txt.process("./files/history.docx")
+    # try:
+    data = parse_test(test)
 
-        with open("files/text_01_03_20.json", "w", encoding="utf-8") as file:
-            file.write(data.model_dump_json(indent=4))
+    with open("files/history_text.json", "w", encoding="utf-8") as file:
+        file.write(data.model_dump_json(indent=4))
 
-    except Exception as e:
-        print("Не удалось распознать ", e)
+    # except Exception as e:
+    # print("Не удалось распознать ", e)
 
 
 if __name__ == "__main__":
