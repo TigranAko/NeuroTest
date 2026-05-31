@@ -3,9 +3,9 @@ from pathlib import Path
 
 import aiofiles
 import docx2txt
-from fastapi import APIRouter, UploadFile
-from mvp1_text2json import Test, parse_test
+from fastapi import APIRouter, Depends, UploadFile
 from mvp2_json2answer import TestOutput, process_test
+from services.text2json import Test, TextToJsonService, get_text2json_service
 
 router = APIRouter(prefix="/api/v1")
 
@@ -47,10 +47,13 @@ async def get_list_docx_files() -> list[str]:
 
 
 @router.post("/files/json_text")
-async def create_json(file_title: str) -> Test:
+async def create_json(
+    file_title: str,
+    text2json: TextToJsonService = Depends(get_text2json_service),
+) -> Test:
     """Создать JSON без ответов"""
     text = docx2txt.process(f"files/{file_title}.docx")
-    questions_without_answers: Test = parse_test(text)
+    questions_without_answers: Test = text2json.parse_test(text)
     async with aiofiles.open(
         f"files/{file_title}_text.json", "w", encoding="utf-8"
     ) as file:
