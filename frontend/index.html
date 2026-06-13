@@ -14,13 +14,27 @@
       transform: translateY(-8px);
       box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
     }
+    .correct-answer {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.1));
+      border: 1px solid rgb(34, 197, 94);
+    }
+    .incorrect-answer {
+      opacity: 0.6;
+    }
+    .answer-item {
+      transition: all 0.2s ease;
+    }
+    .answer-item:hover {
+      transform: translateX(4px);
+    }
   </style>
 </head>
 <body class="bg-gray-950 text-white min-h-screen">
-  <div class="max-w-5xl mx-auto px-6 py-12">
+  <!-- Главный экран со списком тестов -->
+  <div id="test-list-screen" class="max-w-5xl mx-auto px-6 py-12">
     <div class="text-center mb-12">
       <h1 class="text-5xl font-bold mb-3">Test Helper</h1>
-      <p class="text-xl text-gray-400">Выберите тест для прохождения</p>
+      <p class="text-xl text-gray-400">Выберите тест для просмотра правильных ответов</p>
     </div>
 
     <div id="test-list" class="grid md:grid-cols-2 gap-6">
@@ -28,15 +42,37 @@
     </div>
   </div>
 
+  <!-- Экран просмотра ответов -->
+  <div id="answers-screen" class="hidden max-w-4xl mx-auto px-6 py-12">
+    <div class="mb-8 flex items-center justify-between">
+      <div>
+        <h1 id="test-title" class="text-4xl font-bold mb-2">Название теста</h1>
+        <p id="test-stats" class="text-gray-400">Вопросов: 0</p>
+      </div>
+      <button 
+        onclick="goBackToList()" 
+        class="bg-gray-800 hover:bg-gray-700 transition-colors px-6 py-3 rounded-lg flex items-center gap-2"
+      >
+        <i class="fa-solid fa-arrow-left"></i>
+        Вернуться
+      </button>
+    </div>
+
+    <div id="questions-container" class="space-y-8">
+      <!-- Вопросы с ответами будут загружаться сюда -->
+    </div>
+  </div>
+
   <script>
+    let currentTestData = null;
+
     // === Загрузка списка тестов ===
     async function loadTestList() {
       try {
         const response = await fetch('../backend/files/index.json');
         if (!response.ok) throw new Error('Index.json не найден');
 
-        const data = await response.json();
-        const testFiles = data.tests || data; // поддержка старого и нового формата
+        const testFiles = await response.json();
 
         const container = document.getElementById('test-list');
         container.innerHTML = '';
@@ -45,7 +81,8 @@
           const displayName = filename
             .replace('.json', '')
             .replace(/_/g, ' ')
-            .replace(/(\d+)/g, ' $1');
+            .replace(/(\d+)/g, ' $1')
+            .trim();
 
           const card = document.createElement('div');
           card.className = 'test-card bg-gray-900 border border-gray-700 hover:border-sky-500 rounded-3xl p-8 cursor-pointer group';
@@ -53,13 +90,16 @@
             <div class="flex justify-between items-center">
               <div class="flex-1">
                 <h3 class="text-2xl font-semibold mb-1 group-hover:text-sky-400 transition-colors">${displayName}</h3>
-                <p class="text-gray-500 text-sm">Готовый тест • JSON</p>
+                <p class="text-gray-500 text-sm">
+                  <i class="fa-solid fa-file-pdf mr-2"></i>
+                  Просмотр ответов
+                </p>
               </div>
               <i class="fa-solid fa-chevron-right text-3xl text-gray-600 group-hover:text-sky-400 transition-colors"></i>
             </div>
           `;
           
-          card.addEventListener('click', () => loadAndStartTest(filename));
+          card.addEventListener('click', () => loadAndShowAnswers(filename));
           container.appendChild(card);
         });
 
@@ -67,25 +107,102 @@
         console.error(err);
         document.getElementById('test-list').innerHTML = `
           <div class="bg-red-900/30 border border-red-500 rounded-3xl p-8 text-center col-span-full">
-            <p class="text-red-400">Не удалось загрузить список тестов.<br>Проверьте файл backend/files/index.json</p>
+            <p class="text-red-400">
+              <i class="fa-solid fa-exclamation-circle mr-2"></i>
+              Не удалось загрузить список тестов.<br>
+              Проверьте файл backend/files/index.json
+            </p>
           </div>`;
       }
     }
 
-    // === Загрузка и запуск выбранного теста ===
-    async function loadAndStartTest(filename) {
+    // === Загрузка и отображение ответов теста ===
+    async function loadAndShowAnswers(filename) {
       try {
         const res = await fetch(`../backend/files/${filename}`);
         if (!res.ok) throw new Error('Тест не найден');
 
-        const testData = await res.json();
-        
-        alert(`✅ Тест загружен: "${testData.title || filename}"\n\nВопросов: ${testData.questions ? testData.questions.length : 'много'}\n\n(Скоро здесь будет полноценный интерфейс прохождения)`);
-        
-        // В будущем здесь будет переход на экран с вопросами
+        currentTestData = await res.json();
+        displayAnswers(filename);
+
       } catch (e) {
         alert(`❌ Не удалось загрузить тест: ${filename}\nУбедитесь, что файл существует в backend/files/`);
       }
+    }
+
+    // === Отображение вопросов и ответов ===
+    function displayAnswers(filename) {
+      const testName = filename
+        .replace('.json', '')
+        .replace(/_/g, ' ')
+        .replace(/(\d+)/g, ' $1')
+        .trim();
+
+      document.getElementById('test-title').textContent = testName;
+      
+      const questions = currentTestData.questions || [];
+      document.getElementById('test-stats').textContent = `Вопросов: ${questions.length}`;
+
+      const container = document.getElementById('questions-container');
+      container.innerHTML = '';
+
+      questions.forEach((q, index) => {
+        const questionDiv = document.createElement('div');
+        questionDiv.className = 'bg-gray-900 border border-gray-800 rounded-xl p-8 hover:border-gray-700 transition-colors';
+        
+        let answersHTML = '';
+        const correctAnswers = q.answers.filter(a => a.isCorrect);
+
+        q.answers.forEach(answer => {
+          const isCorrect = answer.isCorrect;
+          const answerClass = isCorrect 
+            ? 'correct-answer' 
+            : 'incorrect-answer';
+          
+          const icon = isCorrect 
+            ? '<i class="fa-solid fa-check text-green-400 mr-3"></i>' 
+            : '<i class="fa-solid fa-times text-gray-600 mr-3"></i>';
+
+          answersHTML += `
+            <div class="answer-item ${answerClass} rounded-lg p-4 mb-3 flex items-start last:mb-0">
+              ${icon}
+              <span class="flex-1 ${isCorrect ? 'text-green-300 font-medium' : 'text-gray-300'}">${answer.text}</span>
+            </div>
+          `;
+        });
+
+        questionDiv.innerHTML = `
+          <div class="mb-6">
+            <div class="flex items-start gap-3">
+              <span class="bg-sky-600 text-white px-4 py-1 rounded-full font-bold min-w-max">Q${index + 1}</span>
+              <h3 class="text-lg font-semibold pt-1">${q.question}</h3>
+            </div>
+          </div>
+          <div class="space-y-0">
+            ${answersHTML}
+          </div>
+          <div class="mt-4 pt-4 border-t border-gray-700">
+            <span class="inline-block bg-green-900/30 border border-green-700 text-green-300 px-3 py-1 rounded text-sm">
+              <i class="fa-solid fa-check-circle mr-1"></i>
+              Правильных ответов: ${correctAnswers.length}
+            </span>
+          </div>
+        `;
+
+        container.appendChild(questionDiv);
+      });
+
+      // Переключение на экран ответов
+      document.getElementById('test-list-screen').classList.add('hidden');
+      document.getElementById('answers-screen').classList.remove('hidden');
+    }
+
+    // === Возврат к списку тестов ===
+    function goBackToList() {
+      currentTestData = null;
+      document.getElementById('test-list-screen').classList.remove('hidden');
+      document.getElementById('answers-screen').classList.add('hidden');
+      document.getElementById('questions-container').innerHTML = '';
     }
 
     // Запуск при загрузке страницы
