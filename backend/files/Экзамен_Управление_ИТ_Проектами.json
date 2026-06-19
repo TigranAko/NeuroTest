@@ -1,0 +1,1626 @@
+{
+  "title": "Управление IT-проектами в цифровой экономике",
+  "questions": [
+    {
+      "question": "1. Какие виды стандартов существуют в управлении проектами?",
+      "answers": [
+        { "text": "Только международные.", "isCorrect": false },
+        { "text": "Международные, национальные, корпоративные.", "isCorrect": true },
+        { "text": "Только корпоративные.", "isCorrect": false },
+        { "text": "Только национальные.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "2. Какой институт разработал стандарт PMBOK?",
+      "answers": [
+        { "text": "ISO.", "isCorrect": false },
+        { "text": "PMI (США).", "isCorrect": true },
+        { "text": "IPMA.", "isCorrect": false },
+        { "text": "ANSI.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "3. Сколько групп процессов управления проектами выделяет PMBOK?",
+      "answers": [
+        { "text": "3", "isCorrect": false },
+        { "text": "5", "isCorrect": true },
+        { "text": "7", "isCorrect": false },
+        { "text": "10", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "4. Какие области знаний входят в PMBOK? (выберите неверное утверждение)",
+      "answers": [
+        { "text": "Управление интеграцией.", "isCorrect": false },
+        { "text": "Управление заинтересованными сторонами.", "isCorrect": false },
+        { "text": "Управление инновациями.", "isCorrect": true },
+        { "text": "Управление рисками.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "5. Какова основная цель проектного управления в государственном секторе США?",
+      "answers": [
+        { "text": "Получение финансовой прибыли.", "isCorrect": false },
+        { "text": "Ориентация на выгоды для жителей государства.", "isCorrect": true },
+        { "text": "Минимизация затрат.", "isCorrect": false },
+        { "text": "Ускорение реализации проектов.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "6. Что отличает государственные проекты от бизнес-проектов?",
+      "answers": [
+        { "text": "Отсутствие отчётности.", "isCorrect": false },
+        { "text": "Жёсткие правовые рамки, ответственность перед общественностью, использование государственных ресурсов.", "isCorrect": true },
+        { "text": "Только использование частных ресурсов.", "isCorrect": false },
+        { "text": "Только отсутствие контроля.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "7. Какой стандарт ISO посвящён управлению проектами?",
+      "answers": [
+        { "text": "ISO 9001.", "isCorrect": false },
+        { "text": "ISO 21500:2012.", "isCorrect": true },
+        { "text": "ISO 14001.", "isCorrect": false },
+        { "text": "ISO 27001.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "8. Как называется российский национальный стандарт, основанный на ISO 21500?",
+      "answers": [
+        { "text": "ГОСТ Р ИСО 21500-2014.", "isCorrect": true },
+        { "text": "ГОСТ Р 54869-2011.", "isCorrect": false },
+        { "text": "ГОСТ Р ИСО 9001-2015.", "isCorrect": false },
+        { "text": "ГОСТ Р 21.1101-2013.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "9. Какой стандарт управления проектами наиболее популярен в Великобритании?",
+      "answers": [
+        { "text": "PMBOK.", "isCorrect": false },
+        { "text": "PRINCE2.", "isCorrect": true },
+        { "text": "P2M.", "isCorrect": false },
+        { "text": "ICB4.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "10. В чём особенность стандарта PRINCE2?",
+      "answers": [
+        { "text": "Содержит только отраслевые практики.", "isCorrect": false },
+        { "text": "Не содержит конкретных инструментов, требует адаптации под организацию.", "isCorrect": true },
+        { "text": "Используется только в Японии.", "isCorrect": false },
+        { "text": "Не выделяет роли и обязанности.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "11. Какой стандарт акцентирует внимание на инновациях и миссии организации?",
+      "answers": [
+        { "text": "PMBOK.", "isCorrect": false },
+        { "text": "PRINCE2.", "isCorrect": false },
+        { "text": "P2M (Япония).", "isCorrect": true },
+        { "text": "ICB4.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "12. Сколько областей знаний выделяет стандарт P2M?",
+      "answers": [
+        { "text": "5", "isCorrect": false },
+        { "text": "7", "isCorrect": false },
+        { "text": "10", "isCorrect": false },
+        { "text": "11", "isCorrect": true }
+      ]
+    },
+    {
+      "question": "13. Что описывает стандарт ICB4?",
+      "answers": [
+        { "text": "Только финансовые аспекты проектов.", "isCorrect": false },
+        { "text": "Требования к компетентности специалистов по управлению проектами.", "isCorrect": true },
+        { "text": "Только технические инструменты.", "isCorrect": false },
+        { "text": "Только юридические нормы.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "14. Сколько компетенций содержит ICB4?",
+      "answers": [
+        { "text": "15", "isCorrect": false },
+        { "text": "29", "isCorrect": true },
+        { "text": "40", "isCorrect": false },
+        { "text": "50", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "15. На какие три группы делятся компетенции в ICB4?",
+      "answers": [
+        { "text": "Люди, практика, контекст.", "isCorrect": true },
+        { "text": "Планирование, исполнение, контроль.", "isCorrect": false },
+        { "text": "Финансы, риски, коммуникации.", "isCorrect": false },
+        { "text": "Технологии, ресурсы, сроки.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "16. Что такое коммуникации проекта?",
+      "answers": [
+        { "text": "Только обмен письмами.", "isCorrect": false },
+        { "text": "Связи между участниками проекта для обмена информацией.", "isCorrect": true },
+        { "text": "Только совещания.", "isCorrect": false },
+        { "text": "Только отчёты.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "17. Когда должно начинаться планирование коммуникаций?",
+      "answers": [
+        { "text": "На стадии исполнения проекта.", "isCorrect": false },
+        { "text": "На стадии инициации проекта.", "isCorrect": true },
+        { "text": "На стадии закрытия проекта.", "isCorrect": false },
+        { "text": "После завершения проекта.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "18. Какие коммуникативные потребности есть у членов команды проекта?",
+      "answers": [
+        { "text": "Обязанности, координация, ход выполнения, решения и изменения.", "isCorrect": true },
+        { "text": "Только обязанности.", "isCorrect": false },
+        { "text": "Только координация.", "isCorrect": false },
+        { "text": "Только решения и изменения.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "19. Какие типы коммуникаций существуют? (выберите неверное утверждение)",
+      "answers": [
+        { "text": "Внутренние и внешние.", "isCorrect": false },
+        { "text": "Формальные и неформальные.", "isCorrect": false },
+        { "text": "Вертикальные и горизонтальные.", "isCorrect": false },
+        { "text": "Только письменные.", "isCorrect": true }
+      ]
+    },
+    {
+      "question": "20. Какой фактор НЕ учитывается при выборе метода коммуникации по PMBOK?",
+      "answers": [
+        { "text": "Срочность получения информации.", "isCorrect": false },
+        { "text": "Доступность технологии.", "isCorrect": false },
+        { "text": "Личные предпочтения руководителя проекта.", "isCorrect": true },
+        { "text": "Секретность информации.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "21. Какой инструмент используется для видеоконференций?",
+      "answers": [
+        { "text": "Telegram.", "isCorrect": false },
+        { "text": "Zoom.", "isCorrect": true },
+        { "text": "Trello.", "isCorrect": false },
+        { "text": "Slack.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "22. Какой сервис предназначен для совместной визуализации идей?",
+      "answers": [
+        { "text": "Discord.", "isCorrect": false },
+        { "text": "Miro.", "isCorrect": true },
+        { "text": "Jira.", "isCorrect": false },
+        { "text": "MS Project.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "23. Какой мессенджер позволяет структурировать обсуждения по каналам и темам?",
+      "answers": [
+        { "text": "Telegram.", "isCorrect": false },
+        { "text": "Slack.", "isCorrect": true },
+        { "text": "Zoom.", "isCorrect": false },
+        { "text": "Miro.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "24. Какой инструмент используется для управления задачами по принципу канбан-доски?",
+      "answers": [
+        { "text": "Trello.", "isCorrect": true },
+        { "text": "MS Project.", "isCorrect": false },
+        { "text": "GanttPro.", "isCorrect": false },
+        { "text": "Jira.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "25. Какой сервис позволяет строить диаграмму Ганта?",
+      "answers": [
+        { "text": "Kanbanery.", "isCorrect": false },
+        { "text": "GanttPro.", "isCorrect": true },
+        { "text": "Slack.", "isCorrect": false },
+        { "text": "Miro.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "26. Что такое Битрикс24?",
+      "answers": [
+        { "text": "Мессенджер для личного общения.", "isCorrect": false },
+        { "text": "Инструмент для управления рабочими процессами и задачами.", "isCorrect": true },
+        { "text": "Сервис для видеоконференций.", "isCorrect": false },
+        { "text": "Система для учёта финансов.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "27. Какой инструмент предназначен для отслеживания ошибок и управления проектами?",
+      "answers": [
+        { "text": "YouTrack.", "isCorrect": true },
+        { "text": "Slack.", "isCorrect": false },
+        { "text": "Miro.", "isCorrect": false },
+        { "text": "Trello.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "28. Какой сервис используется для управления государственными проектами в России?",
+      "answers": [
+        { "text": "ПМ Форсайт.", "isCorrect": true },
+        { "text": "Jira.", "isCorrect": false },
+        { "text": "GanttPro.", "isCorrect": false },
+        { "text": "Kanbanery.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "29. Какой инструмент позволяет планировать спринты и собирать задачи в бэклог?",
+      "answers": [
+        { "text": "Jira.", "isCorrect": true },
+        { "text": "MS Project.", "isCorrect": false },
+        { "text": "GanttPro.", "isCorrect": false },
+        { "text": "Trello.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "30. Какой сервис основан на диаграмме Ганта и позволяет планировать сценарии «что если»?",
+      "answers": [
+        { "text": "Jira.", "isCorrect": false },
+        { "text": "MS Project.", "isCorrect": true },
+        { "text": "Kanbanery.", "isCorrect": false },
+        { "text": "Slack.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "31. Что такое чат-бот «Иван из Проектной ПРАКТИКИ»?",
+      "answers": [
+        { "text": "Инструмент для видеосвязи.", "isCorrect": false },
+        { "text": "Чат-бот с шаблонами документов и подсказками по проектному управлению.", "isCorrect": true },
+        { "text": "Сервис для управления задачами.", "isCorrect": false },
+        { "text": "Система для видеоконференций.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "32. Какой инструмент предназначен для управления договорами и контрактами?",
+      "answers": [
+        { "text": "Smart Contracts (часть Smart project).", "isCorrect": true },
+        { "text": "Zoom.", "isCorrect": false },
+        { "text": "Miro.", "isCorrect": false },
+        { "text": "Trello.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "33. Какой инструмент позволяет формировать команды с учётом компетенций исполнителей?",
+      "answers": [
+        { "text": "Smart Teams (часть Smart project).", "isCorrect": true },
+        { "text": "Jira.", "isCorrect": false },
+        { "text": "GanttPro.", "isCorrect": false },
+        { "text": "MS Project.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "34. Какой сервис позволяет управлять задачами и накапливать опыт для повторного использования?",
+      "answers": [
+        { "text": "Smart Tasks (часть Smart project).", "isCorrect": true },
+        { "text": "Slack.", "isCorrect": false },
+        { "text": "Zoom.", "isCorrect": false },
+        { "text": "Miro.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "35. Какой инструмент используется для визуализации календаря и распределения задач?",
+      "answers": [
+        { "text": "Битрикс24.", "isCorrect": true },
+        { "text": "Telegram.", "isCorrect": false },
+        { "text": "Discord.", "isCorrect": false },
+        { "text": "Jira.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "36. Какой из перечисленных инструментов НЕ является мессенджером?",
+      "answers": [
+        { "text": "Telegram.", "isCorrect": false },
+        { "text": "Slack.", "isCorrect": false },
+        { "text": "Discord.", "isCorrect": false },
+        { "text": "Miro.", "isCorrect": true }
+      ]
+    },
+    {
+      "question": "37. Какой из перечисленных инструментов НЕ предназначен для построения диаграммы Ганта?",
+      "answers": [
+        { "text": "MS Project.", "isCorrect": false },
+        { "text": "GanttPro.", "isCorrect": false },
+        { "text": "Jira.", "isCorrect": false },
+        { "text": "Trello.", "isCorrect": true }
+      ]
+    },
+    {
+      "question": "38. Какой из стандартов НЕ является международным?",
+      "answers": [
+        { "text": "ISO 21500:2012.", "isCorrect": false },
+        { "text": "PRINCE2.", "isCorrect": false },
+        { "text": "ГОСТ Р ИСО 21500-2014.", "isCorrect": true },
+        { "text": "ICB4.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "39. Какой из стандартов НЕ выделяет управление заинтересованными сторонами как отдельную область знаний?",
+      "answers": [
+        { "text": "PMBOK.", "isCorrect": false },
+        { "text": "ISO 21500.", "isCorrect": false },
+        { "text": "PRINCE2.", "isCorrect": true },
+        { "text": "P2M.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "40. Какой из инструментов НЕ относится к системам управления проектами?",
+      "answers": [
+        { "text": "YouTrack.", "isCorrect": false },
+        { "text": "ПМ Форсайт.", "isCorrect": false },
+        { "text": "Zoom.", "isCorrect": true },
+        { "text": "Jira.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "41. Какой из инструментов НЕ предназначен для совместной работы команды над идеями и визуализацией?",
+      "answers": [
+        { "text": "Miro.", "isCorrect": false },
+        { "text": "Kanbanery.", "isCorrect": false },
+        { "text": "Slack.", "isCorrect": false },
+        { "text": "GanttPro.", "isCorrect": true }
+      ]
+    },
+    {
+      "question": "42. Какой из стандартов НЕ содержит конкретных инструментов управления проектами (например, диаграмму Ганта)?",
+      "answers": [
+        { "text": "PMBOK.", "isCorrect": false },
+        { "text": "PRINCE2.", "isCorrect": true },
+        { "text": "ISO 21500.", "isCorrect": false },
+        { "text": "P2M.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "43. Какой из инструментов НЕ используется для управления задачами по принципу канбан-доски?",
+      "answers": [
+        { "text": "Trello.", "isCorrect": false },
+        { "text": "Kanbanery.", "isCorrect": false },
+        { "text": "Jira.", "isCorrect": false },
+        { "text": "MS Project.", "isCorrect": true }
+      ]
+    },
+    {
+      "question": "44. Какой из сервисов НЕ предназначен для автоматизации документооборота в государственных проектах РФ?",
+      "answers": [
+        { "text": "ПМ Форсайт.", "isCorrect": false },
+        { "text": "Битрикс24.", "isCorrect": false },
+        { "text": "Smart project.", "isCorrect": false },
+        { "text": "YouTrack.", "isCorrect": true }
+      ]
+    },
+    {
+      "question": "45. Что такое проект?",
+      "answers": [
+        { "text": "Процесс выполнения рутинных задач.", "isCorrect": false },
+        { "text": "Система автоматизации процессов.", "isCorrect": false },
+        { "text": "Совокупность операций без установленного результата.", "isCorrect": false },
+        { "text": "Комплекс мероприятий с общей целью, ограниченный во времени.", "isCorrect": true }
+      ]
+    },
+    {
+      "question": "46. Какое из следующих утверждений описывает управление проектами?",
+      "answers": [
+        { "text": "Это управление только человеческим ресурсом.", "isCorrect": false },
+        { "text": "Это способ организовать выполнение всех требований к проекту.", "isCorrect": true },
+        { "text": "Это исключительно финансирование мероприятий.", "isCorrect": false },
+        { "text": "Это замена всех регулярных процессов на проектные.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "47. Что относится к основным элементам проектного управления?",
+      "answers": [
+        { "text": "Исследование рынка.", "isCorrect": false },
+        { "text": "Управление задачами, временем и бюджетом.", "isCorrect": true },
+        { "text": "Разработка новой технологии.", "isCorrect": false },
+        { "text": "Набор персонала.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "48. Какова основная цель проектного менеджмента?",
+      "answers": [
+        { "text": "Увеличение числа сотрудников.", "isCorrect": false },
+        { "text": "Упрощение процессов.", "isCorrect": false },
+        { "text": "Достижение стратегических целей компании.", "isCorrect": true },
+        { "text": "Повышение уровня бюрократии.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "49. Что такое «проектный треугольник»?",
+      "answers": [
+        { "text": "Модель процессов взаимодействия.", "isCorrect": false },
+        { "text": "Три ограничения: время, бюджет, объем работ.", "isCorrect": true },
+        { "text": "Методы привлечения инвесторов.", "isCorrect": false },
+        { "text": "Концепция оценки качества.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "50. Какое из утверждений является преимуществом проектного метода управления?",
+      "answers": [
+        { "text": "Большие временные затраты на реализацию.", "isCorrect": false },
+        { "text": "Невозможность выставления приоритетов.", "isCorrect": false },
+        { "text": "Быстрое обнаружение рисков.", "isCorrect": true },
+        { "text": "Проблемы с автоматизацией процессов.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "51. Что из следующего является недостатком проектного управления?",
+      "answers": [
+        { "text": "Упрощение процесса оформления.", "isCorrect": false },
+        { "text": "Высокие требования к квалификации руководителя.", "isCorrect": true },
+        { "text": "Четкие критерии успеха.", "isCorrect": false },
+        { "text": "Отсутствие бюрократии.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "52. Чем проект отличается от текущей работы?",
+      "answers": [
+        { "text": "Проект длится постоянно.", "isCorrect": false },
+        { "text": "Проект имеет ограниченный срок и уникальный результат.", "isCorrect": true },
+        { "text": "Проект включает рутинные действия.", "isCorrect": false },
+        { "text": "Проект выполняется без планирования.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "53. В чем заключается цель проекта?",
+      "answers": [
+        { "text": "Определение задач для сотрудников.", "isCorrect": false },
+        { "text": "Предложение конкретного решения проблемы.", "isCorrect": true },
+        { "text": "Создание нового программного обеспечения.", "isCorrect": false },
+        { "text": "Оптимизация финансовых потоков.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "54. Какие ресурсы относятся к проекту?",
+      "answers": [
+        { "text": "Только финансы.", "isCorrect": false },
+        { "text": "Программы и приложения.", "isCorrect": false },
+        { "text": "Технические, материальные, кадровые и информационные ресурсы.", "isCorrect": true },
+        { "text": "Лишь человеческие ресурсы.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "55. Каковы основные ограничения проекта?",
+      "answers": [
+        { "text": "Временные, технические и людские.", "isCorrect": false },
+        { "text": "Время, деньги и объем работы.", "isCorrect": true },
+        { "text": "Потребности клиентов и законы.", "isCorrect": false },
+        { "text": "Места проведения и оборудования.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "56. Как называется стандарт управления проектами, применяемый более чем в 160 странах?",
+      "answers": [
+        { "text": "ISO.", "isCorrect": false },
+        { "text": "PMBOK.", "isCorrect": true },
+        { "text": "Agile.", "isCorrect": false },
+        { "text": "Lean.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "57. Каковы преимущества автоматизации рутинных процессов в проектном управлении?",
+      "answers": [
+        { "text": "Усложнение задач.", "isCorrect": false },
+        { "text": "Уменьшение точности.", "isCorrect": false },
+        { "text": "Увеличение времени на выполнение.", "isCorrect": false },
+        { "text": "Экономия времени и ресурсов.", "isCorrect": true }
+      ]
+    },
+    {
+      "question": "58. Что подразумевается под образовательным результатом проекта?",
+      "answers": [
+        { "text": "Финансовые последствия проекта.", "isCorrect": false },
+        { "text": "Развитие знаний и умений участников.", "isCorrect": true },
+        { "text": "Реальные результаты продаж.", "isCorrect": false },
+        { "text": "Объем выполненной работы.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "59. К какому проекту относятся мероприятия, которые направлены на получение информации о клиентах?",
+      "answers": [
+        { "text": "Прикладные проекты.", "isCorrect": false },
+        { "text": "Творческие проекты.", "isCorrect": false },
+        { "text": "Проекты влияния.", "isCorrect": false },
+        { "text": "Исследовательские проекты.", "isCorrect": true }
+      ]
+    },
+    {
+      "question": "60. Какой из нижеперечисленных пунктов не относится к задачам управления проектом?",
+      "answers": [
+        { "text": "Разработка плана действий.", "isCorrect": false },
+        { "text": "Обсуждение результатов.", "isCorrect": false },
+        { "text": "Набор новых сотрудников.", "isCorrect": true },
+        { "text": "Оценка эффективности.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "61. Какова роль проектного менеджера в проекте?",
+      "answers": [
+        { "text": "Организация процесса и мотивация команды.", "isCorrect": true },
+        { "text": "Проведение технических испытаний.", "isCorrect": false },
+        { "text": "Разработка финальной продукции.", "isCorrect": false },
+        { "text": "Управление бухгалтерским учетом.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "62. Что означает \"ограничение на выбор подрядчиков\" в проекте?",
+      "answers": [
+        { "text": "Возможность выбора поставщиков.", "isCorrect": false },
+        { "text": "Запрет на изменение подрядчика.", "isCorrect": false },
+        { "text": "Условия, определяющие, кто может быть подрядчиком.", "isCorrect": true },
+        { "text": "Свобода в найме подрядчиков.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "63. Какое из следующих утверждений является правильным для успешного проекта?",
+      "answers": [
+        { "text": "Проект должен выполняться без четкой структуры.", "isCorrect": false },
+        { "text": "Проект должен использовать только внутренние ресурсы.", "isCorrect": false },
+        { "text": "Проект должен соответствовать временным, бюджетным и объемным ограничениям.", "isCorrect": true },
+        { "text": "Проект не должен иметь конечной цели.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "64. Какая из следующих характеристик не соответствует проекту?",
+      "answers": [
+        { "text": "Уникальность результата.", "isCorrect": false },
+        { "text": "Ограничение по времени.", "isCorrect": false },
+        { "text": "Регулярное выполнение одних и тех же задач.", "isCorrect": true },
+        { "text": "Наличие четкой цели.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "65. Что такое \"портфель проектов\"?",
+      "answers": [
+        { "text": "Совокупность задач одной команды.", "isCorrect": false },
+        { "text": "Набор проектов, объединенных для эффективного управления.", "isCorrect": true },
+        { "text": "Документация по каждому проекту.", "isCorrect": false },
+        { "text": "Финансовый отчет по проектам.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "66. Какой из ниже перечисленных факторов не является ресурсом проекта?",
+      "answers": [
+        { "text": "Новые технологии.", "isCorrect": false },
+        { "text": "Данные о клиентах.", "isCorrect": false },
+        { "text": "Параметры структуры.", "isCorrect": true },
+        { "text": "Условия реализации задач.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "67. Почему важно ясно сформулировать проблему проекта?",
+      "answers": [
+        { "text": "Это помогает сэкономить бюджет.", "isCorrect": false },
+        { "text": "Это упрощает процесс планирования.", "isCorrect": true },
+        { "text": "Это позволяет избежать рутинной работы.", "isCorrect": false },
+        { "text": "Это увеличивает количество участников.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "68. Что требуется для успешной реализации проектного менеджмента?",
+      "answers": [
+        { "text": "Высокая квалификация всех сотрудников.", "isCorrect": false },
+        { "text": "Четкая структура и распределение задач.", "isCorrect": true },
+        { "text": "Оптимизация всех рабочих процессов.", "isCorrect": false },
+        { "text": "Автоматизация всех рутинных задач.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "69. Какой аспект управления проектами наиболее важен для достижения успешного результата?",
+      "answers": [
+        { "text": "Строгое соблюдение правил.", "isCorrect": false },
+        { "text": "Правильная оценка рисков и управление ими.", "isCorrect": true },
+        { "text": "Фиксация всех процессов и процедур.", "isCorrect": false },
+        { "text": "Сложная система отчетности.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "70. Как классифицируются проекты по доминирующему виду деятельности?",
+      "answers": [
+        { "text": "Прикладные, исследовательские, творческие, информационно-организационные, стартап проекты.", "isCorrect": true },
+        { "text": "Финансовые, технические, организационные.", "isCorrect": false },
+        { "text": "Научные, культурные, производственные.", "isCorrect": false },
+        { "text": "Объединенные, независимые, связанные.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "71. Каковы основные цели прикладного проекта?",
+      "answers": [
+        { "text": "Ответить на актуальные вопросы.", "isCorrect": false },
+        { "text": "Получение четко обозначенного результата, такого как продукт или технология.", "isCorrect": true },
+        { "text": "Создание информационного отчета.", "isCorrect": false },
+        { "text": "Разработка новой теории.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "72. Что определить как результат исследовательского проекта?",
+      "answers": [
+        { "text": "Бизнес-модель.", "isCorrect": false },
+        { "text": "Техническая документация.", "isCorrect": false },
+        { "text": "Письменный отчет о научно-исследовательской работе.", "isCorrect": true },
+        { "text": "Макет или прототип.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "73. Каковы основные характеристики творческого проекта?",
+      "answers": [
+        { "text": "Получение творческого продукта, такого как произведение искусства.", "isCorrect": true },
+        { "text": "Анализ данных и их организация.", "isCorrect": false },
+        { "text": "Исследование новых технологий.", "isCorrect": false },
+        { "text": "Создание бизнес-плана.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "74. Какой тип проекта изначально направлен на получение и обработку информации?",
+      "answers": [
+        { "text": "Прикладные проекты.", "isCorrect": false },
+        { "text": "Информационно-организационные проекты.", "isCorrect": true },
+        { "text": "Творческие проекты.", "isCorrect": false },
+        { "text": "Стартап проекты.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "75. Какое утверждение характеризует стартап проект?",
+      "answers": [
+        { "text": "Проект с долгосрочной рентабельностью.", "isCorrect": false },
+        { "text": "Молодой проект с новой, не использованной ранее идеей.", "isCorrect": true },
+        { "text": "Проект, который ориентирован на массовый рынок.", "isCorrect": false },
+        { "text": "Проект с четко установленным бюджетом.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "76. Каковы основные этапы развития стартапа?",
+      "answers": [
+        { "text": "Запуск, развитие, выход на рынок.", "isCorrect": false },
+        { "text": "Зарождение, становление, раннее развитие, расширение, зрелость.", "isCorrect": true },
+        { "text": "Идея, разработка, анализ.", "isCorrect": false },
+        { "text": "Концепция, прототип, реализация.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "77. Какова задача стартаперов на стадии «заслужения стартапа»?",
+      "answers": [
+        { "text": "Отладка системы продвижения продукта и поиск финансирования.", "isCorrect": true },
+        { "text": "Разработка бизнес-плана.", "isCorrect": false },
+        { "text": "Создание рекламной стратегии.", "isCorrect": false },
+        { "text": "Разработка образовательной программы.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "78. Какой подход применяется на этапе \"расширения стартапа\"?",
+      "answers": [
+        { "text": "Уменьшение объемов производства.", "isCorrect": false },
+        { "text": "Разработка новых технологий.", "isCorrect": false },
+        { "text": "Увеличение объемов продаж и привлечение массовых пользователей.", "isCorrect": true },
+        { "text": "Снижение затрат на маркетинг.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "79. Какое из утверждений верно для стартапа на этапе \"зрелости\"?",
+      "answers": [
+        { "text": "Стартап находится в процессе разработки.", "isCorrect": false },
+        { "text": "Стартап превратился в серьезный бизнес с лидирующей позицией на рынке.", "isCorrect": true },
+        { "text": "Стартап требует больших инвестиций.", "isCorrect": false },
+        { "text": "Стартап прекращает свою деятельность.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "80. Какой из следующих типов проектов не относится к прикладным?",
+      "answers": [
+        { "text": "Разработка нового устройства.", "isCorrect": false },
+        { "text": "Создание программного обеспечения.", "isCorrect": false },
+        { "text": "Исследование причин экономического спада.", "isCorrect": true },
+        { "text": "Разработка производственной технологии.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "81. Какие из следующих проектов определяются по отраслевой привязке?",
+      "answers": [
+        { "text": "Проекты в текстильной промышленности, архитектуре, информационных технологиях.", "isCorrect": true },
+        { "text": "Социальные проекты.", "isCorrect": false },
+        { "text": "Экологические проекты.", "isCorrect": false },
+        { "text": "Научные проекты.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "82. Что такое монопроект?",
+      "answers": [
+        { "text": "Проект, охватывающий несколько дисциплин.", "isCorrect": false },
+        { "text": "Проект, реализуемый в рамках одной области знания.", "isCorrect": true },
+        { "text": "Проект с ограниченным бюджетом.", "isCorrect": false },
+        { "text": "Проект с международным участием.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "83. Как классифицируются проекты по охвату участников?",
+      "answers": [
+        { "text": "Неправительственные и коммерческие.", "isCorrect": false },
+        { "text": "Глобальные и локальные.", "isCorrect": false },
+        { "text": "Внутривузовские, региональные, всероссийские, международные.", "isCorrect": true },
+        { "text": "Краткосрочные и долгосрочные.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "84. Каковы критерии успешного стартапа?",
+      "answers": [
+        { "text": "Многочисленные партнеры.", "isCorrect": false },
+        { "text": "Высокая окупаемость и команда высококвалифицированных специалистов.", "isCorrect": true },
+        { "text": "Наличие большого количества инвесторов.", "isCorrect": false },
+        { "text": "Четкая коммерческая стратегия.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "85. Какой этап жизненного цикла проекта включает анализ полученных данных и подготовку презентации?",
+      "answers": [
+        { "text": "Инициация.", "isCorrect": false },
+        { "text": "Планирование.", "isCorrect": false },
+        { "text": "Завершение проекта.", "isCorrect": true }
+      ]
+    },
+    {
+      "question": "86. В какой модели жизненного цикла возврат на предыдущие этапы невозможен?",
+      "answers": [
+        { "text": "Спиральная.", "isCorrect": false },
+        { "text": "Инкрементная.", "isCorrect": false },
+        { "text": "Каскадная (водопадная).", "isCorrect": true }
+      ]
+    },
+    {
+      "question": "87. В какой матричной структуре проектный менеджер имеет больше полномочий, чем функциональный руководитель?",
+      "answers": [
+        { "text": "Слабая.", "isCorrect": false },
+        { "text": "Сильная.", "isCorrect": true },
+        { "text": "Сбалансированная.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "88. В чём главное отличие матричной структуры управления от линейной?",
+      "answers": [
+        { "text": "В линейной структуре больше руководителей.", "isCorrect": false },
+        { "text": "В матричной структуре у сотрудников двойное подчинение.", "isCorrect": true },
+        { "text": "В линейной структуре нет отделов.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "89. В чём заключается матричная организационная структура управления?",
+      "answers": [
+        { "text": "У сотрудников только один руководитель.", "isCorrect": false },
+        { "text": "Сотрудники имеют двойное подчинение: руководителю отдела и менеджеру проекта.", "isCorrect": true },
+        { "text": "Все сотрудники подчиняются только директору.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "90. В чём особенность спиральной модели жизненного цикла?",
+      "answers": [
+        { "text": "Нет возвратов на предыдущие этапы.", "isCorrect": false },
+        { "text": "На каждом витке создаётся очередная версия продукта и уточняются требования.", "isCorrect": true },
+        { "text": "Проект делится на мелкие части.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "91. Для чего используется инкрементная модель жизненного цикла?",
+      "answers": [
+        { "text": "Для простых проектов.", "isCorrect": false },
+        { "text": "Для сложных и масштабных проектов, которые разбиваются на мелкие составляющие.", "isCorrect": true },
+        { "text": "Только для IT-проектов.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "92. Какая модель жизненного цикла предполагает переход на следующий этап только после полного завершения предыдущего?",
+      "answers": [
+        { "text": "Спиральная.", "isCorrect": false },
+        { "text": "Инкрементная.", "isCorrect": false },
+        { "text": "Каскадная (водопадная).", "isCorrect": true }
+      ]
+    },
+    {
+      "question": "93. Какая модель жизненного цикла предполагает создание очередной версии продукта на каждом витке?",
+      "answers": [
+        { "text": "Каскадная.", "isCorrect": false },
+        { "text": "Спиральная.", "isCorrect": true },
+        { "text": "Линейная.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "94. Для каких проектов наиболее эффективна инкрементная модель?",
+      "answers": [
+        { "text": "Для простых и краткосрочных.", "isCorrect": false },
+        { "text": "Для сложных, масштабных, с большим количеством участников.", "isCorrect": true }
+      ]
+    },
+    {
+      "question": "95. Какая модель жизненного цикла наиболее гибкая и позволяет вносить изменения на любом этапе?",
+      "answers": [
+        { "text": "Каскадная.", "isCorrect": false },
+        { "text": "Инкрементная.", "isCorrect": true },
+        { "text": "Линейная.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "96. В какой структуре управления сотрудники распределены по отделам в зависимости от функций?",
+      "answers": [
+        { "text": "Линейная.", "isCorrect": false },
+        { "text": "Функциональная.", "isCorrect": true },
+        { "text": "Дивизиональная.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "97. Для каких компаний наиболее подходит дивизиональная структура?",
+      "answers": [
+        { "text": "Для малых предприятий.", "isCorrect": false },
+        { "text": "Для больших корпораций, где подразделения — мини-компании.", "isCorrect": true },
+        { "text": "Только для IT-компаний.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "98. Какая структура управления считается наиболее простой для внедрения?",
+      "answers": [
+        { "text": "Матричная.", "isCorrect": false },
+        { "text": "Линейная или функциональная.", "isCorrect": true },
+        { "text": "Дивизиональная.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "99. Какое преимущество матричной структуры связано с возможностью быстро реагировать на изменения?",
+      "answers": [
+        { "text": "Эффективное принятие решений.", "isCorrect": false },
+        { "text": "Гибкость.", "isCorrect": true },
+        { "text": "Интеграция знаний.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "100. Какое преимущество матричной структуры связано с обменом опытом между отделами?",
+      "answers": [
+        { "text": "Оптимальное распределение ресурсов.", "isCorrect": false },
+        { "text": "Интеграция знаний.", "isCorrect": true },
+        { "text": "Гибкость.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "101. Какое преимущество матричной структуры способствует профессиональному росту сотрудников?",
+      "answers": [
+        { "text": "Оптимальное распределение ресурсов.", "isCorrect": false },
+        { "text": "Развитие сотрудников за счёт участия в разных проектах.", "isCorrect": true },
+        { "text": "Гибкость.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "102. Какой недостаток матричной структуры может привести к конфликтам между руководителями?",
+      "answers": [
+        { "text": "Нечёткое распределение ролей.", "isCorrect": false },
+        { "text": "Борьба за власть среди руководителей.", "isCorrect": true },
+        { "text": "Сбалансированная.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "103. Какой недостаток характерен для матричной структуры управления?",
+      "answers": [
+        { "text": "Простота внедрения.", "isCorrect": false },
+        { "text": "Нечёткое распределение ролей и борьба за власть среди руководителей.", "isCorrect": true },
+        { "text": "Отсутствие гибкости.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "104. Что может снизить мотивацию сотрудников в матричной структуре?",
+      "answers": [
+        { "text": "Отсутствие премий.", "isCorrect": false },
+        { "text": "Необходимость отчитываться перед несколькими руководителями.", "isCorrect": true },
+        { "text": "Большой объём работы.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "105. Какой инструмент помогает избежать путаницы в задачах при матричной структуре?",
+      "answers": [
+        { "text": "Увеличение числа совещаний.", "isCorrect": false },
+        { "text": "Матрица RACI.", "isCorrect": true },
+        { "text": "Жёсткая иерархия.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "106. Кто в матрице RACI отвечает за непосредственное выполнение задачи?",
+      "answers": [
+        { "text": "R — исполнитель.", "isCorrect": true },
+        { "text": "A — ответственный.", "isCorrect": false },
+        { "text": "C — консультант.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "107. Какое правило помогает упростить распределение ролей в матричной структуре?",
+      "answers": [
+        { "text": "Чем больше команда, тем лучше.", "isCorrect": false },
+        { "text": "Чем меньше сотрудников в команде, тем проще распределять роли и обязанности (идеально — 10–20 человек).", "isCorrect": true },
+        { "text": "Не планировать работу заранее.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "108. На скольких уровнях рекомендуется планировать работу при матричной структуре?",
+      "answers": [
+        { "text": "Только на уровне проекта.", "isCorrect": false },
+        { "text": "На двух уровнях: в рамках отдела и проекта.", "isCorrect": true },
+        { "text": "Только на уровне отдела.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "109. Что должно быть максимально подробно описано для успешной работы матричной структуры?",
+      "answers": [
+        { "text": "Только должностные обязанности сотрудников.", "isCorrect": false },
+        { "text": "Структура компании, обязанности каждого руководителя и сотрудника.", "isCorrect": true },
+        { "text": "Только цели проекта.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "110. Какой тип матричной структуры предполагает равные полномочия у проектного и функционального руководителя?",
+      "answers": [
+        { "text": "Слабая.", "isCorrect": false },
+        { "text": "Сильная.", "isCorrect": false },
+        { "text": "Сбалансированная.", "isCorrect": true }
+      ]
+    },
+    {
+      "question": "111. Какой тип матричной структуры предполагает, что у проектного менеджера больше полномочий, чем у руководителя отдела?",
+      "answers": [
+        { "text": "Слабая матричная структура.", "isCorrect": false },
+        { "text": "Сильная матричная структура.", "isCorrect": true },
+        { "text": "Сбалансированная матричная структура.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "112. Какой тип матричной структуры характерен для компаний, где важно чёткое распределение ролей и минимум гибкости?",
+      "answers": [
+        { "text": "Сильная.", "isCorrect": false },
+        { "text": "Слабая.", "isCorrect": true },
+        { "text": "Сбалансированная.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "113. Какова основная цель выделения фаз (этапов) проекта?",
+      "answers": [
+        { "text": "Для усложнения управления.", "isCorrect": false },
+        { "text": "Для лучшего контроля процесса реализации проекта.", "isCorrect": true },
+        { "text": "Для уменьшения сроков выполнения.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "114. Что такое веха проекта?",
+      "answers": [
+        { "text": "Любой промежуточный результат.", "isCorrect": false },
+        { "text": "Контрольная точка, значимый момент, связанный с завершением ключевого мероприятия.", "isCorrect": true },
+        { "text": "Начало проекта.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "115. Какой этап жизненного цикла проекта включает непосредственное выполнение задач?",
+      "answers": [
+        { "text": "Инициация.", "isCorrect": false },
+        { "text": "Планирование.", "isCorrect": false },
+        { "text": "Реализация проекта.", "isCorrect": true }
+      ]
+    },
+    {
+      "question": "116. Что такое жизненный цикл проекта?",
+      "answers": [
+        { "text": "Это этапы реализации проекта.", "isCorrect": false },
+        { "text": "Это определённая последовательность фаз, вех и этапов, через которые проходит замысел в процессе реализации и функционирования.", "isCorrect": true },
+        { "text": "Это вехи проекта.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "117. Какое из определений фазы (этапа) проекта является верным?",
+      "answers": [
+        { "text": "Любая задача в проекте.", "isCorrect": false },
+        { "text": "Набор логически взаимосвязанных работ, приводящих к одному из основных результатов проекта.", "isCorrect": true },
+        { "text": "Только завершающая часть проекта.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "118. Каковы основные процессы управления проектами?",
+      "answers": [
+        { "text": "Идентификация, планирование, выполнение, мониторинг и завершение.", "isCorrect": true },
+        { "text": "Идентификация, реализация, исправление.", "isCorrect": false },
+        { "text": "Реклама, реализация, завершение.", "isCorrect": false },
+        { "text": "Начало, выполнение, завершение, обновление.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "119. Что включает в себя жизненный цикл проекта?",
+      "answers": [
+        { "text": "Заказ, поставка, использование.", "isCorrect": false },
+        { "text": "Инициация, планирование, исполнение, закрытие.", "isCorrect": true },
+        { "text": "Начало, приостановка, завершение.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "120. Какая структура управления проектом включает в себя роли и обязанности всех участников?",
+      "answers": [
+        { "text": "Групповая структура.", "isCorrect": false },
+        { "text": "Иерархическая структура.", "isCorrect": false },
+        { "text": "Организационная структура.", "isCorrect": true }
+      ]
+    },
+    {
+      "question": "121. Что такое матрица ответственности в проекте?",
+      "answers": [
+        { "text": "Документ, определяющий сроки.", "isCorrect": false },
+        { "text": "Инструмент, который показывает, кто за что отвечает.", "isCorrect": true },
+        { "text": "Список всех задач проекта.", "isCorrect": false },
+        { "text": "График выполнения задач.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "122. Какой из следующих подходов относится к гибким методологиям управления проектами?",
+      "answers": [
+        { "text": "Waterfall.", "isCorrect": false },
+        { "text": "Agile.", "isCorrect": true },
+        { "text": "V-Model.", "isCorrect": false },
+        { "text": "Spiral.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "123. В какой документации описывается цель и задачи проекта?",
+      "answers": [
+        { "text": "Техническое задание.", "isCorrect": true },
+        { "text": "Финансовая отчетность, отражающая прибыль компании.", "isCorrect": false },
+        { "text": "Приказ о назначении, касающийся внутреннего распределения ресурсов.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "124. Каковы основные стандарты оформления технической документации?",
+      "answers": [
+        { "text": "ISO 9000.", "isCorrect": false },
+        { "text": "ГОСТ Р 6.30-2003.", "isCorrect": true },
+        { "text": "Организационные требования.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "125. Какой из перечисленных методов структуризации проектов включает разбивку задач на подзадачи?",
+      "answers": [
+        { "text": "Метод цепи критического пути.", "isCorrect": false },
+        { "text": "Метод декомпозиции.", "isCorrect": true },
+        { "text": "Метод SWOT.", "isCorrect": false },
+        { "text": "Метод хронометража.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "126. Какое программное обеспечение чаще всего используется для управления проектами?",
+      "answers": [
+        { "text": "Microsoft Word.", "isCorrect": false },
+        { "text": "Microsoft Project.", "isCorrect": true },
+        { "text": "Adobe Photoshop.", "isCorrect": false },
+        { "text": "AutoCAD.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "127. Каково основное назначение проектного управления?",
+      "answers": [
+        { "text": "Подготовка отчета о доходах.", "isCorrect": false },
+        { "text": "Обеспечение эффективного выполнения задач.", "isCorrect": true },
+        { "text": "Разработка рекламной кампании.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "128. Какой стандарт ISO применяется для управления проектами?",
+      "answers": [
+        { "text": "ISO 5001.", "isCorrect": false },
+        { "text": "ISO 14001.", "isCorrect": false },
+        { "text": "ISO 21500.", "isCorrect": true },
+        { "text": "ISO 9001.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "129. Что подразумевает под собой термин \"изменение объема проекта\"?",
+      "answers": [
+        { "text": "Увеличение бюджета.", "isCorrect": false },
+        { "text": "Изменение первоначально запланированных целей и задач.", "isCorrect": true },
+        { "text": "Замена участников команды.", "isCorrect": false },
+        { "text": "Сокращение времени реализации.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "130. Какой метод используется для визуализации графика выполнения задач проекта?",
+      "answers": [
+        { "text": "График Ганта.", "isCorrect": true },
+        { "text": "SWOT-анализ.", "isCorrect": false },
+        { "text": "Диаграмма потоков.", "isCorrect": false },
+        { "text": "Метод критического пути.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "131. Каков основной принцип Agile?",
+      "answers": [
+        { "text": "Жесткая фиксация требований в начале проекта.", "isCorrect": false },
+        { "text": "Постоянная адаптация и гибкость к изменяющимся требованиям.", "isCorrect": true },
+        { "text": "Долгосрочное планирование.", "isCorrect": false },
+        { "text": "Проектирование на основе предыдущего опыта.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "132. Что такое \"техническое задание\" в проекте?",
+      "answers": [
+        { "text": "План продаж.", "isCorrect": false },
+        { "text": "Документ, описывающий требования к продукту.", "isCorrect": true },
+        { "text": "Описание процессов компании.", "isCorrect": false },
+        { "text": "Стратегия маркетинга.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "133. Что необходимо для оформления проекта?",
+      "answers": [
+        { "text": "Высокие знания в области бухгалтерского учета.", "isCorrect": false },
+        { "text": "Стандарты оформления и утверждения документов.", "isCorrect": true },
+        { "text": "Умение договариваться.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "134. Какова основная функция системы управления проектами?",
+      "answers": [
+        { "text": "Обновление оборудования.", "isCorrect": false },
+        { "text": "Понимание потребностей клиентов.", "isCorrect": false },
+        { "text": "Управление на основании исторических данных.", "isCorrect": false },
+        { "text": "Объединение всех процессов и участников проекта.", "isCorrect": true }
+      ]
+    },
+    {
+      "question": "135. Какой из перечисленных документов является заключительным этапом проекта?",
+      "answers": [
+        { "text": "Отчет о выполнении проекта.", "isCorrect": true },
+        { "text": "Календарный план.", "isCorrect": false },
+        { "text": "Техническое задание.", "isCorrect": false },
+        { "text": "Рекомендации по улучшению.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "136. Какое значение имеет анализ рисков в проекте?",
+      "answers": [
+        { "text": "Увеличение объема работ.", "isCorrect": false },
+        { "text": "Управление потенциальными проблемами и угрозами для проекта.", "isCorrect": true },
+        { "text": "Составление графика выполнения задач.", "isCorrect": false },
+        { "text": "Уведомление клиентов о задержках.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "137. Что такое \"дерево задач\" в проекте?",
+      "answers": [
+        { "text": "Модель, показывающая взаимоотношения между отделами.", "isCorrect": false },
+        { "text": "График, показывающий последовательность выполнения задач.", "isCorrect": false },
+        { "text": "Структура, отображающая все задачи и их подзадачи.", "isCorrect": true },
+        { "text": "Лестница задач, где каждая ступень – это конечная цель.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "138. Какие из следующих терминов используются в рамках Agile?",
+      "answers": [
+        { "text": "Спиральный подход.", "isCorrect": false },
+        { "text": "Инкременты.", "isCorrect": true },
+        { "text": "Оперативное планирование.", "isCorrect": false },
+        { "text": "Линейная модель.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "139. Что такое \"проектное управление\"?",
+      "answers": [
+        { "text": "Управление только в производственной сфере.", "isCorrect": false },
+        { "text": "Процесс планирования, организации, мотивации и контроля ресурсов.", "isCorrect": true },
+        { "text": "Управление с использованием только финансовых данных.", "isCorrect": false },
+        { "text": "Процесс, ориентированный исключительно на людей.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "140. Каков основной смысл методологии управления проектами?",
+      "answers": [
+        { "text": "Сосредоточение на краткосрочных целях.", "isCorrect": false },
+        { "text": "Эффективное распределение ресурсов и времени.", "isCorrect": true },
+        { "text": "Работа без документации.", "isCorrect": false },
+        { "text": "Разработка красивого дизайна.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "141. Какой из следующих шагов не является частью процесса планирования проекта?",
+      "answers": [
+        { "text": "Определение задач.", "isCorrect": false },
+        { "text": "Оценка рисков.", "isCorrect": false },
+        { "text": "Составление бюджета.", "isCorrect": false },
+        { "text": "Выполнение задач.", "isCorrect": true }
+      ]
+    },
+    {
+      "question": "142. Что такое \"программное управление проектами\"?",
+      "answers": [
+        { "text": "Программные средства, предназначенные для анализа и контроля.", "isCorrect": true },
+        { "text": "Создание программного обеспечения без учета требований.", "isCorrect": false },
+        { "text": "Проектирование программного обеспечения.", "isCorrect": false },
+        { "text": "Запуск новых программ без проектирования.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "143. Каковы критерии успешного завершения проекта?",
+      "answers": [
+        { "text": "Проект выполнен без учета качества.", "isCorrect": false },
+        { "text": "Проект завершен в срок и в рамках бюджета с выполнением всех требований.", "isCorrect": true },
+        { "text": "Проект завершен с превышением бюджета.", "isCorrect": false },
+        { "text": "Проект не был проверен.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "144. Какой инструмент помогает выявить слабые и сильные стороны проекта?",
+      "answers": [
+        { "text": "SWOT-анализ.", "isCorrect": true },
+        { "text": "Постпроцессный анализ.", "isCorrect": false },
+        { "text": "Календарный план.", "isCorrect": false },
+        { "text": "Бюджет.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "145. Что происходит на этапе \"инициации\" проекта?",
+      "answers": [
+        { "text": "Начали выполнение задач.", "isCorrect": false },
+        { "text": "Определяются цели и задачи, а также участие заинтересованных сторон.", "isCorrect": true },
+        { "text": "Обсуждение рисков.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "146. Что такое \"программное обеспечение для управления проектами\"?",
+      "answers": [
+        { "text": "Программа для управления личными финансами.", "isCorrect": false },
+        { "text": "Программа, предназначенная для планирования и управления проектами.", "isCorrect": true },
+        { "text": "Инструмент для ведения бухгалтерии и финансового учета.", "isCorrect": false },
+        { "text": "Программа для моделирования физических процессов.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "147. Какой из следующих принципов Agile касается работы с клиентом?",
+      "answers": [
+        { "text": "Устойчивость к изменениям.", "isCorrect": false },
+        { "text": "Постоянная работа без обратной связи.", "isCorrect": false },
+        { "text": "Отказ от документации.", "isCorrect": false },
+        { "text": "Периодические встречи без клиентов.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "148. Какова основная задача технического задания на проект?",
+      "answers": [
+        { "text": "Определение бюджета.", "isCorrect": false },
+        { "text": "Описание требований и условий для выполнения проекта.", "isCorrect": true },
+        { "text": "Установление сроков.", "isCorrect": false },
+        { "text": "Определение команды.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "149. Каковы основные этапы идентификации рисков в ИТ-проектах?",
+      "answers": [
+        { "text": "Определение, анализ, планирование.", "isCorrect": true },
+        { "text": "Оценка, реализация, завершение.", "isCorrect": false },
+        { "text": "Идентификация, мониторинг, обработка.", "isCorrect": false },
+        { "text": "Планирование, выполнение, анализ.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "150. Какой метод используется для анализа рисков, направленный на их количественную оценку?",
+      "answers": [
+        { "text": "SWOT-анализ.", "isCorrect": false },
+        { "text": "Матричный анализ.", "isCorrect": false },
+        { "text": "Монте-Карло.", "isCorrect": true },
+        { "text": "PEST-анализ.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "151. Какое из следующих определений лучше всего описывает риск?",
+      "answers": [
+        { "text": "Возможность достижения успеха в проекте.", "isCorrect": false },
+        { "text": "Событие, которое может негативно повлиять на цели проекта.", "isCorrect": true },
+        { "text": "Работы, превышающие плановые затраты.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "152. Каковы ключевые факторы при планировании мер реагирования на риски?",
+      "answers": [
+        { "text": "Сложность проекта и сроки выполнения.", "isCorrect": false },
+        { "text": "Вероятность и воздействие рисков.", "isCorrect": true },
+        { "text": "Желания команды и возможности бюджета.", "isCorrect": false },
+        { "text": "Политическая обстановка и законодательные изменения.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "153. Что обозначает термин \"мониторинг рисков\"?",
+      "answers": [
+        { "text": "Процесс оценки бюджета проекта.", "isCorrect": false },
+        { "text": "Отслеживание изменений в рисках и корректировка мер реагирования.", "isCorrect": true },
+        { "text": "Установление новых целей для команды.", "isCorrect": false },
+        { "text": "Устранение всех известных рисков.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "154. Какой из методов формирования команды проекта подразумевает четкое разделение ролей и обязанностей?",
+      "answers": [
+        { "text": "Рандомное распределение.", "isCorrect": false },
+        { "text": "Комплексный анализ.", "isCorrect": false },
+        { "text": "Матрица ответственности.", "isCorrect": true },
+        { "text": "Групповое взаимодействие.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "155. Каковы основные принципы управления командой ИТ-проекта?",
+      "answers": [
+        { "text": "Иерархия, контроль, индивидуальность.", "isCorrect": false },
+        { "text": "Командная работа, открытая коммуникация и доверие.", "isCorrect": true },
+        { "text": "Автономность, непредсказуемость, централизация.", "isCorrect": false },
+        { "text": "Управление конфликтами, контроль сроков, завершение задач.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "156. Какой метод используется для разрешения конфликтов в команде?",
+      "answers": [
+        { "text": "Избегание.", "isCorrect": false },
+        { "text": "Принуждение.", "isCorrect": false },
+        { "text": "Компромисс.", "isCorrect": true },
+        { "text": "Изоляция.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "157. Как оценивается потребность в ресурсах проекта?",
+      "answers": [
+        { "text": "На основе прошлых опытов.", "isCorrect": false },
+        { "text": "На основе желаний команды.", "isCorrect": false },
+        { "text": "На основе анализа задач и сроков.", "isCorrect": true },
+        { "text": "На основе доступных возможностей.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "158. Что такое календарное планирование?",
+      "answers": [
+        { "text": "Составление финансовых отчетов.", "isCorrect": false },
+        { "text": "Установление временных рамок для выполнения задач.", "isCorrect": true },
+        { "text": "Определение начальных и конечных точек проекта.", "isCorrect": false },
+        { "text": "Создание отчетов о выполнении задач.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "159. Какой метод оценки продолжительности проекта основан на определении самых оптимистичных, наиболее вероятных и пессимистичных сценариев?",
+      "answers": [
+        { "text": "Метод критического пути.", "isCorrect": false },
+        { "text": "Диаграмма Ганта.", "isCorrect": false },
+        { "text": "Метод трех оценок.", "isCorrect": true },
+        { "text": "Agile-подход.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "160. Какую роль играют сетевые модели в управлении проектами?",
+      "answers": [
+        { "text": "Они помогают визуализировать задания и их взаимосвязи.", "isCorrect": true },
+        { "text": "Они определяют команду и ресурсы.", "isCorrect": false },
+        { "text": "Они документируют результаты.", "isCorrect": false },
+        { "text": "Они составляют бюджет проекта.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "161. Что такое оценка стоимости проекта?",
+      "answers": [
+        { "text": "Предсказание длины проекта.", "isCorrect": false },
+        { "text": "Вычисление требуемых финансирования и ресурсов.", "isCorrect": true },
+        { "text": "Прогнозирование затрат на операции.", "isCorrect": false },
+        { "text": "Установление суммы за проект.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "162. Какие элементы составляют структуру бизнес-плана проекта?",
+      "answers": [
+        { "text": "Андеррайтинг и оценка рисков.", "isCorrect": false },
+        { "text": "Стратегия реализации, финансовый прогноз, анализ рынка.", "isCorrect": true },
+        { "text": "Обзор команды и описание фондов.", "isCorrect": false },
+        { "text": "Описание этапов проекта и календарные графики.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "163. Что подразумевается под качественным анализом рисков ИТ-проекта?",
+      "answers": [
+        { "text": "Выявление и оценка рисков на основе экспертных мнений.", "isCorrect": true },
+        { "text": "Определение количественных показателей риска.", "isCorrect": false },
+        { "text": "Установление временных рамок для выполнения задач.", "isCorrect": false },
+        { "text": "Финансовые расчеты.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "164. Какой аспект важен при ресурсном планировании в ИТ-проектах?",
+      "answers": [
+        { "text": "Сроки выполнения.", "isCorrect": false },
+        { "text": "Объем прибыли.", "isCorrect": false },
+        { "text": "Доступность необходимых квалификаций и навыков.", "isCorrect": true },
+        { "text": "Обсуждение стратегии с клиентами.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "165. Какова основная цель разработки сетевого графика выполнения работ?",
+      "answers": [
+        { "text": "Быстрая реализация проекта.", "isCorrect": false },
+        { "text": "Визуализация задач и их последовательности выполнения.", "isCorrect": true },
+        { "text": "Сокращение расходов.", "isCorrect": false },
+        { "text": "Оформление итогов проекта.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "166. Каковы ключевые технико-экономические показатели ИТ-проекта?",
+      "answers": [
+        { "text": "Время выполнения, удовлетворение клиентов.", "isCorrect": false },
+        { "text": "Затраты, срок окупаемости, предельная стоимость.", "isCorrect": true },
+        { "text": "Количество сотрудников, тайм-менеджмент.", "isCorrect": false },
+        { "text": "Документация, инструменты.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "167. Какое из следующих действий относится к методу качественного анализа рисков?",
+      "answers": [
+        { "text": "Определение финансовых затрат.", "isCorrect": false },
+        { "text": "Проведение мозгового штурма с командой.", "isCorrect": true },
+        { "text": "Создание шаблонов документирования.", "isCorrect": false },
+        { "text": "Подготовка отчетов о выполнении.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "168. Какова цель практического занятия по ресурсному планированию в ИТ-проектах?",
+      "answers": [
+        { "text": "Обсуждение конфликта интересов.", "isCorrect": false },
+        { "text": "Определение необходимых ресурсов и их распределение по задачам.", "isCorrect": true },
+        { "text": "Прогнозирование стоимости проектных задач.", "isCorrect": false },
+        { "text": "Выработка идей для улучшения существующих процессов.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "169. В чем заключается оптимизация сетевого графика?",
+      "answers": [
+        { "text": "Увеличение сроков выполнения.", "isCorrect": false },
+        { "text": "Минимизация продолжительности проекта при сохранении его целей.", "isCorrect": true },
+        { "text": "Расширение полномочий команды.", "isCorrect": false },
+        { "text": "Подбор случаев в проекте.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "170. Какое из следующих утверждений верно для команды управления ИТ-проектом?",
+      "answers": [
+        { "text": "Она всегда состоит из технических специалистов.", "isCorrect": false },
+        { "text": "Она должна иметь четкие роли и обязательства.", "isCorrect": true },
+        { "text": "Она может быть сформирована на основе случайных выборов.", "isCorrect": false },
+        { "text": "Она не требует мониторинга и оценки.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "171. Какова основная причина конфликтов в ИТ-командах?",
+      "answers": [
+        { "text": "Нехватка ресурсов.", "isCorrect": false },
+        { "text": "Разные подходы и методы выполнения задач.", "isCorrect": true },
+        { "text": "Невысокая мотивация участников.", "isCorrect": false },
+        { "text": "Плохая работа.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "172. Какой из методов оценки продолжительности проекта основан на использовании ветвления и направлений?",
+      "answers": [
+        { "text": "Метод цепи критического пути.", "isCorrect": true },
+        { "text": "Метод оценки по аналогии.", "isCorrect": false },
+        { "text": "Метод СМП (Сравнительный метод параметров).", "isCorrect": false },
+        { "text": "Метод сценарного анализа.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "173. Какова роль мониторинга рисков в проекте?",
+      "answers": [
+        { "text": "Редакция итогового отчета.", "isCorrect": false },
+        { "text": "Корректировка плана на основе изменений в рисках.", "isCorrect": true },
+        { "text": "Мыслительный анализ на уровне команды.", "isCorrect": false },
+        { "text": "Удаление всех формальных процессов.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "174. Как осуществляется первичный качественный анализ рисков проекта?",
+      "answers": [
+        { "text": "На основе финансовых отчетов.", "isCorrect": false },
+        { "text": "На уровне обсуждения с потенциальными клиентами.", "isCorrect": false },
+        { "text": "Используя экспертные мнения и предварительные данные.", "isCorrect": true },
+        { "text": "Через принятие решений на уровне команды.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "175. Какие инструменты можно использовать для оценки потребности в ресурсах?",
+      "answers": [
+        { "text": "SWOT-анализ.", "isCorrect": false },
+        { "text": "График Ганта.", "isCorrect": false },
+        { "text": "Бюджетирование и анализ задач.", "isCorrect": true },
+        { "text": "Анализ конкурентов.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "176. Что включает в себя структура бизнес-плана проекта?",
+      "answers": [
+        { "text": "Описание команд и их ролей.", "isCorrect": false },
+        { "text": "Анализ текущих процессов.", "isCorrect": false },
+        { "text": "Описание продукта, анализ рынка, финансовый план.", "isCorrect": true },
+        { "text": "Рекомендации по управлению командой.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "177. В каком пункте бизнес-плана описывается анализ рисков?",
+      "answers": [
+        { "text": "Продукт.", "isCorrect": false },
+        { "text": "Маркетинг.", "isCorrect": false },
+        { "text": "Открытие бизнеса.", "isCorrect": false },
+        { "text": "Риски и стратегии реагирования.", "isCorrect": true }
+      ]
+    },
+    {
+      "question": "178. Какова основная цель разработки бизнес-плана?",
+      "answers": [
+        { "text": "Изучение методов финансирования.", "isCorrect": false },
+        { "text": "Определение всех участников проекта.", "isCorrect": false },
+        { "text": "Изучение формирования и структуры документации.", "isCorrect": false },
+        { "text": "Оценка технико-экономических показателей ИТ-проекта.", "isCorrect": true }
+      ]
+    },
+    {
+      "question": "179. Какой компонент управляет поставками проекта?",
+      "answers": [
+        { "text": "Бюджет.", "isCorrect": false },
+        { "text": "Условия обслуживания.", "isCorrect": false },
+        { "text": "Система поставок и контрактов.", "isCorrect": true },
+        { "text": "Заказчики проекта.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "180. Каким образом можно организовать эффективный мониторинг рисков?",
+      "answers": [
+        { "text": "Исключительно на этапе завершения проекта.", "isCorrect": false },
+        { "text": "С помощью регулярных отчетов и встреч с командой.", "isCorrect": true },
+        { "text": "С применением автоматизированных систем.", "isCorrect": false },
+        { "text": "По окончании каждого этапа проекта.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "181. Какой метод подходит для оценки эффективности работы команды?",
+      "answers": [
+        { "text": "SWOT-анализ.", "isCorrect": false },
+        { "text": "Оценка проделанных работ и достигнутых результатов.", "isCorrect": true },
+        { "text": "Кинетический анализ.", "isCorrect": false },
+        { "text": "Групповое обсуждение.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "182. Что представляет собой планирование мер реагирования на риски?",
+      "answers": [
+        { "text": "Обсуждение проектных интерфейсов.", "isCorrect": false },
+        { "text": "Создание альтернативных сценариев и методов.", "isCorrect": true },
+        { "text": "Обсуждение эффективных коммуникационных стратегий.", "isCorrect": false },
+        { "text": "Определение зарплат командных участников.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "183. Какой метод используется для разрешения конфликтов в команде?",
+      "answers": [
+        { "text": "Компромисс.", "isCorrect": true },
+        { "text": "Игнорирование конфликта и его последствий.", "isCorrect": false },
+        { "text": "Обсуждение ситуации на уровне руководства.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "184. Какова основная цель проектного менеджмента?",
+      "answers": [
+        { "text": "Сокращение затрат.", "isCorrect": false },
+        { "text": "Достижение поставленных целей в определенные сроки.", "isCorrect": true },
+        { "text": "Увеличение числа сотрудников и снижение рисков.", "isCorrect": false }
+      ]
+    },
+    {
+      "question": "185. Какой из следующих стандартов управления проектами является международным?",
+      "answers": [
+        { "text": "ISO 9001.", "isCorrect": false },
+        { "text": "ГОСТ Р ИСО 9001.", "isCorrect": false },
+        { "text": "PMBOK Guide.", "isCorrect": true },
+        { "text": "ГОСТ Р ИСО 14001.", "isCorrect": false }
+      ]
+    }
+  ]
+}
