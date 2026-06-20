@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+from typing import Literal
 
 import aiofiles
 import docx2txt
@@ -58,10 +59,22 @@ class FileService:
             data = json.loads(data)
         return data
 
-    async def get_files(self, extension: str = ".docx") -> list[str]:
+    async def get_files(
+        self,
+        file_type: Literal["docx", "text", "answer"],
+    ) -> list[str]:
         """Получить список файлов по расширению"""
         dir = Path("files/")  # TODO: Need async read
-        return [item.name for item in dir.iterdir() if item.name.endswith(extension)]
+        extensions_data = {
+            "docx": ".docx",
+            "text": "_text.json",
+            "answer": "_answers.json",
+        }
+        return [
+            item.name
+            for item in dir.iterdir()
+            if item.name.endswith(extensions_data[file_type])
+        ]
 
     async def get_text_docx(self, file_title):
         # TODO: need add to reed files with another extensions

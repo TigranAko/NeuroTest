@@ -1,4 +1,5 @@
 import json
+from typing import Literal
 
 import aiofiles
 from fastapi import APIRouter, Depends, UploadFile
@@ -30,14 +31,6 @@ async def downloand_user_file(
     return await file.download(test_file)
 
 
-@router.get("/files/docx")
-async def get_list_docx_files(
-    file: FileService = Depends(get_file_service),
-) -> list[str]:
-    """Получить список всех файлов с расширением .docx (тексты тестов)"""
-    return await file.get_files(extension=".docx")
-
-
 @router.post("/files/json_text")
 async def create_json(
     file_title: str,
@@ -49,14 +42,6 @@ async def create_json(
     questions_without_answers: Test = text2json.parse_test(text)
     data = await file.create_json(file_title + "_text", questions_without_answers)
     return data
-
-
-@router.get("/files/json_text")
-async def get_list_json_text_files(
-    file: FileService = Depends(get_file_service),
-) -> list[str]:
-    """Получить список файлов с расширением .json но без ответов (промежуточные резульатаы)"""
-    return await file.get_files(extension="_text.json")
 
 
 @router.post("/files/json_answer")
@@ -73,9 +58,10 @@ async def create_json_answers(
     return answers
 
 
-@router.get("/files/json_answer")
-async def get_list_json_anwer_files(
+@router.get("/files")
+async def get_files(
+    file_type: Literal["docx", "text", "answer"] = "docx",
     file: FileService = Depends(get_file_service),
 ) -> list[str]:
-    """Получить список файлов с расширением .json с ответами (Какие тесты уже есть)"""
-    return await file.get_files(extension="_answers.json")
+    """Получить список файлов по типу"""
+    return await file.get_files(file_type)
