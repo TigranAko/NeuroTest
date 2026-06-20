@@ -1,25 +1,12 @@
 from time import sleep
 from typing import Literal
 
+from core.settings import settings
 from langchain_cerebras import ChatCerebras
 from langchain_core.output_parsers import PydanticOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_tavily import TavilySearch
-from pydantic import BaseModel, SecretStr
-from pydantic_settings import BaseSettings, SettingsConfigDict
-
-
-class TavilyConfig(BaseSettings):
-    model_config = SettingsConfigDict(
-        env_file="./.env",
-        env_file_encoding="utf-8",
-        extra="ignore",
-    )
-    TAVILY_API_KEY: SecretStr
-    CEREBRAS_API_KEY: SecretStr
-
-
-config = TavilyConfig()
+from pydantic import BaseModel
 
 
 # ---------- Модели ----------
@@ -41,11 +28,11 @@ class TestOutput(BaseModel):
 search = TavilySearch(
     max_results=2,
     search_depth="basic",
-    tavily_api_key=config.TAVILY_API_KEY.get_secret_value(),
+    tavily_api_key=settings.TAVILY_API_KEY.get_secret_value(),
 )
 
 llm = ChatCerebras(
-    api_key=config.CEREBRAS_API_KEY,
+    api_key=settings.CEREBRAS_API_KEY,
     model="gpt-oss-120b",
     temperature=0,
     model_kwargs={"response_format": {"type": "json_object"}},
