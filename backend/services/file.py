@@ -9,7 +9,7 @@ from pydantic import BaseModel
 
 class CreateJson(BaseModel):
     file: str
-    data: BaseModel
+    data: dict  # BaseModel
 
 
 # TODO: Директории сейчас не используются
@@ -49,7 +49,7 @@ class FileService:
 
         return CreateJson(
             file=file_name,
-            data=json,
+            data=json.model_dump(),
         )
 
     async def reed_json(self, file_name: str) -> dict:
