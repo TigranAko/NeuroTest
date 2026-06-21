@@ -16,14 +16,11 @@ class CreateJson(BaseModel):
 # TODO: Директории сейчас не используются
 class FileService:
     async def download(self, upload_file: UploadFile):
-        # TODO: лишние параметры
         user_file: str = upload_file.filename
         file_title: str = "_".join(
             user_file.split(".")[:-1]
         )  #  Лишние точки заменяются на _
         file_extension: str = user_file.split(".")[-1]
-        file_name: str = f"{file_title}.{file_extension}"
-        path: str = f"files/{file_title}.{file_extension}"
         content_type: str = upload_file.content_type
 
         async with aiofiles.open(f"files/{file_title}.{file_extension}", "wb") as file:
@@ -32,9 +29,6 @@ class FileService:
         return {
             "input": user_file,
             "title": file_title,
-            "extension": file_extension,
-            "full_name": file_name,
-            "path": path,
             "content_type": content_type,
         }
 
