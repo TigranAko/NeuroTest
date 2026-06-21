@@ -1,7 +1,5 @@
-import json
 from typing import Literal
 
-import aiofiles
 from fastapi import APIRouter, Depends, UploadFile
 from services.file import CreateJson, FileService, get_file_service
 from services.json2answer import (
