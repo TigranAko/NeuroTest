@@ -1,4 +1,4 @@
-from typing import Literal
+from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, UploadFile
 from services.file import CreateJson, FileService, get_file_service
@@ -24,7 +24,7 @@ def main():
 @router.post("/files")
 async def downloand_user_file(
     test_file: UploadFile,
-    file: FileService = Depends(get_file_service),
+    file: Annotated[FileService, Depends(get_file_service)],
 ) -> dict[str, str]:
     return await file.download(test_file)
 
@@ -32,8 +32,8 @@ async def downloand_user_file(
 @router.post("/files/json_text")
 async def create_json(
     file_title: str,
-    text2json: TextToJsonService = Depends(get_text2json_service),
-    file: FileService = Depends(get_file_service),
+    text2json: Annotated[TextToJsonService, Depends(get_text2json_service)],
+    file: Annotated[FileService, Depends(get_file_service)],
 ) -> CreateJson:
     """Создать JSON без ответов"""
     text = await file.get_text_docx(file_title)
@@ -45,8 +45,8 @@ async def create_json(
 @router.post("/files/json_answer")
 async def create_json_answers(
     file_title: str,
-    json2answer: JsonToAnswerService = Depends(get_json2answer_service),
-    file: FileService = Depends(get_file_service),
+    json2answer: Annotated[JsonToAnswerService, Depends(get_json2answer_service)],
+    file: Annotated[FileService, Depends(get_file_service)],
 ) -> TestOutput:
     """Создать JSON с ответами"""
     data = await file.reed_json(file_title + "_text")
@@ -58,8 +58,8 @@ async def create_json_answers(
 
 @router.get("/files")
 async def get_files(
+    file: Annotated[FileService, Depends(get_file_service)],
     file_type: Literal["docx", "text", "answer"] = "docx",
-    file: FileService = Depends(get_file_service),
 ) -> list[str]:
     """Получить список файлов по типу"""
     return await file.get_files(file_type)
