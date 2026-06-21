@@ -1,18 +1,8 @@
-import docx2txt
+from core.settings import settings
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openrouter import ChatOpenRouter
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from pydantic import BaseModel, Field, SecretStr
-from pydantic_settings import BaseSettings, SettingsConfigDict
-
-
-class OpenrouterConfig(BaseSettings):
-    model_config = SettingsConfigDict(
-        env_file="./.env",
-        env_file_encoding="utf-8",
-        extra="ignore",
-    )
-    openrouter_api_key: SecretStr
+from pydantic import BaseModel, Field
 
 
 class Answer(BaseModel):
@@ -30,10 +20,8 @@ class Test(BaseModel):
     questions: list[Question] = Field(description="Список всех вопросов теста")
 
 
-config = OpenrouterConfig()
-
 llm = ChatOpenRouter(
-    api_key=config.openrouter_api_key,
+    api_key=settings.OPENROUTER_API_KEY,
     base_url="https://openrouter.ai/api/v1",
     model="openrouter/free",
     temperature=0.1,
