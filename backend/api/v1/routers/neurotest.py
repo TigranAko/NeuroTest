@@ -1,7 +1,7 @@
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, UploadFile
-from services.file import CreateJson, FileService, get_file_service
+from services.file import CreateJson, DownloadFile, FileService, get_file_service
 from services.json2answer import (
     JsonToAnswerService,
     TestOutput,
@@ -25,7 +25,7 @@ def main():
 async def downloand_user_file(
     test_file: UploadFile,
     file: Annotated[FileService, Depends(get_file_service)],
-) -> dict[str, str]:
+) -> DownloadFile:
     return await file.download(test_file)
 
 

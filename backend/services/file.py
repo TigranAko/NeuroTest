@@ -13,24 +13,33 @@ class CreateJson(BaseModel):
     data: dict  # BaseModel
 
 
+class DownloadFile(BaseModel):
+    input: str
+    title: str
+    content_type: str
+
+
 # TODO: Директории сейчас не используются
 class FileService:
-    async def download(self, upload_file: UploadFile):
+    async def download(self, upload_file: UploadFile) -> DownloadFile:
         user_file: str = upload_file.filename
         file_title: str = "_".join(
             user_file.split(".")[:-1]
         )  #  Лишние точки заменяются на _
+
+        # TODO: Need check extension and type
         file_extension: str = user_file.split(".")[-1]
         content_type: str = upload_file.content_type
 
         async with aiofiles.open(f"files/{file_title}.{file_extension}", "wb") as file:
             while chunk := await upload_file.read(1024):
                 await file.write(chunk)
-        return {
-            "input": user_file,
-            "title": file_title,
-            "content_type": content_type,
-        }
+
+        return DownloadFile(
+            input=user_file,
+            title=file_title,
+            content_type=content_type,
+        )
 
     async def create_json(
         self,
