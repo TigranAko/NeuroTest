@@ -10,14 +10,14 @@ from pydantic import BaseModel
 
 
 # ---------- Модели ----------
-class Answer(BaseModel):
+class AnswerOutput(BaseModel):
     text: str
     isCorrect: bool
 
 
 class QuestionOutput(BaseModel):
     question: str
-    answers: list[Answer]
+    answers: list[AnswerOutput]
 
 
 class TestOutput(BaseModel):
