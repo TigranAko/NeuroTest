@@ -68,12 +68,8 @@ class TextToJsonService:
             all_questions.extend(new_questions)
             print(f"Добавлено {len(new_questions)} вопросов")
             chunk_lines = chunk.split("\n")
-            tail = (
-                "\n".join(chunk_lines[-5:])
-                if len(chunk_lines) > 5
-                else "\n".join(chunk_lines)
-            )
-            print("Обрезанный конец", tail)
+            tail = chunk_lines[-1]
+            print("Последний  вопрос", tail)
             # TODO: нужно выбрать последний вопрос предыдущего чанка
         # TODO: нужо обрабатыввать последний вопрос
         print()
