@@ -40,6 +40,7 @@ prompt = ChatPromptTemplate.from_messages(
         ),
         (
             "human",
+            "Последний вопрос из предыдущего чанка:\n{first_question}\n"
             "Хвост предыдущего чанка:\n{previous_tail}\n\n"
             "Текущий фрмагмент\n{current_chunk}",
         ),
@@ -58,27 +59,38 @@ class TextToJsonService:
         chunks = spliter.split_text(raw_text)
         all_questions = []
         tail = ""
+        last_question = ""
         for i, chunk in enumerate(chunks, 1):
             chunk = chunk.replace("\n\n", "\n")
             print(f"Чанк: {i}/{len(chunks)}\nДлина чанка {len(chunk)} символов")
-            chunk_test = self.parse_chunk(chunk, tail)  # TODO: Тут используется модель
+            chunk_test = self.parse_chunk(
+                chunk,
+                tail,
+                last_question,
+            )  # TODO: Тут используется модель
             new_questions = chunk_test.questions
             print("Новые вопросы", new_questions)
             all_questions.extend(new_questions)
             print(f"Добавлено {len(new_questions)} вопросов")
             chunk_lines = chunk.split("\n")
             tail = chunk_lines[-1]
-            print("Последний  вопрос", tail)
-            # TODO: нужно выбрать последний вопрос предыдущего чанка
-        # TODO: нужо обрабатыввать последний вопрос
+            print("Последния  строка", tail)
+            last_question = all_questions[-1].model_dump_json()
+            print("Последний  вопрос", last_question)
         print()
         print(all_questions)
         test = Test(questions=all_questions)
         return test
 
-    def parse_chunk(self, chunk_text: str, tail: str) -> list[Question]:
+    def parse_chunk(
+        self,
+        chunk_text: str,
+        tail: str,
+        last_question_last_chunk: str | None,
+    ) -> list[Question]:
         result = chain.invoke(
             {
+                "first_question": last_question_last_chunk,
                 "previous_tail": tail,
                 "current_chunk": chunk_text,
             }
