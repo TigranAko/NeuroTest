@@ -63,11 +63,18 @@ class TextToJsonService:
         for i, chunk in enumerate(chunks, 1):
             chunk = chunk.replace("\n\n", "\n")
             print(f"Чанк: {i}/{len(chunks)}\nДлина чанка {len(chunk)} символов")
-            chunk_test = self.parse_chunk(
-                chunk,
-                tail,
-                last_question,
-            )  # TODO: Тут используется модель
+            chunk_test = None
+            for retry_count in range(3):
+                print(f"\nОтправляется запрос {retry_count + 1}\n")
+                chunk_test = self.parse_chunk(
+                    chunk,
+                    tail,
+                    last_question,
+                )  # TODO: Тут используется модель
+                if chunk_test is not None:
+                    break
+            else:
+                print("ERROR: Не получилось обработать чанк", i, chunk)
             new_questions = chunk_test.questions
             print("Новые вопросы", new_questions)
             all_questions.extend(new_questions)
