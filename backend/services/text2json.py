@@ -36,11 +36,11 @@ prompt = ChatPromptTemplate.from_messages(
         (
             "system",
             "Ты - строгий парсер тестов. "
-            "Твоя задача - находить вопросы и варианты ответов. "
-            "Игнорируй последний вопрос в фрагменте",
+            "Твоя задача - находить вопросы и варианты ответов. ",
         ),
         (
             "human",
+            "Последний вопрос из предыдущего чанка:\n{first_question}\n"
             "Хвост предыдущего чанка:\n{previous_tail}\n\n"
             "Текущий фрмагмент\n{current_chunk}",
         ),
@@ -59,31 +59,52 @@ class TextToJsonService:
         chunks = spliter.split_text(raw_text)
         all_questions = []
         tail = ""
+        last_question = ""
         for i, chunk in enumerate(chunks, 1):
             chunk = chunk.replace("\n\n", "\n")
             print(f"Чанк: {i}/{len(chunks)}\nДлина чанка {len(chunk)} символов")
-            chunk_test = self.parse_chunk(chunk, tail)  # TODO: Тут используется модель
+            chunk_test = None
+            for retry_count in range(3):
+                print(f"\nОтправляется запрос {retry_count + 1}\n")
+                chunk_test = self.parse_chunk(
+                    chunk,
+                    tail,
+                    last_question,
+                )  # TODO: Тут используется модель
+                if chunk_test is not None:
+                    break
+            else:
+                print("ERROR: Не получилось обработать чанк", i, chunk)
             new_questions = chunk_test.questions
             print("Новые вопросы", new_questions)
+            if (
+                all_questions != []
+                and all_questions[-1].question == new_questions[0].question
+            ):
+                print("\nУдаление дубликата вопроса при соединении чанков")
+                print(all_questions[-1], "\n", new_questions[0])
+                all_questions.pop()
             all_questions.extend(new_questions)
             print(f"Добавлено {len(new_questions)} вопросов")
             chunk_lines = chunk.split("\n")
-            tail = (
-                "\n".join(chunk_lines[-5:])
-                if len(chunk_lines) > 5
-                else "\n".join(chunk_lines)
-            )
-            print("Обрезанный конец", tail)
-            # TODO: нужно выбрать последний вопрос предыдущего чанка
-        # TODO: нужо обрабатыввать последний вопрос
+            tail = chunk_lines[-1]
+            print("Последния  строка", tail)
+            last_question = all_questions[-1].model_dump_json()
+            print("Последний  вопрос", last_question)
         print()
         print(all_questions)
         test = Test(questions=all_questions)
         return test
 
-    def parse_chunk(self, chunk_text: str, tail: str) -> list[Question]:
+    def parse_chunk(
+        self,
+        chunk_text: str,
+        tail: str,
+        last_question_last_chunk: str | None,
+    ) -> list[Question]:
         result = chain.invoke(
             {
+                "first_question": last_question_last_chunk,
                 "previous_tail": tail,
                 "current_chunk": chunk_text,
             }
