@@ -77,6 +77,13 @@ class TextToJsonService:
                 print("ERROR: Не получилось обработать чанк", i, chunk)
             new_questions = chunk_test.questions
             print("Новые вопросы", new_questions)
+            if (
+                all_questions != []
+                and all_questions[-1].question == new_questions[0].question
+            ):
+                print("\nУдаление дубликата вопроса при соединении чанков")
+                print(all_questions[-1], "\n", new_questions[0])
+                all_questions.pop()
             all_questions.extend(new_questions)
             print(f"Добавлено {len(new_questions)} вопросов")
             chunk_lines = chunk.split("\n")
