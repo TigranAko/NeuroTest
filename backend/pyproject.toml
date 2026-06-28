@@ -17,3 +17,15 @@ dependencies = [
     "python-multipart>=0.0.26",
     "uvicorn>=0.46.0",
 ]
+
+[tool.semantic_release]
+# Версия будет автоматически определяться по коммитам (нужны Conventional Commits)
+version_variable =[
+    "pyproject.toml:version",
+    "../VERSION"
+]
+
+[dependency-groups]
+dev = [
+    "python-semantic-release>=10.5.3",
+]
