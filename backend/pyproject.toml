@@ -26,7 +26,7 @@ version_variable =[
 ]
 # Команда сборки, которая также обновляет lock-файл
 build_command = """
-uv lock --upgrade-package $PACKAGE_NAME &&
+uv lock --upgrade-package NeuroTest &&
 git add uv.lock &&
 uv build
 """
