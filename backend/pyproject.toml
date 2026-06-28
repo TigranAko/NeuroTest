@@ -19,11 +19,11 @@ dependencies = [
 ]
 
 [tool.semantic_release]
+version_toml = ["pyproject.toml:project.version"]
 # Версия будет автоматически определяться по коммитам (нужны Conventional Commits)
-version_variable =[
-    "pyproject.toml:version",
-    "../VERSION"
-]
+version_variables = ["../VERSION:*:nf"]
+allow_zero_version = true
+major_on_zero = false
 
 [dependency-groups]
 dev = [
