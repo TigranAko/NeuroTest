@@ -17,3 +17,13 @@ dependencies = [
     "python-multipart>=0.0.26",
     "uvicorn>=0.46.0",
 ]
+
+[tool.semantic_release]
+# Версия будет автоматически определяться по коммитам (нужны Conventional Commits)
+version_variable = "pyproject.toml:version"
+# Команда сборки, которая также обновляет lock-файл
+build_command = """
+uv lock --upgrade-package $PACKAGE_NAME &&
+git add uv.lock &&
+uv build
+"""
