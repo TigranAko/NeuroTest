@@ -20,7 +20,10 @@ dependencies = [
 
 [tool.semantic_release]
 # Версия будет автоматически определяться по коммитам (нужны Conventional Commits)
-version_variable = "pyproject.toml:version"
+version_variable =[
+    "pyproject.toml:version",
+    "../VERSION"
+]
 # Команда сборки, которая также обновляет lock-файл
 build_command = """
 uv lock --upgrade-package $PACKAGE_NAME &&
