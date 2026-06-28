@@ -1,0 +1,17 @@
+services:
+  fastapi:
+    build: ./backend/
+    container_name: fastapi-nt
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+
+  mongodb:
+    image: mongo:8.3.4
+    # this version not available on my laptop, which does not have avx.
+    # mongo-nt  | WARNING: MongoDB 5.0+ requires a CPU with AVX support,
+    # and your current system does not appear to have that!
+    container_name: mongo-nt
+    ports:
+      - "27017:27017"
