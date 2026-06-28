@@ -27,3 +27,8 @@ uv lock --upgrade-package $PACKAGE_NAME &&
 git add uv.lock &&
 uv build
 """
+
+[dependency-groups]
+dev = [
+    "python-semantic-release>=10.5.3",
+]
