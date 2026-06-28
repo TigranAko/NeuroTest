@@ -1,0 +1,34 @@
+name: Semantic Release
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    concurrency: release
+    defaults:
+      run:
+        working-directory: backend  # все команды выполняются в backend/
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v3
+
+    - name: Install dependencies
+      run: uv sync --locked
+
+    - name: Python Semantic Release
+      uses: python-semantic-release/python-semantic-release@v10.5.3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        working_directory: backend
