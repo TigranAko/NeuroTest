@@ -1,10 +1,10 @@
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, UploadFile
+from schemas.test_output import TestOutput
 from services.file import CreateJson, DownloadFile, FileService, get_file_service
 from services.json2answer import (
     JsonToAnswerService,
-    TestOutput,
     get_json2answer_service,
 )
 from services.text2json import (
