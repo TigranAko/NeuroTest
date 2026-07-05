@@ -9,6 +9,13 @@ class FileQuestionRepository(IQuestionRepository):
     def __init__(self):
         self.storage = FileStorage()
 
+    async def _number2id(self, number) -> int:
+        if number > 0:
+            number = number - 1
+        elif number == 0:
+            number = -1
+        return number
+
     async def add(
         self,
         question: QuestionOutput,
@@ -34,10 +41,7 @@ class FileQuestionRepository(IQuestionRepository):
         data = await self.storage.read_json(test_id)  # read
         questions = data.get("questions")
         # TODO: Verify questions and question_id
-        if question_id > 0:
-            question_id = question_id - 1
-        elif question_id == 0:
-            question_id = -1
+        question_id = self._number2id(question_id)
         question = questions[question_id]
         question_output = QuestionOutput(**question)
         return question_output
@@ -51,10 +55,7 @@ class FileQuestionRepository(IQuestionRepository):
         async with self.storage.transaction(test_id) as data:
             questions = data.get("questions")
             # TODO: Verify questions and question_id
-            if question_id > 0:
-                question_id = question_id - 1
-            elif question_id == 0:
-                question_id = -1
+            question_id = self._number2id(question_id)
             questions[question_id] = question
         return test_id
 
@@ -67,8 +68,5 @@ class FileQuestionRepository(IQuestionRepository):
         # TODO: delete many questions
         async with self.storage.transaction(test_id) as data:
             questions = data.get("questions")
-            if question_id > 0:
-                question_id = question_id - 1
-            elif question_id == 0:
-                question_id = -1
+            question_id = self._number2id(question_id)
             del questions[question_id]

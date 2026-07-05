@@ -9,6 +9,13 @@ class FileAnswerRepository(IAnswerRepository):
     def __init__(self):
         self.storage = FileStorage()
 
+    async def _number2id(self, number) -> int:
+        if number > 0:
+            number = number - 1
+        elif number == 0:
+            number = -1
+        return number
+
     async def add(
         self,
         answer: AnswerOutput,
@@ -18,11 +25,7 @@ class FileAnswerRepository(IAnswerRepository):
     ) -> UUID:
         async with self.storage.transaction(test_id) as data:
             questions = data.get("questions")  # TODO: Verify questions
-            # парсинг из номера в id
-            if question_id > 0:
-                question_id = question_id - 1
-            elif question_id == 0:
-                question_id = -1
+            question_id = self._number2id(question_id)
             question = questions[question_id]  # TODO: Verify questions
             answers = question.get("answers")  # TODO: Verify answers
             if answer_id == 0:
@@ -42,15 +45,8 @@ class FileAnswerRepository(IAnswerRepository):
         data = await self.storage.read_json(test_id)  # read
         questions = data.get("questions")
         # TODO: Verify questions and question_id, answer_id
-        if question_id > 0:
-            question_id = question_id - 1
-        elif question_id == 0:
-            question_id = -1
-
-        if answer_id > 0:
-            answer_id = answer_id - 1
-        elif answer_id == 0:
-            answer_id = -1
+        question_id = self._number2id(question_id)
+        answer_id = self._number2id(answer_id)
         question = questions[question_id]
         answers = question["answers"]
         answer = answers[answer_id]
@@ -68,15 +64,8 @@ class FileAnswerRepository(IAnswerRepository):
         async with self.storage.transaction(test_id) as data:
             questions = data.get("questions")
             # TODO: Verify questions and question_id
-            if question_id > 0:
-                question_id = question_id - 1
-            elif question_id == 0:
-                question_id = -1
-
-            if answer_id > 0:
-                answer_id = answer_id - 1
-            elif answer_id == 0:
-                answer_id = -1
+            question_id = self._number2id(question_id)
+            answer_id = self._number2id(answer_id)
             question = questions[question_id]
             answers = question["answers"]
             answers[answer_id] = answer
@@ -90,15 +79,8 @@ class FileAnswerRepository(IAnswerRepository):
     ) -> None:
         # TODO: delete many questions
         async with self.storage.transaction(test_id) as data:
-            if question_id > 0:
-                question_id = question_id - 1
-            elif question_id == 0:
-                question_id = -1
-
-            if answer_id > 0:
-                answer_id = answer_id - 1
-            elif answer_id == 0:
-                answer_id = -1
+            question_id = self._number2id(question_id)
+            answer_id = self._number2id(answer_id)
             questions = data.get("questions")
             question = questions[question_id]
             answers = question["answers"]
