@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from uuid import UUID
 
-from schemas.test_output import TestOutput, QuestionOutput, AnswerOutput
+from schemas.test_output import AnswerOutput, QuestionOutput, TestOutput
 
 
 class ITestRepository(ABC):

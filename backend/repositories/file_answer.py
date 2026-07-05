@@ -1,6 +1,5 @@
 from uuid import UUID
 
-
 from infrastructure.file_storage import FileStorage
 from repositories.interfaces import IAnswerRepository
 from schemas.test_output import AnswerOutput
