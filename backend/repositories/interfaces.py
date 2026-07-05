@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from uuid import UUID
 
-from schemas.test_output import TestOutput, QuestionOutput
+from schemas.test_output import TestOutput, QuestionOutput, AnswerOutput
 
 
 class ITestRepository(ABC):
@@ -58,5 +58,45 @@ class IQuestionRepository(ABC):
         self,
         test_id: UUID,
         question_id: UUID | int,
+    ) -> None:
+        pass
+
+
+class IAnswerRepository(ABC):
+    @abstractmethod
+    async def add(
+        self,
+        answer: AnswerOutput,
+        test_id: UUID,
+        question_id: UUID | int,
+        answer_id: int,
+    ) -> UUID:
+        pass
+
+    @abstractmethod
+    async def get(
+        self,
+        test_id: UUID,
+        question_id: UUID | int,
+        answer_id: int,
+    ) -> AnswerOutput:
+        pass
+
+    @abstractmethod
+    async def update(
+        self,
+        answer: AnswerOutput,
+        test_id: UUID,
+        question_id: UUID | int,
+        answer_id: int,
+    ) -> UUID:
+        pass
+
+    @abstractmethod
+    async def delete(
+        self,
+        test_id: UUID,
+        question_id: UUID | int,
+        answer_id: int,
     ) -> None:
         pass
