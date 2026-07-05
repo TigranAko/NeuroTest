@@ -16,8 +16,8 @@ async def create_answer(
     question_service: Annotated[AnswerService, Depends(get_answer_service)],
     answer: AnswerOutput,
     test_id: UUID,
-    question_id: UUID | int | None = None,
-    answer_id: int | None = None,
+    question_id: UUID | int = 0,
+    answer_id: int = 0,
 ) -> UUID:
     return await question_service.add_answer(answer, test_id, question_id, answer_id)
 
@@ -26,8 +26,8 @@ async def create_answer(
 async def read_answer(
     question_service: Annotated[AnswerService, Depends(get_answer_service)],
     test_id: UUID,
-    question_id: UUID | int = -1,
-    answer_id: int = -1,
+    question_id: UUID | int = 0,
+    answer_id: int = 0,
 ) -> AnswerOutput:
     return await question_service.get_answer(test_id, question_id, answer_id)
 
@@ -37,8 +37,8 @@ async def update_answer(
     question_service: Annotated[AnswerService, Depends(get_answer_service)],
     answer: AnswerOutput,
     test_id: UUID,
-    question_id: UUID | int = -1,
-    answer_id: int = -1,
+    question_id: UUID | int = 0,
+    answer_id: int = 0,
 ) -> UUID:
     return await question_service.update_answer(answer, test_id, question_id, answer_id)
 
@@ -47,7 +47,7 @@ async def update_answer(
 async def delete_answer(
     question_service: Annotated[AnswerService, Depends(get_answer_service)],
     test_id: UUID,
-    question_id: UUID | int = -1,
-    answer_id: int = -1,
+    question_id: UUID | int = 0,
+    answer_id: int = 0,
 ) -> None:
     await question_service.delete_answer(test_id, question_id, answer_id)

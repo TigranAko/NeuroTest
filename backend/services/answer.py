@@ -13,8 +13,8 @@ class AnswerService:
         self,
         answer: AnswerOutput,
         test_id: UUID,
-        question_id: int | UUID | None = None,
-        answer_id: int | None = None,
+        question_id: int | UUID,
+        answer_id: int,
     ) -> UUID:
         # if question_id is none append else insert by question_id
         test_id = await self.repo.add(answer, test_id, question_id, answer_id)
@@ -23,8 +23,8 @@ class AnswerService:
     async def get_answer(
         self,
         test_id: UUID,
-        question_id: int | UUID | None = None,
-        answer_id: int = -1,
+        question_id: int | UUID,
+        answer_id: int,
     ) -> AnswerOutput:
         return await self.repo.get(test_id, question_id, answer_id)
 
@@ -32,16 +32,16 @@ class AnswerService:
         self,
         answer: AnswerOutput,
         test_id: UUID,
-        question_id: UUID | int = -1,
-        answer_id: int = -1,
+        question_id: UUID | int,
+        answer_id: int,
     ) -> UUID:
         return await self.repo.update(answer, test_id, question_id, answer_id)
 
     async def delete_answer(
         self,
         test_id: UUID,
-        question_id: int | UUID = -1,
-        answer_id: int | UUID = -1,
+        question_id: int | UUID,
+        answer_id: int,
     ) -> None:
         return await self.repo.delete(test_id, question_id, answer_id)
 

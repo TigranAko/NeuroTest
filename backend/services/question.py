@@ -13,7 +13,7 @@ class QuestionService:
         self,
         question: QuestionOutput,
         test_id: UUID,
-        question_id: int | UUID | None = None,
+        question_id: int | UUID,
     ) -> UUID:
         # if question_id is none append else insert by question_id
         test_id = await self.repo.add(question, test_id)
@@ -22,7 +22,7 @@ class QuestionService:
     async def get_question(
         self,
         test_id: UUID,
-        question_id: int | UUID = -1,
+        question_id: int | UUID,
     ) -> QuestionOutput:
         return await self.repo.get(test_id, question_id)
 
@@ -30,14 +30,14 @@ class QuestionService:
         self,
         question: QuestionOutput,
         test_id: UUID,
-        question_id: int | UUID = -1,
+        question_id: int | UUID,
     ) -> UUID:
         return await self.repo.update(question, test_id, question_id)
 
     async def delete_question(
         self,
         test_id: UUID,
-        question_id: int | UUID = -1,
+        question_id: int | UUID,
     ) -> None:
         return await self.repo.delete(test_id, question_id)
 
