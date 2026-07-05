@@ -11,7 +11,10 @@ from schemas.test_output import TestOutput
 
 class FileStorage:
     @asynccontextmanager
-    async def transaction(self, test_id) -> AsyncGenerator[dict, None]:
+    async def transaction(
+        self,
+        test_id: str | UUID,
+    ) -> AsyncGenerator[dict, None]:
         try:
             data = await self.read_json(test_id)
             yield data
@@ -19,12 +22,12 @@ class FileStorage:
             raise
         else:
             test = TestOutput(**data)
-            await self.create_json(test_id, test)
+            await self.create_json(test, test_id)
 
     async def create_json(
         self,
-        file_name: str | UUID,
         pydantic_data: BaseModel,
+        file_name: str | UUID,
         directory: str = "files",
     ) -> dict:
         data: str = pydantic_data.model_dump_json()

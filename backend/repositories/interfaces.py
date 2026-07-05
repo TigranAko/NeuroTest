@@ -6,23 +6,38 @@ from schemas.test_output import AnswerOutput, QuestionOutput, TestOutput
 
 class ITestRepository(ABC):
     @abstractmethod
-    async def add(self, test: TestOutput) -> UUID:
+    async def add(
+        self,
+        test: TestOutput,
+    ) -> UUID:
         pass
 
     @abstractmethod
-    async def get(self, test_id: UUID) -> TestOutput:
+    async def get(
+        self,
+        test_id: UUID,
+    ) -> TestOutput:
         pass
 
     @abstractmethod
-    async def get_all(self) -> list[str]:
+    async def get_all(
+        self,
+    ) -> list[str]:
         pass
 
     @abstractmethod
-    async def update(self, test_id: UUID, test: TestOutput) -> UUID:
+    async def update(
+        self,
+        test: TestOutput,
+        test_id: UUID,
+    ) -> UUID:
         pass
 
     @abstractmethod
-    async def delete(self, test_id: UUID) -> None:
+    async def delete(
+        self,
+        test_id: UUID,
+    ) -> None:
         pass
 
 
@@ -30,9 +45,9 @@ class IQuestionRepository(ABC):
     @abstractmethod
     async def add(
         self,
-        test_id: UUID,
         question: QuestionOutput,
-        question_id: UUID | int | None = None,
+        test_id: UUID,
+        question_id: UUID | int,
     ) -> UUID:
         pass
 
@@ -47,9 +62,9 @@ class IQuestionRepository(ABC):
     @abstractmethod
     async def update(
         self,
+        question: QuestionOutput,
         test_id: UUID,
         question_id: UUID | int,
-        question: QuestionOutput,
     ) -> UUID:
         pass
 

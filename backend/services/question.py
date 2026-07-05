@@ -11,12 +11,12 @@ class QuestionService:
 
     async def add_question(
         self,
-        test_id: UUID,
         question: QuestionOutput,
+        test_id: UUID,
         question_id: int | UUID | None = None,
     ) -> UUID:
         # if question_id is none append else insert by question_id
-        test_id = await self.repo.add(test_id, question)
+        test_id = await self.repo.add(question, test_id)
         return test_id
 
     async def get_question(
@@ -28,11 +28,11 @@ class QuestionService:
 
     async def update_question(
         self,
-        test_id: UUID,
         question: QuestionOutput,
+        test_id: UUID,
         question_id: int | UUID = -1,
     ) -> UUID:
-        return await self.repo.update(test_id, question, question_id)
+        return await self.repo.update(question, test_id, question_id)
 
     async def delete_question(
         self,

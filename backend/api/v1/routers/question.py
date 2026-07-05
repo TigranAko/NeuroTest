@@ -13,18 +13,18 @@ router = APIRouter(
 
 @router.post("/")
 async def create_question(
-    test_id: UUID,
-    question: QuestionOutput,
     question_service: Annotated[QuestionService, Depends(get_question_service)],
+    question: QuestionOutput,
+    test_id: UUID,
     question_id: UUID | int | None = None,
 ) -> UUID:
-    return await question_service.add_question(test_id, question, question_id)
+    return await question_service.add_question(question, test_id, question_id)
 
 
 @router.get("/")
 async def read_question(
-    test_id: UUID,
     question_service: Annotated[QuestionService, Depends(get_question_service)],
+    test_id: UUID,
     question_id: UUID | int = -1,
 ) -> QuestionOutput:
     return await question_service.get_question(test_id, question_id)
@@ -32,18 +32,18 @@ async def read_question(
 
 @router.put("/")
 async def update_question(
-    test_id: UUID,
-    question: QuestionOutput,
     question_service: Annotated[QuestionService, Depends(get_question_service)],
+    question: QuestionOutput,
+    test_id: UUID,
     question_id: UUID | int = -1,
 ) -> UUID:
-    return await question_service.update_question(test_id, question, question_id)
+    return await question_service.update_question(question, test_id, question_id)
 
 
 @router.delete("/")
 async def delete_question(
-    test_id: UUID,
     question_service: Annotated[QuestionService, Depends(get_question_service)],
+    test_id: UUID,
     question_id: UUID | int = -1,
 ) -> None:
     await question_service.delete_question(test_id, question_id)

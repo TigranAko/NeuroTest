@@ -11,8 +11,8 @@ class FileQuestionRepository(IQuestionRepository):
 
     async def add(
         self,
-        test_id: UUID,
         question: QuestionOutput,
+        test_id: UUID,
         question_id: int | None = None,
     ) -> UUID:
         async with self.storage.transaction(test_id) as data:
@@ -40,8 +40,8 @@ class FileQuestionRepository(IQuestionRepository):
 
     async def update(
         self,
-        test_id: UUID,
         question: QuestionOutput,
+        test_id: UUID,
         question_id: int = -1,
     ) -> UUID:
         async with self.storage.transaction(test_id) as data:

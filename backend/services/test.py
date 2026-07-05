@@ -12,7 +12,10 @@ class TestService:
     def __init__(self, repo: ITestRepository):
         self.repo = repo
 
-    async def _read_test_from_file(self, test_file: UploadFile) -> TestOutput:
+    async def _read_test_from_file(
+        self,
+        test_file: UploadFile,
+    ) -> TestOutput:
         file_type = test_file.content_type
         if file_type != "application/json":
             raise HTTPException(422)
@@ -25,29 +28,51 @@ class TestService:
             raise HTTPException(422)
         return test
 
-    async def add_test_from_file(self, test_file: UploadFile) -> UUID:
+    async def add_test_from_file(
+        self,
+        test_file: UploadFile,
+    ) -> UUID:
         test = await self._read_test_from_file(test_file)
         return await self.add_test(test)
 
-    async def add_test(self, test: TestOutput) -> UUID:
+    async def add_test(
+        self,
+        test: TestOutput,
+    ) -> UUID:
         test_id = await self.repo.add(test)
         return test_id
 
-    async def get_test(self, test_id: UUID) -> TestOutput:
+    async def get_test(
+        self,
+        test_id: UUID,
+    ) -> TestOutput:
         return await self.repo.get(test_id)
 
-    async def get_tests(self) -> list[str]:
+    async def get_tests(
+        self,
+    ) -> list[str]:
         # TODO: Нужно поменять структуру, добавить метаданные, сейчас возвращается list[UUID], нужно list[dict]
         return await self.repo.get_all()
 
-    async def update_test_from_file(self, test_id: UUID, test_file: UploadFile) -> UUID:
+    async def update_test_from_file(
+        self,
+        test_file: UploadFile,
+        test_id: UUID,
+    ) -> UUID:
         test = await self._read_test_from_file(test_file)
-        return await self.update_test(test_id, test)
+        return await self.update_test(test, test_id)
 
-    async def update_test(self, test_id: UUID, test: TestOutput) -> UUID:
-        return await self.repo.update(test_id, test)
+    async def update_test(
+        self,
+        test: TestOutput,
+        test_id: UUID,
+    ) -> UUID:
+        return await self.repo.update(test, test_id)
 
-    async def delete_test(self, test_id: UUID) -> None:
+    async def delete_test(
+        self,
+        test_id: UUID,
+    ) -> None:
         return await self.repo.delete(test_id)
 
 
