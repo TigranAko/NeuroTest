@@ -3,20 +3,12 @@ from uuid import UUID
 
 from infrastructure.file_storage import FileStorage
 from repositories.interfaces import IQuestionRepository
-from schemas.test_output import QuestionOutput, TestOutput
+from schemas.test_output import QuestionOutput
 
 
 class FileQuestionRepository(IQuestionRepository):
     def __init__(self):
         self.storage = FileStorage()
-
-    # async def to_json(self, function):
-    #     async def wrapper(*args, **kwargs):
-    #         data = await self.storage.read_json()
-    #         new_data = await function(data)
-    #         await self.storage.create_json(new_data)
-    #         return new_data
-    #     return wrapper()
 
     async def add(
         self,
@@ -24,17 +16,13 @@ class FileQuestionRepository(IQuestionRepository):
         question: QuestionOutput,
         question_id: int | None = None,
     ) -> UUID:
-        data = await self.storage.read_json(test_id)
-
-        questions = data.get("questions")
-        # TODO: Verify questions
-        if question_id is None:
-            questions.append(question)
-        else:
-            questions.insert(question, question_id)
-
-        test = TestOutput(**data)
-        await self.storage.create_json(test_id, test)
+        async with self.storage.transaction(test_id) as data:
+            questions = data.get("questions")
+            # TODO: Verify questions
+            if question_id is None:
+                questions.append(question)
+            else:
+                questions.insert(question, question_id)
         return test_id
 
     async def get(
@@ -57,14 +45,10 @@ class FileQuestionRepository(IQuestionRepository):
         question: QuestionOutput,
         question_id: int = -1,
     ) -> UUID:
-        data = await self.storage.read_json(test_id)
-        questions = data.get("questions")
-        # TODO: Verify questions and question_id
-
-        questions[question_id] = question
-
-        test = TestOutput(**data)
-        await self.storage.create_json(test_id, test)
+        async with self.storage.transaction(test_id) as data:
+            questions = data.get("questions")
+            # TODO: Verify questions and question_id
+            questions[question_id] = question
         return test_id
 
     async def delete(
@@ -74,8 +58,6 @@ class FileQuestionRepository(IQuestionRepository):
         # question_id_stop: int | None = None,
     ) -> None:
         # TODO: delete many questions
-        data = await self.storage.read_json(test_id)
-        questions = data.get("questions")
-        del questions[question_id]
-        test = TestOutput(**data)
-        await self.storage.create_json(test_id, test)
+        async with self.storage.transaction(test_id) as data:
+            questions = data.get("questions")
+            del questions[question_id]

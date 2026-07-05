@@ -3,7 +3,7 @@ from uuid import UUID
 
 from infrastructure.file_storage import FileStorage
 from repositories.interfaces import IAnswerRepository
-from schemas.test_output import AnswerOutput, TestOutput
+from schemas.test_output import AnswerOutput
 
 
 class FileAnswerRepository(IAnswerRepository):
@@ -17,20 +17,16 @@ class FileAnswerRepository(IAnswerRepository):
         question_id: UUID | int,
         answer_id: int | None = None,
     ) -> UUID:
-        data = await self.storage.read_json(test_id)
+        async with self.storage.transaction(test_id) as data:
+            questions = data.get("questions")
+            # TODO: Verify questions, answers
+            question = questions[question_id]
+            answers = question.get("answers")
 
-        questions = data.get("questions")
-        # TODO: Verify questions, answers
-        question = questions[question_id]
-        answers = question.get("answers")
-
-        if answer_id is None:
-            answers.append(answer)
-        else:
-            answers.insert(answer, answer_id)
-
-        test = TestOutput(**data)
-        await self.storage.create_json(test_id, test)
+            if answer_id is None:
+                answers.append(answer)
+            else:
+                answers.insert(answer, answer_id)
         return test_id
 
     async def get(
@@ -57,16 +53,12 @@ class FileAnswerRepository(IAnswerRepository):
         question_id: UUID | int,
         answer_id: int,
     ) -> UUID:
-        data = await self.storage.read_json(test_id)
-        questions = data.get("questions")
-        # TODO: Verify questions and question_id
-
-        question = questions[question_id]
-        answers = question["answers"]
-        answers[answer_id] = answer
-
-        test = TestOutput(**data)
-        await self.storage.create_json(test_id, test)
+        async with self.storage.transaction(test_id) as data:
+            questions = data.get("questions")
+            # TODO: Verify questions and question_id
+            question = questions[question_id]
+            answers = question["answers"]
+            answers[answer_id] = answer
         return test_id
 
     async def delete(
@@ -76,10 +68,8 @@ class FileAnswerRepository(IAnswerRepository):
         answer_id: int,
     ) -> None:
         # TODO: delete many questions
-        data = await self.storage.read_json(test_id)
-        questions = data.get("questions")
-        question = questions[question_id]
-        answers = question["answers"]
-        del answers[answer_id]
-        test = TestOutput(**data)
-        await self.storage.create_json(test_id, test)
+        async with self.storage.transaction(test_id) as data:
+            questions = data.get("questions")
+            question = questions[question_id]
+            answers = question["answers"]
+            del answers[answer_id]
