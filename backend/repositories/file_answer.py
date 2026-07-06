@@ -39,9 +39,8 @@ class FileAnswerRepository(IAnswerRepository):
             question_id = self._number2id(question_id)
             if answer_id == 0:
                 answers.append(answer)
-            elif answer_id > 0:
-                answers.insert(answer, answer_id - 1)
             else:
+                answer_id = self._number2id(answer_id)
                 answers.insert(answer, answer_id)
         return test_id
 
@@ -67,9 +66,9 @@ class FileAnswerRepository(IAnswerRepository):
         question_id: int = 0,
         answer_id: int = 0,
     ) -> UUID:
+        question_id = self._number2id(question_id)
+        answer_id = self._number2id(answer_id)
         async with self.storage.transaction(test_id) as data:
-            question_id = self._number2id(question_id)
-            answer_id = self._number2id(answer_id)
             answers = self._get_answers(data, question_id)
             answers[answer_id] = answer
         return test_id
@@ -81,8 +80,8 @@ class FileAnswerRepository(IAnswerRepository):
         answer_id: int = 0,
     ) -> None:
         # TODO: delete many questions
+        question_id = self._number2id(question_id)
+        answer_id = self._number2id(answer_id)
         async with self.storage.transaction(test_id) as data:
-            question_id = self._number2id(question_id)
-            answer_id = self._number2id(answer_id)
             answers = self._get_answers(data, question_id)
             del answers[answer_id]

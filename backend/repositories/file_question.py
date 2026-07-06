@@ -27,9 +27,8 @@ class FileQuestionRepository(IQuestionRepository):
             # TODO: Verify questions
             if question_id == 0:
                 questions.append(question)
-            elif question_id > 0:
-                questions.insert(question, question_id - 1)
             else:
+                question_id = self._number2id(question_id)
                 questions.insert(question, question_id)
         return test_id
 
@@ -38,10 +37,10 @@ class FileQuestionRepository(IQuestionRepository):
         test_id: UUID,
         question_id: int = 0,
     ) -> QuestionOutput:
+        question_id = self._number2id(question_id)
         async with self.storage.transaction(test_id, "r") as data:
             questions = data.get("questions")
         # TODO: Verify questions and question_id
-        question_id = self._number2id(question_id)
         question = questions[question_id]
         question_output = QuestionOutput(**question)
         return question_output
@@ -52,10 +51,10 @@ class FileQuestionRepository(IQuestionRepository):
         test_id: UUID,
         question_id: int = 0,
     ) -> UUID:
+        question_id = self._number2id(question_id)
         async with self.storage.transaction(test_id) as data:
             questions = data.get("questions")
             # TODO: Verify questions and question_id
-            question_id = self._number2id(question_id)
             questions[question_id] = question
         return test_id
 
@@ -66,7 +65,7 @@ class FileQuestionRepository(IQuestionRepository):
         # question_id_stop: int | None = None,
     ) -> None:
         # TODO: delete many questions
+        question_id = self._number2id(question_id)
         async with self.storage.transaction(test_id) as data:
             questions = data.get("questions")
-            question_id = self._number2id(question_id)
             del questions[question_id]
