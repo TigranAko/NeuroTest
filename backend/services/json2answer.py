@@ -6,23 +6,7 @@ from langchain_cerebras import ChatCerebras
 from langchain_core.output_parsers import PydanticOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_tavily import TavilySearch
-from pydantic import BaseModel
-
-
-# ---------- Модели ----------
-class AnswerOutput(BaseModel):
-    text: str
-    isCorrect: bool
-
-
-class QuestionOutput(BaseModel):
-    question: str
-    answers: list[AnswerOutput]
-
-
-class TestOutput(BaseModel):
-    questions: list[QuestionOutput]
-
+from schemas.test_output import QuestionOutput, TestOutput
 
 # ---------- Инструменты ----------
 search = TavilySearch(

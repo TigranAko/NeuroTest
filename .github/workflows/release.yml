@@ -3,8 +3,6 @@ name: Semantic Release
 on:
   push:
     branches: [ main ]
-  pull_request:
-      branches: [ main ]
 
 permissions:
   contents: write
@@ -19,7 +17,7 @@ jobs:
         working-directory: backend  # все команды выполняются в backend/
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
       with:
         fetch-depth: 0
 
