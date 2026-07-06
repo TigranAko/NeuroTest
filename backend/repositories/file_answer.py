@@ -16,6 +16,17 @@ class FileAnswerRepository(IAnswerRepository):
             number = -1
         return number
 
+    async def _get_answers(
+        self,
+        data: dict,
+        question_id: int,
+        answer_id: int | None = None,
+    ) -> list[dict[str, str]]:
+        questions = data.get("questions")  # TODO: Verify questions
+        question = questions[question_id]  # TODO: Verify questions
+        answers = question.get("answers")  # TODO: Verify answers
+        return answers
+
     async def add(
         self,
         answer: AnswerOutput,
@@ -24,10 +35,8 @@ class FileAnswerRepository(IAnswerRepository):
         answer_id: int = 0,
     ) -> UUID:
         async with self.storage.transaction(test_id) as data:
-            questions = data.get("questions")  # TODO: Verify questions
+            answers = self._get_answers(data, question_id)
             question_id = self._number2id(question_id)
-            question = questions[question_id]  # TODO: Verify questions
-            answers = question.get("answers")  # TODO: Verify answers
             if answer_id == 0:
                 answers.append(answer)
             elif answer_id > 0:
@@ -42,13 +51,10 @@ class FileAnswerRepository(IAnswerRepository):
         question_id: int = 0,
         answer_id: int = 0,
     ) -> AnswerOutput:
-        async with self.storage.transaction(test_id, "r") as data:
-            questions = data.get("questions")
-        # TODO: Verify questions and question_id, answer_id
         question_id = self._number2id(question_id)
         answer_id = self._number2id(answer_id)
-        question = questions[question_id]
-        answers = question["answers"]
+        async with self.storage.transaction(test_id, "r") as data:
+            answers = self._get_answers(data, question_id)
         answer = answers[answer_id]
 
         question_output = AnswerOutput(**answer)
@@ -62,12 +68,9 @@ class FileAnswerRepository(IAnswerRepository):
         answer_id: int = 0,
     ) -> UUID:
         async with self.storage.transaction(test_id) as data:
-            questions = data.get("questions")
-            # TODO: Verify questions and question_id
             question_id = self._number2id(question_id)
             answer_id = self._number2id(answer_id)
-            question = questions[question_id]
-            answers = question["answers"]
+            answers = self._get_answers(data, question_id)
             answers[answer_id] = answer
         return test_id
 
@@ -81,7 +84,5 @@ class FileAnswerRepository(IAnswerRepository):
         async with self.storage.transaction(test_id) as data:
             question_id = self._number2id(question_id)
             answer_id = self._number2id(answer_id)
-            questions = data.get("questions")
-            question = questions[question_id]
-            answers = question["answers"]
+            answers = self._get_answers(data, question_id)
             del answers[answer_id]
