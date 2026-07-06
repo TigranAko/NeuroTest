@@ -14,16 +14,16 @@ class FileTestRepository(ITestRepository):
         test: TestOutput,
     ) -> UUID:
         test_id = uuid4()
-        await self.storage.create_json(test, test_id)
+        async with self.storage.transaction(test_id, "w") as data:
+            data.update(test)  # Мутация data
         return test_id
 
     async def get(
         self,
         test_id: UUID,
     ) -> TestOutput:
-        data = await self.storage.read_json(test_id)  # read
-        test_output = TestOutput(**data)
-        return test_output
+        async with self.storage.transaction(test_id, "r") as data:
+            return data
 
     async def get_all(
         self,
@@ -35,8 +35,9 @@ class FileTestRepository(ITestRepository):
         test: TestOutput,
         test_id: UUID,
     ) -> UUID:
-        file_data = await self.storage.create_json(test, test_id)
-        return file_data["file"]
+        async with self.storage.transaction(test_id, "w") as data:
+            data.update(test)  # Мутация data
+        return test_id
 
     async def delete(
         self,

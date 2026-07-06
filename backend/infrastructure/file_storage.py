@@ -1,7 +1,7 @@
 import json
 from contextlib import asynccontextmanager
 from pathlib import Path
-from typing import AsyncGenerator
+from typing import AsyncGenerator, Literal
 from uuid import UUID
 
 import aiofiles
@@ -14,17 +14,21 @@ class FileStorage:
     async def transaction(
         self,
         test_id: str | UUID,
+        mode: Literal["r", "w", "rw"] = "rw",
     ) -> AsyncGenerator[dict, None]:
+        data = dict()  # МУТИРУЮЩИЙ объект, для изменения данных
         try:
-            data = await self.read_json(test_id)
-            yield data
+            if "r" in mode:
+                data = await self._read_json(test_id)
+            yield data  # При режиме w, data должен мутировать
         except:
             raise
         else:
-            test = TestOutput(**data)
-            await self.create_json(test, test_id)
+            if data and "w" in mode:
+                test = TestOutput(**data)
+                await self._create_json(test, test_id)
 
-    async def create_json(
+    async def _create_json(
         self,
         pydantic_data: BaseModel,
         file_name: str | UUID,
@@ -39,7 +43,7 @@ class FileStorage:
             await file.write(data)
         return {"file": str(file_name), "data": data}
 
-    async def read_json(
+    async def _read_json(
         self,
         file_name: str | UUID,
         directory: str = "files",

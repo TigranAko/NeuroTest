@@ -38,8 +38,8 @@ class FileQuestionRepository(IQuestionRepository):
         test_id: UUID,
         question_id: int = 0,
     ) -> QuestionOutput:
-        data = await self.storage.read_json(test_id)  # read
-        questions = data.get("questions")
+        async with self.storage.transaction(test_id, "r") as data:
+            questions = data.get("questions")
         # TODO: Verify questions and question_id
         question_id = self._number2id(question_id)
         question = questions[question_id]
