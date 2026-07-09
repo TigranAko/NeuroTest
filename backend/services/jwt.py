@@ -4,6 +4,8 @@ from uuid import UUID
 
 import jwt
 from core.settings import auth_settigs as settings
+from fastapi import Depends, HTTPException
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jwt.exceptions import PyJWTError
 
 
@@ -79,3 +81,26 @@ class JWTService:
             return UUID(payload["sub"])
         except (KeyError, ValueError):
             return None
+
+
+jwt_service = JWTService(settings.auth_jwt_secret, settings.auth_algorithm)
+security = HTTPBearer(auto_error=False)
+
+
+async def get_current_user_id(
+    credentials: HTTPAuthorizationCredentials | None = Depends(security),
+) -> UUID:
+    if not credentials:
+        raise HTTPException(
+            401, detail="Missing token", headers={"WWW-Authenticate": "Bearer"}
+        )
+    user_id = jwt_service.verify_token(
+        credentials.credentials, allowed_types=["access"]
+    )
+    if user_id is None:
+        raise HTTPException(
+            401,
+            detail="Invalid or expired token",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    return user_id
