@@ -1,7 +1,7 @@
 from typing import Annotated
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, Response
+from fastapi import APIRouter, Depends, Response, Request
 from fastapi.security import OAuth2PasswordRequestForm
 from schemas.user import UserCreate, UserResponse
 from services.auth import AuthService, get_auth_service
@@ -28,6 +28,15 @@ async def login(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
 ):
     return await auth_service.login(response, form_data)
+
+
+@router.post("/refresh")
+async def refresh(
+    auth_service: Annotated[AuthService, Depends(get_auth_service)],
+    request: Request,
+    response: Response,
+):
+    return await auth_service.refresh(request, response)
 
 
 @router.get("/myid")

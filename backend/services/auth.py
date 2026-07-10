@@ -2,7 +2,7 @@ from typing import Annotated
 from uuid import UUID, uuid4
 
 from core.settings import auth_settings as settings
-from fastapi import Depends, HTTPException, Response
+from fastapi import Depends, HTTPException, Request, Response
 from fastapi.security import OAuth2PasswordRequestForm
 from schemas.user import UserCreate, UserDB, UserResponse
 from services.jwt import jwt_service
@@ -59,19 +59,47 @@ class AuthService:
             samesite="strict",
             max_age=settings.auth_access_expire_minutes * 86400,
         )
-        response.set_cookie(
-            key="access_token",
-            value=access,
-            httponly=True,
-            secure=True,
-            samesite="strict",
-            max_age=settings.auth_refresh_expire_days * 60,
-        )
+        # response.set_cookie(
+        #     key="access_token",
+        #     value=access,
+        #     httponly=True,
+        #     secure=True,
+        #     samesite="strict",
+        #     max_age=settings.auth_refresh_expire_days * 60,
+        # )
         return {"access_token": access, "token_type": "Bearer"}
         # return UserResponse(
         #     username=user.username,
         #     user_id=user.user_id,
         # )
+
+    async def refresh(
+        self,
+        request: Request,
+        response: Response,
+    ):
+        refresh_token = request.cookies.get("refresh_token")
+        if not refresh_token:
+            raise HTTPException(401, detail="Refresh token missing")
+
+        user_id = jwt_service.verify_token(refresh_token, allowed_types=["refresh"])
+        if user_id is None:
+            # Удаляем битый cookie
+            response.delete_cookie("refresh_token")
+            raise HTTPException(401, detail="Invalid or expired refresh token")
+
+        # Ротация: выдаём новую пару (старый refresh продолжает жить до истечения, но клиент его заменит)
+        new_access = jwt_service.create_access_token(user_id)
+        new_refresh = jwt_service.create_refresh_token(user_id)
+        response.set_cookie(
+            key="refresh_token",
+            value=new_refresh,
+            httponly=True,
+            secure=True,
+            samesite="strict",
+            max_age=settings.auth_refresh_expire_days * 86400,
+        )
+        return {"access_token": new_access, "token_type": "Bearer"}
 
 
 def get_auth_service():
