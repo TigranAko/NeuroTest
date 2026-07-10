@@ -3,7 +3,7 @@ from typing import Any, Literal
 from uuid import UUID
 
 import jwt
-from core.settings import auth_settigs as settings
+from core.settings import auth_settings as settings
 from fastapi import Depends, HTTPException
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jwt.exceptions import PyJWTError
