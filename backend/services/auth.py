@@ -67,11 +67,11 @@ class AuthService:
             samesite="strict",
             max_age=settings.auth_refresh_expire_days * 60,
         )
-        # return {"access_token": access, "token_type": "Bearer"}
-        return UserResponse(
-            username=user.username,
-            user_id=user.user_id,
-        )
+        return {"access_token": access, "token_type": "Bearer"}
+        # return UserResponse(
+        #     username=user.username,
+        #     user_id=user.user_id,
+        # )
 
 
 def get_auth_service():

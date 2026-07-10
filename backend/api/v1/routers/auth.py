@@ -1,9 +1,11 @@
 from typing import Annotated
+from uuid import UUID
 
 from fastapi import APIRouter, Depends, Response
 from fastapi.security import OAuth2PasswordRequestForm
 from schemas.user import UserCreate, UserResponse
 from services.auth import AuthService, get_auth_service
+from services.jwt import get_current_user_id
 
 router = APIRouter(
     prefix="/api/v1/auth",
@@ -12,7 +14,7 @@ router = APIRouter(
 
 
 @router.post("/register")
-async def read_tests(
+async def register(
     auth_service: Annotated[AuthService, Depends(get_auth_service)],
     user: UserCreate,
 ) -> UserResponse:
@@ -23,6 +25,11 @@ async def read_tests(
 async def login(
     auth_service: Annotated[AuthService, Depends(get_auth_service)],
     response: Response,
-    form_data: OAuth2PasswordRequestForm = Depends(),
-) -> UserResponse:
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
+):
     return await auth_service.login(response, form_data)
+
+
+@router.get("/myid")
+async def what_my_id(user_id: Annotated[UUID, Depends(get_current_user_id)]):
+    return {"user_id": user_id}
