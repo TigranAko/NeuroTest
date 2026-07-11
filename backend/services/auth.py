@@ -1,6 +1,8 @@
 from typing import Annotated
 from uuid import UUID, uuid4
 
+from argon2 import PasswordHasher
+from argon2.exceptions import VerificationError
 from core.settings import auth_settings as settings
 from fastapi import Depends, HTTPException, Request, Response
 from fastapi.security import OAuth2PasswordRequestForm
@@ -8,6 +10,7 @@ from schemas.user import UserCreate, UserDB, UserResponse
 from services.jwt import jwt_service
 
 fake_db: dict[UUID, UserDB] = {}
+ph = PasswordHasher()
 
 
 class AuthService:
@@ -15,7 +18,7 @@ class AuthService:
         self,
         user: UserCreate,
     ) -> UserResponse:
-        hashed_password = user.password  # TODO: Hash
+        hashed_password = ph.hash(user.password)
         # TODO: Verify user exists
         # TODO: Real DB
         user_data = {
@@ -44,9 +47,13 @@ class AuthService:
         for user_data in fake_db.values():
             if user_data.username == form_data.username:
                 user = user_data
+                try:
+                    ph.verify(user.hashed_password, form_data.password)
+                except VerificationError:
+                    raise HTTPException(401, "User Not Found")
                 break
         else:
-            raise HTTPException(404, "User Not Found error")
+            raise HTTPException(401, "User Not Found")
 
         access = jwt_service.create_access_token(user.user_id)
         refresh = jwt_service.create_refresh_token(user.user_id)
