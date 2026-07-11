@@ -101,6 +101,15 @@ class AuthService:
         )
         return {"access_token": new_access, "token_type": "Bearer"}
 
+    async def logout(
+        self,
+        response: Response,
+        user_id: UUID,
+    ):
+        response.delete_cookie("refresh_token")
+        # Access сам истечёт через 15 минут
+        return {"ok": True}
+
 
 def get_auth_service():
     return AuthService()

@@ -39,6 +39,15 @@ async def refresh(
     return await auth_service.refresh(request, response)
 
 
+@router.post("/logout")
+async def logout(
+    auth_service: Annotated[AuthService, Depends(get_auth_service)],
+    response: Response,
+    user_id: UUID = Depends(get_current_user_id),
+):
+    return await auth_service.logout(response, user_id)
+
+
 @router.get("/myid")
 async def what_my_id(user_id: Annotated[UUID, Depends(get_current_user_id)]):
     return {"user_id": user_id}
