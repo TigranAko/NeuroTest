@@ -130,12 +130,11 @@ NeuroTest/
    cd NeuroTest/backend
    ```
 
-2. Создайте файл `.env` в корневой директории (рядом с `backend/`) со следующими переменными:
-   ```env
-   TAVILY_API_KEY=your_tavily_key
-   CEREBRAS_API_KEY=your_cerebras_key
-   OPENROUTER_API_KEY=your_openrouter_key
+2. Скопируйте файл с примером переменных окружения и заполните своими данными:
+   ```bash
+   cp .env.example .env
    ```
+   Отредактируйте .env, указав свои API-ключи и настройки JWT
 
 3. Установите зависимости (рекомендуется использовать `uv`):
    ```bash
@@ -159,14 +158,6 @@ NeuroTest/
    ```bash
    docker run -p 8000:8000 --env-file .env neurotest-backend
    ```
-
-## Переменные окружения
-
-| Переменная | Описание |
-|------------|----------|
-| `TAVILY_API_KEY` | API-ключ для Tavily Search (поиск информации для проверки ответов) |
-| `CEREBRAS_API_KEY` | API-ключ для Cerebras (генерация ответов) |
-| `OPENROUTER_API_KEY` | API-ключ для OpenRouter (парсинг текста теста) |
 
 ## Лицензия
 
