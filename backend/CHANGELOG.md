@@ -2,6 +2,77 @@
 
 <!-- version list -->
 
+## v0.4.0 (2026-07-14)
+
+### Bug Fixes
+
+- **auth**: Add exception user not found and fix some problems
+  ([`cccc878`](https://github.com/TigranAko/NeuroTest/commit/cccc878a2dd0cdcc52ea654508849825e7510186))
+
+- **auth**: Set refresh timeout
+  ([`614a69d`](https://github.com/TigranAko/NeuroTest/commit/614a69d6cf73851bd4e8209cb1458b737f24789e))
+
+### Chores
+
+- **uv**: Add argon2-cffi
+  ([`e62fbea`](https://github.com/TigranAko/NeuroTest/commit/e62fbead95c33e8d06967e3287145fb6e7fa7f2c))
+
+- **uv**: Add pyjwt to pyproject and uv.lock
+  ([`544511c`](https://github.com/TigranAko/NeuroTest/commit/544511c0dc3dfe6ca5244f33be7a1c26789b341d))
+
+- **uv**: Update uv.lock to 0.3.0
+  ([`138cdb9`](https://github.com/TigranAko/NeuroTest/commit/138cdb9e415ea2ca8e2f11b971fc547ed8ec0fb7))
+
+### Documentation
+
+- Add auth endpoints to readme
+  ([`616c547`](https://github.com/TigranAko/NeuroTest/commit/616c547c76a6b4de669a533ab0b6d6f10fda18f9))
+
+- Add auth files to readme
+  ([`d65e378`](https://github.com/TigranAko/NeuroTest/commit/d65e37898ef5b7ea0485945885d1a32bd525b0fd))
+
+- Add auth technologies to readme
+  ([`3cbc390`](https://github.com/TigranAko/NeuroTest/commit/3cbc3906af200528d364da3b99325a4ae234e26e))
+
+- Change environment information in readme
+  ([`da107f1`](https://github.com/TigranAko/NeuroTest/commit/da107f1790c66b9c10ad660e05c8a7ddb1c9e662))
+
+### Features
+
+- **api**: Add authorization to router llm (neurotest)
+  ([`fe219f8`](https://github.com/TigranAko/NeuroTest/commit/fe219f82a71e94c48465fa5aaa40e5564b0a0ba1))
+
+- **auth**: Add authorize button to swagger by OAuth2PasswordBearer
+  ([`e02d461`](https://github.com/TigranAko/NeuroTest/commit/e02d4613ef92086918da68663eac3f51c5382526))
+
+- **auth**: Add basic regestration with fake db
+  ([`d346824`](https://github.com/TigranAko/NeuroTest/commit/d3468247756a4cbe1c990a1cbda645984367f614))
+
+- **auth**: Add dependency for extracting user_id from access token
+  ([`8950cc0`](https://github.com/TigranAko/NeuroTest/commit/8950cc0d9865f402e44c78a964ced2511b3a20b4))
+
+- **auth**: Add jwt service for create tokens
+  ([`a1e8e6d`](https://github.com/TigranAko/NeuroTest/commit/a1e8e6d9bedbb998fe3a145ec62f3fc0846f57bd))
+
+- **auth**: Add login endpoint with jwt and cookie
+  ([`7d31f03`](https://github.com/TigranAko/NeuroTest/commit/7d31f031d526ed34ae6742c928859c4ce9e14116))
+
+- **auth**: Add logout endpoint with delete refresh cookie
+  ([`1c4a3ba`](https://github.com/TigranAko/NeuroTest/commit/1c4a3ba3898826bbf1bb1c9141af6a678bb91691))
+
+- **auth**: Add password hasher with argon2
+  ([`1e00b31`](https://github.com/TigranAko/NeuroTest/commit/1e00b3183862529f9c1d175d01dff12017be3d29))
+
+- **auth**: Add token refresh endpoint
+  ([`5e62860`](https://github.com/TigranAko/NeuroTest/commit/5e628607818d073cb28a5d0a294b6788fb6b540b))
+
+- **env**: Add environment variables for auth
+  ([`ecfd379`](https://github.com/TigranAko/NeuroTest/commit/ecfd379f453488cc103f0d26443d98c8221f7cc3))
+
+- **env**: Add settings forauth
+  ([`dba468e`](https://github.com/TigranAko/NeuroTest/commit/dba468e32923d4672aa686605df771fd2c74d952))
+
+
 ## v0.3.0 (2026-07-06)
 
 ### Chores
