@@ -64,7 +64,7 @@ class AuthService:
             httponly=True,
             secure=True,
             samesite="strict",
-            max_age=settings.auth_access_expire_minutes * 86400,
+            max_age=settings.auth_refresh_expire_days * 86400,
         )
         # response.set_cookie(
         #     key="access_token",
@@ -72,7 +72,7 @@ class AuthService:
         #     httponly=True,
         #     secure=True,
         #     samesite="strict",
-        #     max_age=settings.auth_refresh_expire_days * 60,
+        #     max_age=settings.auth_access_expire_minutes * 60,
         # )
         return {"access_token": access, "token_type": "Bearer"}
         # return UserResponse(
