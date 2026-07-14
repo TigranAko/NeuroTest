@@ -7,13 +7,18 @@ from services.json2answer import (
     JsonToAnswerService,
     get_json2answer_service,
 )
+from services.jwt import get_current_user_id
 from services.text2json import (
     Test,
     TextToJsonService,
     get_text2json_service,
 )
 
-router = APIRouter(prefix="/api/v1")
+router = APIRouter(
+    prefix="/api/v1",
+    tags=["LLM"],
+    dependencies=[Depends(get_current_user_id)],
+)
 
 
 @router.get("/")
