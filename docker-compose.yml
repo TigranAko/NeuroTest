@@ -21,5 +21,12 @@ services:
       - postgres_data:/var/lib/postgresql
     env_file:
       - .env
+  adminer:
+    image: adminer:5
+    container_name: adminer-nt
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
 volumes:
   postgres_data:
