@@ -28,11 +28,15 @@ class AuthService:
         self,
         user: UserCreate,
     ) -> UserResponse:
+        if await self.users_repo.get_by_username(user.username) is not None:
+            raise HTTPException(
+                401,
+                "User with this username already created, please change username",
+            )  # TODO: change description
         hashed_password = ph.hash(user.password)
         user.password = hashed_password
         user_id = await self.users_repo.add_one(user)
         await self.db.commit()
-        # TODO: Verify user exists
         return UserResponse(username=user.username, user_id=user_id)
 
     async def login(
