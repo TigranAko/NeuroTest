@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class UserBase(BaseModel):
@@ -16,5 +16,6 @@ class UserResponse(UserBase):
 
 
 class UserDB(UserBase):
-    user_id: UUID
-    hashed_password: str
+    model_config = ConfigDict(from_attributes=True)
+    id: UUID
+    password: str

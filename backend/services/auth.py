@@ -1,5 +1,5 @@
 from typing import Annotated
-from uuid import UUID, uuid4
+from uuid import UUID
 
 from argon2 import PasswordHasher
 from argon2.exceptions import VerificationError
@@ -12,7 +12,6 @@ from schemas.user import UserCreate, UserDB, UserResponse
 from services.jwt import jwt_service
 from sqlalchemy.ext.asyncio import AsyncSession
 
-fake_db: dict[UUID, UserDB] = {}
 ph = PasswordHasher()
 
 
@@ -44,22 +43,17 @@ class AuthService:
         response: Response,
         form_data: Annotated[OAuth2PasswordRequestForm, Depends],
     ):
-        # TODO: Verify user exists
-        # TODO: Verify password hash
-        # TODO: Real DB
-        for user_data in fake_db.values():
-            if user_data.username == form_data.username:
-                user = user_data
-                try:
-                    ph.verify(user.hashed_password, form_data.password)
-                except VerificationError:
-                    raise HTTPException(401, "User Not Found")
-                break
-        else:
+        user = await self.users_repo.get_by_username(form_data.username)
+        if user is None:
+            raise HTTPException(401, "User Not Found")
+        user = UserDB.model_validate(user)
+        try:
+            ph.verify(user.password, form_data.password)
+        except VerificationError:
             raise HTTPException(401, "User Not Found")
 
-        access = jwt_service.create_access_token(user.user_id)
-        refresh = jwt_service.create_refresh_token(user.user_id)
+        access = jwt_service.create_access_token(user.id)
+        refresh = jwt_service.create_refresh_token(user.id)
 
         response.set_cookie(
             key="refresh_token",
