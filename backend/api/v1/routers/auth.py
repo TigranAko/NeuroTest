@@ -1,7 +1,7 @@
 from typing import Annotated
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, Response, Request
+from fastapi import APIRouter, Depends, Request, Response
 from fastapi.security import OAuth2PasswordRequestForm
 from schemas.user import UserCreate, UserResponse
 from services.auth import AuthService, get_auth_service
@@ -43,11 +43,14 @@ async def refresh(
 async def logout(
     auth_service: Annotated[AuthService, Depends(get_auth_service)],
     response: Response,
-    user_id: UUID = Depends(get_current_user_id),
+    user_id: Annotated[UUID, Depends(get_current_user_id)],
 ):
     return await auth_service.logout(response, user_id)
 
 
-@router.get("/myid")
-async def what_my_id(user_id: Annotated[UUID, Depends(get_current_user_id)]):
-    return {"user_id": user_id}
+@router.get("/me")
+async def me(
+    auth_service: Annotated[AuthService, Depends(get_auth_service)],
+    user_id: Annotated[UUID, Depends(get_current_user_id)],
+) -> UserResponse:
+    return await auth_service.me(user_id)

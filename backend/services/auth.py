@@ -114,6 +114,15 @@ class AuthService:
         # Access сам истечёт через 15 минут
         return {"ok": True}
 
+    async def me(
+        self,
+        user_id,
+    ):
+        user = await self.users_repo.get_by_id(user_id)
+        if user is None:
+            raise HTTPException(401, "User Not Found")
+        return UserResponse(username=user.username, user_id=user.id)
+
 
 def get_auth_service(
     db: Annotated[AsyncSession, Depends(get_db)],
