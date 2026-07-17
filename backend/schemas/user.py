@@ -1,6 +1,7 @@
+from datetime import datetime
 from uuid import UUID
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class UserBase(BaseModel):
@@ -12,9 +13,14 @@ class UserCreate(UserBase):
 
 
 class UserResponse(UserBase):
-    user_id: UUID
+    user_id: UUID = Field(..., alias="id")
+    created_at: datetime
+    updated_at: datetime
 
 
 class UserDB(UserBase):
-    user_id: UUID
-    hashed_password: str
+    model_config = ConfigDict(from_attributes=True)
+    id: UUID
+    password: str
+    created_at: datetime
+    updated_at: datetime

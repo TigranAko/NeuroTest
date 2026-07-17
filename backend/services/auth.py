@@ -1,62 +1,60 @@
 from typing import Annotated
-from uuid import UUID, uuid4
+from uuid import UUID
 
 from argon2 import PasswordHasher
 from argon2.exceptions import VerificationError
+from core.database import get_db
 from core.settings import auth_settings as settings
 from fastapi import Depends, HTTPException, Request, Response
 from fastapi.security import OAuth2PasswordRequestForm
+from repositories.user import UserRepository
 from schemas.user import UserCreate, UserDB, UserResponse
 from services.jwt import jwt_service
+from sqlalchemy.ext.asyncio import AsyncSession
 
-fake_db: dict[UUID, UserDB] = {}
 ph = PasswordHasher()
 
 
 class AuthService:
+    def __init__(
+        self,
+        db: AsyncSession,
+    ):
+        self.db = db
+        self.users_repo = UserRepository(db)
+
     async def register(
         self,
         user: UserCreate,
     ) -> UserResponse:
+        if await self.users_repo.get_by_username(user.username) is not None:
+            raise HTTPException(
+                401,
+                "User with this username already created, please change username",
+            )  # TODO: change description
         hashed_password = ph.hash(user.password)
-        # TODO: Verify user exists
-        # TODO: Real DB
-        user_data = {
-            "user_id": uuid4(),
-            "username": user.username,
-            "hashed_password": hashed_password,
-        }
-        user_db = UserDB(**user_data)
-        fake_db[user_data["user_id"]] = user_db
-        print(fake_db)
-        user_response_data = {
-            "username": user_db.username,
-            "user_id": user_db.user_id,
-        }
-        user_response = UserResponse(**user_response_data)
-        return user_response
+        user.password = hashed_password
+        user_id = await self.users_repo.add_one(user)
+        await self.db.commit()
+        user_db = UserDB.model_validate(await self.users_repo.get_by_id(user_id))
+        return UserResponse(**user_db.model_dump(exclude={"password"}))
 
     async def login(
         self,
         response: Response,
         form_data: Annotated[OAuth2PasswordRequestForm, Depends],
     ):
-        # TODO: Verify user exists
-        # TODO: Verify password hash
-        # TODO: Real DB
-        for user_data in fake_db.values():
-            if user_data.username == form_data.username:
-                user = user_data
-                try:
-                    ph.verify(user.hashed_password, form_data.password)
-                except VerificationError:
-                    raise HTTPException(401, "User Not Found")
-                break
-        else:
+        user = await self.users_repo.get_by_username(form_data.username)
+        if user is None:
+            raise HTTPException(401, "User Not Found")
+        user = UserDB.model_validate(user)
+        try:
+            ph.verify(user.password, form_data.password)
+        except VerificationError:
             raise HTTPException(401, "User Not Found")
 
-        access = jwt_service.create_access_token(user.user_id)
-        refresh = jwt_service.create_refresh_token(user.user_id)
+        access = jwt_service.create_access_token(user.id)
+        refresh = jwt_service.create_refresh_token(user.id)
 
         response.set_cookie(
             key="refresh_token",
@@ -117,6 +115,18 @@ class AuthService:
         # Access сам истечёт через 15 минут
         return {"ok": True}
 
+    async def me(
+        self,
+        user_id,
+    ):
+        user = await self.users_repo.get_by_id(user_id)
+        if user is None:
+            raise HTTPException(401, "User Not Found")
+        user_db = UserDB.model_validate(user)
+        return UserResponse(**user_db.model_dump(exclude={"password"}))
 
-def get_auth_service():
-    return AuthService()
+
+def get_auth_service(
+    db: Annotated[AsyncSession, Depends(get_db)],
+):
+    return AuthService(db)
