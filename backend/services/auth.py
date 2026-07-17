@@ -36,7 +36,8 @@ class AuthService:
         user.password = hashed_password
         user_id = await self.users_repo.add_one(user)
         await self.db.commit()
-        return UserResponse(username=user.username, user_id=user_id)
+        user_db = UserDB.model_validate(await self.users_repo.get_by_id(user_id))
+        return UserResponse(**user_db.model_dump(exclude={"password"}))
 
     async def login(
         self,
@@ -121,7 +122,8 @@ class AuthService:
         user = await self.users_repo.get_by_id(user_id)
         if user is None:
             raise HTTPException(401, "User Not Found")
-        return UserResponse(username=user.username, user_id=user.id)
+        user_db = UserDB.model_validate(user)
+        return UserResponse(**user_db.model_dump(exclude={"password"}))
 
 
 def get_auth_service(
