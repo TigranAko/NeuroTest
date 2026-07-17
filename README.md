@@ -94,7 +94,7 @@ NeuroTest/
 | POST | `/auth/login` | Вход (возвращает refresh-токен в cookie) |
 | POST | `/auth/refresh` | Обновление access-токена |
 | POST | `/auth/logout` | Выход (удаление cookie) |
-| GET | `/auth/myid` | Получение ID текущего пользователя |
+| GET | `/auth/me` | Получение информации о текущем пользователе |
 
 ### 📁 Файлы и тесты с использованием llm
 Требуется авторизация
