@@ -39,14 +39,18 @@ NeuroTest/
 │   │           ├── auth.py   # Аутентификация и авторизвция
 │   │           └── test.py       # Управление тестами
 │   ├── core/
+│   │   ├── database.py           # Подключение к БД (SQLAlchemy async)
 │   │   └── settings.py           # Настройки и переменные окружения
 │   ├── files/                    # Директория для хранения загруженных файлов
 │   ├── infrastructure/
 │   │   └── file_storage.py       # Вспомогательные утилиты для файлового хранилища
+│   ├── models/                   # SQLAlchemy ORM-модели
+│   │   └── user.py
 │   ├── repositories/             # Работа с хранилищем данных
 │   │   ├── file_answer.py
 │   │   ├── file_question.py
 │   │   ├── file_test.py
+│   │   ├── user.py               # Репозиторий для пользователей
 │   │   └── interfaces.py
 │   ├── schemas/                  # Pydantic-схемы
 │   │   ├── test_output.py        # Схемы для выходных данных тестов
@@ -60,16 +64,22 @@ NeuroTest/
 │   │   ├── question.py           # Сервис для работы с вопросами
 │   │   ├── test.py               # Сервис для работы с тестами
 │   │   └── text2json.py          # Парсинг текста теста в структурированный JSON
+│   ├── alembic/                  # Миграции базы данных (Alembic)
+│   │   └── versions/             # Файлы миграций
 │   ├── .dockerignore
+│   ├── alembic.ini               # Конфигурация Alembic
 │   ├── CHANGELOG.md
 │   ├── Dockerfile                # Инструкция для сборки образа
+│   ├── entrypoint.sh             # Точка входа для Docker (прогон миграций)
 │   ├── main.py                   # Точка входа FastAPI
 │   ├── pyproject.toml            # Зависимости и метаданные проекта
 │   ├── test_docx2txt.py          # Тесты для парсинга DOCX
 │   ├── test_feat.py              # Функциональные тесты
 │   └── uv.lock                   # Зафиксированные версии зависимостей
-└── frontend/
-    └── index.html                # Простой интерфейс для выбора теста и режима
+├── frontend/
+│   └── index.html                # Простой интерфейс для выбора теста и режима
+├── docker-compose.yml
+└── .env.exapmle
 ```
 
 ## API Эндпоинты
