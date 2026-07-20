@@ -1,5 +1,6 @@
 from time import sleep
 from typing import Literal
+from uuid import UUID
 
 from core.settings import settings
 from langchain_cerebras import ChatCerebras
@@ -73,7 +74,7 @@ class JsonToAnswerService:
         )
         return result
 
-    def process_test(self, input: dict) -> TestOutput:
+    def process_test(self, input: dict, author_id: UUID) -> TestOutput:
         questions_data = input["questions"]
         output_questions = []
         for idx, q in enumerate(questions_data):
@@ -82,11 +83,7 @@ class JsonToAnswerService:
             result = self.process_single_questions(q["question"], q["answers"])
             print(result, type(result))
             output_questions.append(result)
-        print(output_questions, type(output_questions))
-        print(
-            (test_output := TestOutput(questions=output_questions)), type(test_output)
-        )
-        return TestOutput(questions=output_questions)
+        return TestOutput(questions=output_questions, author_id=author_id)
 
 
 def get_json2answer_service():

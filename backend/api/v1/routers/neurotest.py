@@ -1,4 +1,5 @@
 from typing import Annotated, Literal
+from uuid import UUID
 
 from fastapi import APIRouter, Depends, UploadFile
 from schemas.test_output import TestOutput
@@ -17,7 +18,6 @@ from services.text2json import (
 router = APIRouter(
     prefix="/api/v1",
     tags=["LLM"],
-    dependencies=[Depends(get_current_user_id)],
 )
 
 
@@ -30,7 +30,9 @@ def main():
 async def downloand_user_file(
     test_file: UploadFile,
     file: Annotated[FileService, Depends(get_file_service)],
+    user_id: Annotated[UUID, Depends(get_current_user_id)],
 ) -> DownloadFile:
+    # TODO: use user_id for create files
     return await file.download(test_file)
 
 
@@ -39,8 +41,10 @@ async def create_json(
     file_title: str,
     text2json: Annotated[TextToJsonService, Depends(get_text2json_service)],
     file: Annotated[FileService, Depends(get_file_service)],
+    user_id: Annotated[UUID, Depends(get_current_user_id)],
 ) -> CreateJson:
     """Создать JSON без ответов"""
+    # TODO: use user_id for create files
     text = await file.get_text_docx(file_title)
     questions_without_answers: Test = text2json.parse_test(text)
     data = await file.create_json(file_title + "_text", questions_without_answers)
@@ -52,10 +56,11 @@ async def create_json_answers(
     file_title: str,
     json2answer: Annotated[JsonToAnswerService, Depends(get_json2answer_service)],
     file: Annotated[FileService, Depends(get_file_service)],
+    user_id: Annotated[UUID, Depends(get_current_user_id)],
 ) -> TestOutput:
     """Создать JSON с ответами"""
     data = await file.reed_json(file_title + "_text")
-    answers: TestOutput = json2answer.process_test(data)
+    answers: TestOutput = json2answer.process_test(data, author_id=user_id)
     # answers_str = answers.model_dump_json(indent=4)
     await file.create_json(file_title + "_answers", answers)
     return answers
