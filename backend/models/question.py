@@ -1,11 +1,20 @@
+from typing import TYPE_CHECKING
 from uuid import UUID, uuid4
 
 from core.database import Base
-from models.answer import Answer
+from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+if TYPE_CHECKING:
+    from models.answer import Answer
+    from models.test import Test
 
 
 class Question(Base):
     __tablename__ = "questions"
     id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
-    answers: Mapped[list["Answer"]] = relationship()
+    test_id: Mapped[UUID] = mapped_column(ForeignKey("tests.id"))
+    text: Mapped[str] = mapped_column()
+
+    test: Mapped["Test"] = relationship(back_populates="questions")
+    answers: Mapped[list["Answer"]] = relationship(back_populates="question")
