@@ -6,8 +6,7 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 if TYPE_CHECKING:
-    from models.answer import Answer
-    from models.test import Test
+    from models import Answer, Test
 
 
 class Question(Base):

@@ -1,8 +1,9 @@
 from uuid import UUID, uuid4
 
 from core.database import Base
-from models.mixins import TimestampMixin
 from sqlalchemy.orm import Mapped, mapped_column
+
+from models import TimestampMixin
 
 
 class User(Base, TimestampMixin):
