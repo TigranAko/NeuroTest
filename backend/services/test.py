@@ -1,80 +1,40 @@
-import json
+from typing import Annotated
 from uuid import UUID
 
-from fastapi import HTTPException, UploadFile
-from pydantic import ValidationError
-from repositories.file_test import FileTestRepository
-from repositories.interfaces import ITestRepository
-from schemas.test_output import TestOutput
+from core.database import get_db
+from fastapi import Depends, HTTPException
+from repositories.test import TestRepository
+from schemas.test import TestCreate, TestResponse
+from sqlalchemy.ext.asyncio import AsyncSession
 
 
 class TestService:
-    def __init__(self, repo: ITestRepository):
-        self.repo = repo
-
-    async def _read_test_from_file(
+    def __init__(
         self,
-        test_file: UploadFile,
-    ) -> TestOutput:
-        file_type = test_file.content_type
-        if file_type != "application/json":
-            raise HTTPException(422)
-        file_content = await test_file.read()
-        file_text = file_content.decode("utf-8")
-        data = json.loads(file_text)
-        try:
-            test = TestOutput(**data)
-        except ValidationError:
-            raise HTTPException(422)
-        return test
-
-    async def add_test_from_file(
-        self,
-        test_file: UploadFile,
-    ) -> UUID:
-        test = await self._read_test_from_file(test_file)
-        return await self.add_test(test)
+        db: AsyncSession,
+    ):
+        self.db = db
+        self.repo = TestRepository(db)
 
     async def add_test(
         self,
-        test: TestOutput,
+        test: TestCreate,
     ) -> UUID:
-        test_id = await self.repo.add(test)
+        test_id = await self.repo.add_one(test)
+        await self.db.commit()
         return test_id
 
     async def get_test(
         self,
         test_id: UUID,
-    ) -> TestOutput:
-        return await self.repo.get(test_id)
-
-    async def get_tests(
-        self,
-    ) -> list[str]:
-        # TODO: Нужно поменять структуру, добавить метаданные, сейчас возвращается list[UUID], нужно list[dict]
-        return await self.repo.get_all()
-
-    async def update_test_from_file(
-        self,
-        test_file: UploadFile,
-        test_id: UUID,
-    ) -> UUID:
-        test = await self._read_test_from_file(test_file)
-        return await self.update_test(test, test_id)
-
-    async def update_test(
-        self,
-        test: TestOutput,
-        test_id: UUID,
-    ) -> UUID:
-        return await self.repo.update(test, test_id)
-
-    async def delete_test(
-        self,
-        test_id: UUID,
-    ) -> None:
-        return await self.repo.delete(test_id)
+    ) -> TestResponse:
+        data = await self.repo.get_by_id(test_id)
+        if data is None:
+            raise HTTPException(404, "Test not found")
+        return TestResponse.model_validate(data)
 
 
-def get_test_service():
-    return TestService(FileTestRepository())
+def get_test_service(
+    db: Annotated[AsyncSession, Depends(get_db)],
+):
+    return TestService(db)
