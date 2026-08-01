@@ -1,46 +1,42 @@
+from typing import Annotated
 from uuid import UUID
 
-from repositories.file_question import FileQuestionRepository
-from repositories.interfaces import IQuestionRepository
-from schemas.test_output import QuestionOutput
+from core.database import get_db
+from fastapi import Depends, HTTPException
+from repositories.question import QuestionRepository
+from schemas.question import QuestionCreate, QuestionResponse
+from sqlalchemy.ext.asyncio import AsyncSession
 
 
 class QuestionService:
-    def __init__(self, repo: IQuestionRepository):
-        self.repo = repo
+    def __init__(
+        self,
+        db: AsyncSession,
+    ):
+        self.db = db
+        self.repo = QuestionRepository(db)
 
     async def add_question(
         self,
-        question: QuestionOutput,
         test_id: UUID,
-        question_id: int | UUID,
+        question: QuestionCreate,
     ) -> UUID:
-        # if question_id is none append else insert by question_id
-        test_id = await self.repo.add(question, test_id)
+        test_id = await self.repo.add_one(test_id, question)
+        await self.db.commit()
         return test_id
 
     async def get_question(
         self,
-        test_id: UUID,
-        question_id: int | UUID,
-    ) -> QuestionOutput:
-        return await self.repo.get(test_id, question_id)
-
-    async def update_question(
-        self,
-        question: QuestionOutput,
-        test_id: UUID,
-        question_id: int | UUID,
-    ) -> UUID:
-        return await self.repo.update(question, test_id, question_id)
-
-    async def delete_question(
-        self,
-        test_id: UUID,
-        question_id: int | UUID,
-    ) -> None:
-        return await self.repo.delete(test_id, question_id)
+        question_id: UUID,
+    ) -> QuestionResponse:
+        data = await self.repo.get_by_id(question_id)
+        if data is None:
+            raise HTTPException(404, "Question not found")
+        question = QuestionResponse.model_validate(data)
+        return question
 
 
-def get_question_service():
-    return QuestionService(FileQuestionRepository())
+def get_question_service(
+    db: Annotated[AsyncSession, Depends(get_db)],
+):
+    return QuestionService(db)
