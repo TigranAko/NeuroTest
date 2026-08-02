@@ -2,7 +2,7 @@ from uuid import UUID
 
 from models.answer import Answer
 from schemas.answer import AnswerCreate
-from sqlalchemy import insert, select, ScalarResult
+from sqlalchemy import ScalarResult, insert, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 

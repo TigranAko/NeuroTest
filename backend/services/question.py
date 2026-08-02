@@ -35,6 +35,18 @@ class QuestionService:
         question = QuestionResponse.model_validate(data)
         return question
 
+    async def get_questions_test(
+        self,
+        test_id: UUID,
+    ) -> list[QuestionResponse]:
+        data = await self.repo.get_by_test(test_id)
+        if data is None:
+            raise HTTPException(404, "Question not found")
+        questions: list[QuestionResponse] = []
+        for question in data:
+            questions.append(QuestionResponse.model_validate(question))
+        return questions
+
 
 def get_question_service(
     db: Annotated[AsyncSession, Depends(get_db)],

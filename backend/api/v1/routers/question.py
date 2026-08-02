@@ -20,6 +20,14 @@ async def create_question(
     return await question_service.add_question(test_id, question)
 
 
+@router.get("/tests/{test_id}/questions")
+async def get_questions_test(
+    question_service: Annotated[QuestionService, Depends(get_question_service)],
+    test_id: UUID,
+) -> list[QuestionResponse]:
+    return await question_service.get_questions_test(test_id)
+
+
 @router.get("/questions/{question_id}")
 async def read_question(
     question_service: Annotated[QuestionService, Depends(get_question_service)],

@@ -2,7 +2,7 @@ from uuid import UUID
 
 from models.question import Question
 from schemas.question import QuestionCreate
-from sqlalchemy import insert, select
+from sqlalchemy import ScalarResult, insert, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
@@ -28,3 +28,8 @@ class QuestionRepository:
         stmt = select(self.model).where(self.model.id == question_id)
         test = await self.db.execute(stmt)
         return test.scalar_one_or_none()
+
+    async def get_by_test(self, test_id: UUID) -> ScalarResult[Question]:
+        stmt = select(self.model).where(self.model.test_id == test_id)
+        answer = await self.db.execute(stmt)
+        return answer.scalars()
