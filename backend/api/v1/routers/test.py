@@ -22,3 +22,10 @@ async def read_test(
     test_id: UUID,
 ) -> TestResponse:
     return await test_service.get_test(test_id)
+
+
+@router.get("/")
+async def read_tests(
+    test_service: Annotated[TestService, Depends(get_test_service)],
+) -> list[TestResponse]:
+    return await test_service.get_tests()

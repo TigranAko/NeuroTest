@@ -2,7 +2,7 @@ from uuid import UUID
 
 from models.test import Test
 from schemas.test import TestCreate
-from sqlalchemy import insert, select
+from sqlalchemy import ScalarResult, insert, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
@@ -25,3 +25,8 @@ class TestRepository:
         stmt = select(self.model).where(self.model.id == test_id)
         test = await self.db.execute(stmt)
         return test.scalar_one_or_none()
+
+    async def get_tests(self) -> ScalarResult[Test]:
+        stmt = select(self.model)
+        answer = await self.db.execute(stmt)
+        return answer.scalars()

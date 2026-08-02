@@ -33,6 +33,17 @@ class TestService:
             raise HTTPException(404, "Test not found")
         return TestResponse.model_validate(data)
 
+    async def get_tests(
+        self,
+    ) -> list[TestResponse]:
+        data = await self.repo.get_tests()
+        if data is None:
+            raise HTTPException(404, "Test not found")
+        tests: list[TestResponse] = []
+        for test in data:
+            tests.append(TestResponse.model_validate(test))
+        return tests
+
 
 def get_test_service(
     db: Annotated[AsyncSession, Depends(get_db)],
