@@ -20,6 +20,14 @@ async def create_answer(
     return await question_service.add_answer(answer, question_id)
 
 
+@router.get("/questions/{question_id}/answers")
+async def read_answers_question(
+    question_service: Annotated[AnswerService, Depends(get_answer_service)],
+    question_id: UUID,
+) -> list[AnswerResponse]:
+    return await question_service.get_answers_question(question_id)
+
+
 @router.get("/answers/{answer_id}")
 async def read_answer(
     question_service: Annotated[AnswerService, Depends(get_answer_service)],

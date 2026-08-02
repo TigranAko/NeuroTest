@@ -19,7 +19,7 @@ class AnswerService:
     async def add_answer(
         self,
         answer: AnswerCreate,
-        question_id: int | UUID,
+        question_id: UUID,
     ) -> UUID:
         answer_id = await self.repo.add_one(question_id, answer)
         await self.db.commit()
@@ -34,6 +34,18 @@ class AnswerService:
             raise HTTPException(404, "Answer not found")
         answer = AnswerResponse.model_validate(data)
         return answer
+
+    async def get_answers_question(
+        self,
+        question_id: UUID,
+    ) -> list[AnswerResponse]:
+        data = await self.repo.get_by_question(question_id)
+        if data is None:
+            raise HTTPException(404, "Question not found")
+        answers: list[AnswerResponse] = []
+        for answer in data:
+            answers.append(AnswerResponse.model_validate(answer))
+        return answers
 
 
 def get_answer_service(
