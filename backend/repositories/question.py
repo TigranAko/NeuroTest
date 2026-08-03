@@ -2,7 +2,7 @@ from uuid import UUID
 
 from models.question import Question
 from schemas.question import QuestionCreate
-from sqlalchemy import ScalarResult, insert, select
+from sqlalchemy import ScalarResult, delete, insert, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
@@ -33,3 +33,16 @@ class QuestionRepository:
         stmt = select(self.model).where(self.model.test_id == test_id)
         answer = await self.db.execute(stmt)
         return answer.scalars()
+
+    async def delete_one(
+        self,
+        question_id: UUID,
+    ) -> UUID | None:
+        stmt = (
+            delete(self.model)
+            .where(self.model.id == question_id)
+            .returning(self.model.id)
+        )
+        user_id = await self.db.execute(stmt)
+        result = user_id.scalar_one_or_none()
+        return result

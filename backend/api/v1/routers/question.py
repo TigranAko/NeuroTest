@@ -34,3 +34,11 @@ async def read_question(
     question_id: UUID,
 ) -> QuestionResponse:
     return await question_service.get_question(question_id)
+
+
+@router.delete("/questions/{question_id}")
+async def delete_question(
+    question_service: Annotated[QuestionService, Depends(get_question_service)],
+    question_id: UUID,
+) -> dict[UUID, list[UUID]]:
+    return await question_service.delete_question(question_id)

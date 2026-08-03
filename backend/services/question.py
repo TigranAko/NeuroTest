@@ -3,6 +3,7 @@ from uuid import UUID
 
 from core.database import get_db
 from fastapi import Depends, HTTPException
+from repositories.answer import AnswerRepository
 from repositories.question import QuestionRepository
 from schemas.question import QuestionCreate, QuestionResponse
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -14,14 +15,15 @@ class QuestionService:
         db: AsyncSession,
     ):
         self.db = db
-        self.repo = QuestionRepository(db)
+        self.question = QuestionRepository(db)
+        self.answer = AnswerRepository(db)
 
     async def add_question(
         self,
         test_id: UUID,
         question: QuestionCreate,
     ) -> UUID:
-        test_id = await self.repo.add_one(test_id, question)
+        test_id = await self.question.add_one(test_id, question)
         await self.db.commit()
         return test_id
 
@@ -29,7 +31,7 @@ class QuestionService:
         self,
         question_id: UUID,
     ) -> QuestionResponse:
-        data = await self.repo.get_by_id(question_id)
+        data = await self.question.get_by_id(question_id)
         if data is None:
             raise HTTPException(404, "Question not found")
         question = QuestionResponse.model_validate(data)
@@ -39,13 +41,26 @@ class QuestionService:
         self,
         test_id: UUID,
     ) -> list[QuestionResponse]:
-        data = await self.repo.get_by_test(test_id)
+        data = await self.question.get_by_test(test_id)
         if data is None:
             raise HTTPException(404, "Question not found")
         questions: list[QuestionResponse] = []
         for question in data:
             questions.append(QuestionResponse.model_validate(question))
         return questions
+
+    async def delete_question(
+        self,
+        question_id: UUID,
+    ) -> dict[UUID, list[UUID]]:
+        # ) -> QuestionResponse:
+        answers = await self.answer.delete_by_question(question_id)
+        question_id: UUID | None = await self.question.delete_one(question_id)
+        if question_id is None:
+            raise HTTPException(404, "Question not found")
+        await self.db.commit()
+        question = {question_id: list(answers)}
+        return question
 
 
 def get_question_service(
