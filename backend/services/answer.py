@@ -41,11 +41,21 @@ class AnswerService:
     ) -> list[AnswerResponse]:
         data = await self.repo.get_by_question(question_id)
         if data is None:
-            raise HTTPException(404, "Question not found")
+            raise HTTPException(404, "Answer not found")
         answers: list[AnswerResponse] = []
         for answer in data:
             answers.append(AnswerResponse.model_validate(answer))
         return answers
+
+    async def delete_answer(
+        self,
+        answer_id: UUID,
+    ) -> UUID:
+        answer = await self.repo.delete_one(answer_id)
+        if answer is None:
+            raise HTTPException(404, "Answer not found")
+        await self.db.commit()
+        return answer
 
 
 def get_answer_service(
