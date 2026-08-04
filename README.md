@@ -10,19 +10,10 @@ NeuroTest — это веб-приложение для загрузки тес�
 
 ## Технологии
 
-- **Python 3.11+**
-- **FastAPI** — веб-фреймворк
-- **LangChain** — интеграция с LLM (Cerebras, OpenRouter)
-- **Pydantic Settings** — управление конфигурацией
-- **Uvicorn** — ASGI-сервер
-- **Docker** — контейнеризация
-- **aiofiles** — асинхронная работа с файлами
-- **docx2txt** — извлечение текста из `.docx`
-- **pyjwt** — работа с JWT
-- **argon2-cffi** — хеширование паролей
-- **PostgreSQL+psycopg3** — реляционная база данных
-- **SQLAlchemy** — ORM
-- **Alembic** — миграции
+**Бэкенд:** Python 3.11+, FastAPI, SQLAlchemy, Alembic, PostgreSQL, Pydantic  
+**Интеграция с AI:** LangChain, OpenRouter, Cerebras, Tavily  
+**Инфраструктура:** Docker, Uvicorn, JWT, Argon2  
+**Работа с файлами:** docx2txt, aiofiles
 
 ## Структура проекта
 
