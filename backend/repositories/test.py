@@ -2,7 +2,7 @@ from uuid import UUID
 
 from models.test import Test
 from schemas.test import TestCreate
-from sqlalchemy import ScalarResult, insert, select
+from sqlalchemy import ScalarResult, delete, insert, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
@@ -30,3 +30,14 @@ class TestRepository:
         stmt = select(self.model)
         answer = await self.db.execute(stmt)
         return answer.scalars()
+
+    async def delete_one(
+        self,
+        test_id: UUID,
+    ) -> UUID | None:
+        stmt = (
+            delete(self.model).where(self.model.id == test_id).returning(self.model.id)
+        )
+        test = await self.db.execute(stmt)
+        result = test.scalar_one_or_none()
+        return result

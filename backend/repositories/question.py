@@ -1,3 +1,4 @@
+from collections.abc import Sequence
 from uuid import UUID
 
 from models.question import Question
@@ -46,3 +47,15 @@ class QuestionRepository:
         user_id = await self.db.execute(stmt)
         result = user_id.scalar_one_or_none()
         return result
+
+    async def delete_by_test(
+        self,
+        test_id: UUID,
+    ) -> Sequence[UUID]:
+        stmt = (
+            delete(self.model)
+            .where(self.model.test_id == test_id)
+            .returning(self.model.id)
+        )
+        answer = await self.db.execute(stmt)
+        return answer.scalars().all()

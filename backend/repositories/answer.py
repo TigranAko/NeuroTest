@@ -2,6 +2,7 @@ from collections.abc import Sequence
 from uuid import UUID
 
 from models.answer import Answer
+from models.question import Question
 from schemas.answer import AnswerCreate
 from sqlalchemy import ScalarResult, delete, insert, select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -51,6 +52,23 @@ class AnswerRepository:
         stmt = (
             delete(self.model)
             .where(self.model.question_id == question_id)
+            .returning(self.model.id)
+        )
+        answer = await self.db.execute(stmt)
+        return answer.scalars().all()
+
+    async def delete_by_test(
+        self,
+        test_id: UUID,
+    ) -> Sequence[UUID]:
+        parent = Question
+        stmt = (
+            delete(self.model)
+            .where(
+                self.model.question_id.in_(
+                    select(parent.id).where(parent.test_id == test_id)
+                )
+            )
             .returning(self.model.id)
         )
         answer = await self.db.execute(stmt)
