@@ -27,59 +27,24 @@ NeuroTest — это веб-приложение для загрузки тес�
 ## Структура проекта
 
 ```text
-NeuroTest/
-├── backend/
-│   ├── api/
-│   │   └── v1/
-│   │       └── routers/          # Эндпоинты API
-│   │           ├── __init__.py
-│   │           ├── answer.py     # Работа с ответами
-│   │           ├── neurotest.py  # Основные эндпоинты (файлы, генерация)
-│   │           ├── question.py   # Работа с вопросами
-│   │           ├── auth.py   # Аутентификация и авторизвция
-│   │           └── test.py       # Управление тестами
-│   ├── core/
-│   │   ├── database.py           # Подключение к БД (SQLAlchemy async)
-│   │   └── settings.py           # Настройки и переменные окружения
-│   ├── files/                    # Директория для хранения загруженных файлов
-│   ├── infrastructure/
-│   │   └── file_storage.py       # Вспомогательные утилиты для файлового хранилища
-│   ├── models/                   # SQLAlchemy ORM-модели
-│   │   └── user.py
-│   ├── repositories/             # Работа с хранилищем данных
-│   │   ├── file_answer.py
-│   │   ├── file_question.py
-│   │   ├── file_test.py
-│   │   ├── user.py               # Репозиторий для пользователей
-│   │   └── interfaces.py
-│   ├── schemas/                  # Pydantic-схемы
-│   │   ├── test_output.py        # Схемы для выходных данных тестов
-│   │   └── user.py               # Схемы для пользователей
-│   ├── services/                 # Бизнес-логика
-│   │   ├── answer.py             # Сервис для работы с ответами
-│   │   ├── auth.py               # Сервис аутентификации 
-│   │   ├── file.py               # Загрузка, чтение, сохранение файлов
-│   │   ├── json2answer.py        # Генерация правильных ответов через LLM
-│   │   ├── jwt.py                # Работа с JWT-токенами 
-│   │   ├── question.py           # Сервис для работы с вопросами
-│   │   ├── test.py               # Сервис для работы с тестами
-│   │   └── text2json.py          # Парсинг текста теста в структурированный JSON
-│   ├── alembic/                  # Миграции базы данных (Alembic)
-│   │   └── versions/             # Файлы миграций
-│   ├── .dockerignore
-│   ├── alembic.ini               # Конфигурация Alembic
-│   ├── CHANGELOG.md
-│   ├── Dockerfile                # Инструкция для сборки образа
-│   ├── entrypoint.sh             # Точка входа для Docker (прогон миграций)
-│   ├── main.py                   # Точка входа FastAPI
-│   ├── pyproject.toml            # Зависимости и метаданные проекта
-│   ├── test_docx2txt.py          # Тесты для парсинга DOCX
-│   ├── test_feat.py              # Функциональные тесты
-│   └── uv.lock                   # Зафиксированные версии зависимостей
-├── frontend/
-│   └── index.html                # Простой интерфейс для выбора теста и режима
-├── docker-compose.yml
-└── .env.exapmle
+📁 NeuroTest/
+├── 📁 backend/                    # FastAPI-бэкенд
+│   ├── 📁 api/                    # REST-эндпоинты (auth, llm, тесты, вопросы, ответы)
+│   ├── 📁 core/                   # Подключение к БД и глобальные настройки
+│   ├── 📁 services/               # Бизнес-логика
+│   ├── 📁 models/                 # SQLAlchemy модели
+│   ├── 📁 repositories/           # операции с БД
+│   ├── 📁 schemas/                # Pydantic-схемы для валидации
+│   ├── 📁 infrastructure/         # Вспомогательные утилиты (файловое хранилище)
+│   ├── 📁 alembic/                # Миграции базы данных
+│   ├── 📁 files/                  # Загруженные файлы (игнорируется в git)
+│   ├── 🐍 main.py                 # Точка входа FastAPI
+│   ├── 🐳 Dockerfile              # Инструкция для сборки образа
+│   └── 📄 pyproject.toml          # Зависимости проекта
+├── 📁 frontend/
+│   └── 🌐 index.html              # Простой интерфейс для тестов
+├── 🐳 docker-compose.yml          # Оркестрация контейнеров
+└── 📄 .env.example                # Шаблон переменных окружения
 ```
 
 ## API Эндпоинты
