@@ -1,7 +1,7 @@
 from typing import Annotated
 from uuid import UUID
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, UploadFile
 from schemas.test import TestCreate, TestResponse
 from services.test import TestService, get_test_service
 
@@ -14,6 +14,14 @@ async def create_test(
     test_file: TestCreate,
 ) -> UUID:
     return await test_service.add_test(test_file)
+
+
+@router.post("/import")
+async def import_test(
+    test_service: Annotated[TestService, Depends(get_test_service)],
+    test: UploadFile,
+) -> UUID:
+    return await test_service.import_test(test)
 
 
 @router.get("/{test_id}")

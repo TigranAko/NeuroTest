@@ -1,11 +1,14 @@
+import json
 from typing import Annotated
 from uuid import UUID
 
 from core.database import get_db
-from fastapi import Depends, HTTPException
+from fastapi import Depends, HTTPException, UploadFile
 from repositories.answer import AnswerRepository
 from repositories.question import QuestionRepository
 from repositories.test import TestRepository
+from schemas.answer import AnswerCreate
+from schemas.question import QuestionCreate
 from schemas.test import TestCreate, TestResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -27,6 +30,38 @@ class TestService:
         test_id = await self.test.add_one(test)
         await self.db.commit()
         return test_id
+
+    async def import_test(
+        self,
+        file: UploadFile,
+    ) -> UUID:
+        data = await self._get_json(file)
+        test = data.copy()
+        questions = test.pop("questions")
+        tc = TestCreate(**test)
+        test_id = await self.test.add_one(tc)
+        for q in questions:
+            answers = q.pop("answers")
+            qc = QuestionCreate(text=q.get("question"))
+            question_id = await self.question.add_one(test_id, qc)
+            for a in answers:
+                ac = AnswerCreate(**a)
+                await self.answer.add_one(question_id, ac)
+        await self.db.commit()
+        return test_id
+
+    async def _get_json(
+        self,
+        file: UploadFile,
+    ) -> dict:
+        content_type = file.content_type
+        if content_type != "application/json":
+            raise HTTPException(
+                422,
+                "File Extension does not support",
+            )
+        data = json.loads(await file.read())
+        return data
 
     async def get_test(
         self,
