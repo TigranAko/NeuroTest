@@ -1,80 +1,106 @@
 import json
+from typing import Annotated
 from uuid import UUID
 
-from fastapi import HTTPException, UploadFile
-from pydantic import ValidationError
-from repositories.file_test import FileTestRepository
-from repositories.interfaces import ITestRepository
-from schemas.test_output import TestOutput
+from core.database import get_db
+from fastapi import Depends, HTTPException, UploadFile
+from repositories.answer import AnswerRepository
+from repositories.question import QuestionRepository
+from repositories.test import TestRepository
+from schemas.answer import AnswerCreate
+from schemas.question import QuestionCreate
+from schemas.test import TestCreate, TestResponse
+from sqlalchemy.ext.asyncio import AsyncSession
 
 
 class TestService:
-    def __init__(self, repo: ITestRepository):
-        self.repo = repo
-
-    async def _read_test_from_file(
+    def __init__(
         self,
-        test_file: UploadFile,
-    ) -> TestOutput:
-        file_type = test_file.content_type
-        if file_type != "application/json":
-            raise HTTPException(422)
-        file_content = await test_file.read()
-        file_text = file_content.decode("utf-8")
-        data = json.loads(file_text)
-        try:
-            test = TestOutput(**data)
-        except ValidationError:
-            raise HTTPException(422)
-        return test
-
-    async def add_test_from_file(
-        self,
-        test_file: UploadFile,
-    ) -> UUID:
-        test = await self._read_test_from_file(test_file)
-        return await self.add_test(test)
+        db: AsyncSession,
+    ):
+        self.db = db
+        self.test = TestRepository(db)
+        self.question = QuestionRepository(db)
+        self.answer = AnswerRepository(db)
 
     async def add_test(
         self,
-        test: TestOutput,
+        test: TestCreate,
     ) -> UUID:
-        test_id = await self.repo.add(test)
+        test_id = await self.test.add_one(test)
+        await self.db.commit()
         return test_id
+
+    async def import_test(
+        self,
+        file: UploadFile,
+    ) -> UUID:
+        data = await self._get_json(file)
+        test = data.copy()
+        questions = test.pop("questions")
+        tc = TestCreate(**test)
+        test_id = await self.test.add_one(tc)
+        for q in questions:
+            answers = q.pop("answers")
+            qc = QuestionCreate(text=q.get("question"))
+            question_id = await self.question.add_one(test_id, qc)
+            for a in answers:
+                ac = AnswerCreate(**a)
+                await self.answer.add_one(question_id, ac)
+        await self.db.commit()
+        return test_id
+
+    async def _get_json(
+        self,
+        file: UploadFile,
+    ) -> dict:
+        content_type = file.content_type
+        if content_type != "application/json":
+            raise HTTPException(
+                422,
+                "File Extension does not support",
+            )
+        data = json.loads(await file.read())
+        return data
 
     async def get_test(
         self,
         test_id: UUID,
-    ) -> TestOutput:
-        return await self.repo.get(test_id)
+    ) -> TestResponse:
+        data = await self.test.get_by_id(test_id)
+        if data is None:
+            raise HTTPException(404, "Test not found")
+        return TestResponse.model_validate(data)
 
     async def get_tests(
         self,
-    ) -> list[str]:
-        # TODO: Нужно поменять структуру, добавить метаданные, сейчас возвращается list[UUID], нужно list[dict]
-        return await self.repo.get_all()
-
-    async def update_test_from_file(
-        self,
-        test_file: UploadFile,
-        test_id: UUID,
-    ) -> UUID:
-        test = await self._read_test_from_file(test_file)
-        return await self.update_test(test, test_id)
-
-    async def update_test(
-        self,
-        test: TestOutput,
-        test_id: UUID,
-    ) -> UUID:
-        return await self.repo.update(test, test_id)
+    ) -> list[TestResponse]:
+        data = await self.test.get_tests()
+        if data is None:
+            raise HTTPException(404, "Test not found")
+        tests: list[TestResponse] = []
+        for test in data:
+            tests.append(TestResponse.model_validate(test))
+        return tests
 
     async def delete_test(
         self,
         test_id: UUID,
-    ) -> None:
-        return await self.repo.delete(test_id)
+    ) -> dict:
+        answers_id = await self.answer.delete_by_test(test_id)
+        questions_id = await self.question.delete_by_test(test_id)
+        test_id: UUID | None = await self.test.delete_one(test_id)
+        if test_id is None:
+            raise HTTPException(404, "Test not found")
+        await self.db.commit()
+        return {
+            "test_id": test_id,
+            "questions_id": list(questions_id),
+            "answers_id": list(answers_id),
+        }
 
 
-def get_test_service():
-    return TestService(FileTestRepository())
+def get_test_service(
+    db: Annotated[AsyncSession, Depends(get_db)],
+):
+    return TestService(db)

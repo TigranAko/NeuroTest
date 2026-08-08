@@ -19,7 +19,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 from core.database import Base
 from core.settings import db_settings
-from models.user import User  # noqa: F401
+from models import Answer, Question, Test, User
 
 target_metadata = Base.metadata
 config.set_main_option("sqlalchemy.url", db_settings.DATABASE_URL)
