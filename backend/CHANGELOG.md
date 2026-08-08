@@ -2,6 +2,173 @@
 
 <!-- version list -->
 
+## v0.6.0 (2026-08-08)
+
+### Bug Fixes
+
+- **alembic**: Delete unique text in answers
+  ([`a177443`](https://github.com/TigranAko/NeuroTest/commit/a1774431eac8f7ff69fe1c86b58e200772ccd622))
+
+- **model**: Delete unique text in answers
+  ([`740bba5`](https://github.com/TigranAko/NeuroTest/commit/740bba5eaa8fbd3b7f6aed38837f32358148e8d7))
+
+### Chores
+
+- **uv**: Update uv lock to 0.5.0
+  ([`915fc9b`](https://github.com/TigranAko/NeuroTest/commit/915fc9b5094bbfdc18beea182a4153363c03fb64))
+
+### Documentation
+
+- Replace API endpoints table to Swagger UI
+  ([`ce0a8ed`](https://github.com/TigranAko/NeuroTest/commit/ce0a8edeb0248971e3f321fae317bcfe21b5e161))
+
+- Simplify and group technologies
+  ([`b2f3e00`](https://github.com/TigranAko/NeuroTest/commit/b2f3e003bbcedcb2e0240b53471c05e95620bedc))
+
+- Simplify project structure with grouped icons
+  ([`187467e`](https://github.com/TigranAko/NeuroTest/commit/187467e1f972f7d4e4e41d70ef80c0a5f980cb7a))
+
+### Features
+
+- **alembic**: Add basic test tables (tests,questions,answers)
+  ([`273ec58`](https://github.com/TigranAko/NeuroTest/commit/273ec58c6e2e72af606d2fbe54e90e294f698a74))
+
+- **alembic**: Add foreign keys and relationships for test objects
+  ([`1107a29`](https://github.com/TigranAko/NeuroTest/commit/1107a299f2ce670fea44192a79397ac707d1eace))
+
+- **api**: Delete answer
+  ([`7ae18ab`](https://github.com/TigranAko/NeuroTest/commit/7ae18abefe28397a623e9903f7cc93c4a7a2487c))
+
+- **api**: Delete old methods for answers
+  ([`29ae1b9`](https://github.com/TigranAko/NeuroTest/commit/29ae1b9b42fe5176bae32c4761a17f63b6c832be))
+
+- **api**: Delete old methods for question
+  ([`4c006a5`](https://github.com/TigranAko/NeuroTest/commit/4c006a5dc88053436cf6c744dae099f82379d3a6))
+
+- **api**: Delete old methods for test
+  ([`2c7a1dc`](https://github.com/TigranAko/NeuroTest/commit/2c7a1dce8d6a0bdb3da9eab9f1b524094094de29))
+
+- **api**: Delete question with answers
+  ([`99aefcf`](https://github.com/TigranAko/NeuroTest/commit/99aefcfcd07fc9c0afcdea0862c26d095519b96f))
+
+- **api**: Delete test with questions and answers
+  ([`739a5e7`](https://github.com/TigranAko/NeuroTest/commit/739a5e719c2eb9213f6253f3be7c9c10b3c720b9))
+
+- **api**: Get answers quesion
+  ([`19f06d5`](https://github.com/TigranAko/NeuroTest/commit/19f06d501c6c0062e5908d7ab38d285d7a5d511f))
+
+- **api**: Get questions test
+  ([`8e33cb7`](https://github.com/TigranAko/NeuroTest/commit/8e33cb7a58ad679c8a1b5caf955b13380aa421d0))
+
+- **api**: Get tests
+  ([`d59dcaa`](https://github.com/TigranAko/NeuroTest/commit/d59dcaaced2891bc0e552fe4efc87abd9e426fae))
+
+- **api**: Import test from json file
+  ([`de46455`](https://github.com/TigranAko/NeuroTest/commit/de46455023af5202ece3d5ff5ea176b0f1f92dc1))
+
+- **models**: Add foreign keys and relationships for test object
+  ([`173b17a`](https://github.com/TigranAko/NeuroTest/commit/173b17a1b88926bf155525d2bbcf6b5d08eb955d))
+
+- **models**: Add test object (tests,questions,answers)
+  ([`07d979e`](https://github.com/TigranAko/NeuroTest/commit/07d979ed29dbb302ca299ecf632750c4b104eb18))
+
+
+## v0.5.0 (2026-07-17)
+
+### Chores
+
+- **env**: Add variavles for postgresql
+  ([`79e8072`](https://github.com/TigranAko/NeuroTest/commit/79e807280d85ae701fba3c60c13b3c25e033a534))
+
+- **uv**: Add alembic
+  ([`b0c9f07`](https://github.com/TigranAko/NeuroTest/commit/b0c9f0791843a2157a1aa2328f76624f3ca549dd))
+
+- **uv**: Add psycopg with binary and pool
+  ([`2395b3a`](https://github.com/TigranAko/NeuroTest/commit/2395b3aab6dad818c4029e0029e41d5ec3f74433))
+
+- **uv**: Add psycopg3
+  ([`026a266`](https://github.com/TigranAko/NeuroTest/commit/026a266ebf70cca8ef07c085b9dc9a432a1b6851))
+
+- **uv**: Add sqlalchemy[asyncio]
+  ([`e7cc53b`](https://github.com/TigranAko/NeuroTest/commit/e7cc53b8791216e6bd78cadba32dba95bac789fb))
+
+### Documentation
+
+- Add alembic files and user model to readme
+  ([`73cbfe7`](https://github.com/TigranAko/NeuroTest/commit/73cbfe7f8a6f9b77a5e4ab1571f14750ede15b77))
+
+- Add database technologies to readme
+  ([`655c57d`](https://github.com/TigranAko/NeuroTest/commit/655c57de080ecea0f5351bff89ad06466e76d17c))
+
+- Change endpoint /myid to /me, get user info
+  ([`7b63304`](https://github.com/TigranAko/NeuroTest/commit/7b6330428423d43829fb48ebc72273d26ff338df))
+
+- Change run services in readme
+  ([`542969e`](https://github.com/TigranAko/NeuroTest/commit/542969e9fd7010b269c9d48c4783da955ef37e8a))
+
+### Features
+
+- **alembic**: Add metadata for autogenerate migrations
+  ([`012f4ac`](https://github.com/TigranAko/NeuroTest/commit/012f4ac018a161bd4ba89f37008ecce99706a315))
+
+- **alembic**: Add timestamp for table users
+  ([`012571b`](https://github.com/TigranAko/NeuroTest/commit/012571b9b03358382e7b57df8ca020e57992e3b4))
+
+- **alembic**: Add user table
+  ([`6078130`](https://github.com/TigranAko/NeuroTest/commit/607813072aa944f6def7832e229448c81649052c))
+
+- **alembic**: Init alembic
+  ([`149db45`](https://github.com/TigranAko/NeuroTest/commit/149db4575160d82e04e4a97d094c8acac9f96176))
+
+- **api**: Add timestamp for schemas
+  ([`67d77be`](https://github.com/TigranAko/NeuroTest/commit/67d77be567d2739884aa0e8e6bb395134e7c57f5))
+
+- **db**: Add async database
+  ([`31c5991`](https://github.com/TigranAko/NeuroTest/commit/31c59916892fb4199909f34bbdaa2e0f66ec8453))
+
+- **db**: Add user model
+  ([`5a97857`](https://github.com/TigranAko/NeuroTest/commit/5a978577b33e85656c210f169c4bbd88a677581f))
+
+- **db**: Create tables in lifespan
+  ([`9be35d1`](https://github.com/TigranAko/NeuroTest/commit/9be35d12f685dd8ea7f559649597bff3f503fb5a))
+
+- **docker**: Add adminer to compose
+  ([`ae275d2`](https://github.com/TigranAko/NeuroTest/commit/ae275d2ee95eb5ee67a7e77d73e02ed5e07a7a6e))
+
+- **docker**: Add docker-compose with fastapi
+  ([`274ab43`](https://github.com/TigranAko/NeuroTest/commit/274ab433d00de0c7761d71b46c78a43300400810))
+
+- **docker**: Add entrypoint for alembic upgrade head
+  ([`cf1c714`](https://github.com/TigranAko/NeuroTest/commit/cf1c7147140b61ae6a30299caf90f65df1b06d26))
+
+- **docker**: Add postgres to compose
+  ([`770ec9d`](https://github.com/TigranAko/NeuroTest/commit/770ec9ddf9289ed95867f08d31ec2fc1840213cc))
+
+- **env**: Add settings for postgres
+  ([`1af3f3a`](https://github.com/TigranAko/NeuroTest/commit/1af3f3acfaee341a28fd260b0b1a9ab5ae7dadc5))
+
+- **models**: Add timestamp mixin
+  ([`8c6ef59`](https://github.com/TigranAko/NeuroTest/commit/8c6ef5947a956a6fb215f9412053b2576d797701))
+
+- **user**: Add add_one() to UserRepository
+  ([`4358b85`](https://github.com/TigranAko/NeuroTest/commit/4358b85e2e72c0bf332c0fa2160f6ad8a0e0aa58))
+
+- **user**: Add get_by_username in repository
+  ([`9c9ab21`](https://github.com/TigranAko/NeuroTest/commit/9c9ab21559505b5cc7cdc7c59a513149a3924c82))
+
+- **user**: Change information about current user on endpoint auth/me
+  ([`4af69fc`](https://github.com/TigranAko/NeuroTest/commit/4af69fc06ec57083ce70db942c2d125099775311))
+
+- **user**: Use repository for login
+  ([`d52fee7`](https://github.com/TigranAko/NeuroTest/commit/d52fee7caa764e6280644b3be1c85ac3eb5371c1))
+
+- **user**: Use repository for register
+  ([`9994484`](https://github.com/TigranAko/NeuroTest/commit/9994484988a29b92ff7bd67849213c0132239555))
+
+- **user**: Verify user's existence durning registration
+  ([`7cdc52d`](https://github.com/TigranAko/NeuroTest/commit/7cdc52dd8c0f67be02078c418b605e2f8dcdd2cb))
+
+
 ## v0.4.0 (2026-07-14)
 
 ### Bug Fixes
