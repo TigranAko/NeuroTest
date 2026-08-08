@@ -25,21 +25,23 @@ class TestService:
 
     async def add_test(
         self,
+        author_id: UUID,
         test: TestCreate,
     ) -> UUID:
-        test_id = await self.test.add_one(test)
+        test_id = await self.test.add_one(test, author_id)
         await self.db.commit()
         return test_id
 
     async def import_test(
         self,
+        author_id: UUID,
         file: UploadFile,
     ) -> UUID:
         data = await self._get_json(file)
         test = data.copy()
         questions = test.pop("questions")
         tc = TestCreate(**test)
-        test_id = await self.test.add_one(tc)
+        test_id = await self.test.add_one(tc, author_id)
         for q in questions:
             answers = q.pop("answers")
             qc = QuestionCreate(text=q.get("question"))

@@ -3,6 +3,7 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends, UploadFile
 from schemas.test import TestCreate, TestResponse
+from services.jwt import get_current_user_id
 from services.test import TestService, get_test_service
 
 router = APIRouter(prefix="/api/v1/tests", tags=["Test"])
@@ -11,17 +12,19 @@ router = APIRouter(prefix="/api/v1/tests", tags=["Test"])
 @router.post("/")
 async def create_test(
     test_service: Annotated[TestService, Depends(get_test_service)],
+    user_id: Annotated[UUID, Depends(get_current_user_id)],
     test_file: TestCreate,
 ) -> UUID:
-    return await test_service.add_test(test_file)
+    return await test_service.add_test(user_id, test_file)
 
 
 @router.post("/import")
 async def import_test(
     test_service: Annotated[TestService, Depends(get_test_service)],
+    user_id: Annotated[UUID, Depends(get_current_user_id)],
     test: UploadFile,
 ) -> UUID:
-    return await test_service.import_test(test)
+    return await test_service.import_test(user_id, test)
 
 
 @router.get("/{test_id}")
