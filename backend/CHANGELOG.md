@@ -2,6 +2,77 @@
 
 <!-- version list -->
 
+## v0.6.0 (2026-08-08)
+
+### Bug Fixes
+
+- **alembic**: Delete unique text in answers
+  ([`a177443`](https://github.com/TigranAko/NeuroTest/commit/a1774431eac8f7ff69fe1c86b58e200772ccd622))
+
+- **model**: Delete unique text in answers
+  ([`740bba5`](https://github.com/TigranAko/NeuroTest/commit/740bba5eaa8fbd3b7f6aed38837f32358148e8d7))
+
+### Chores
+
+- **uv**: Update uv lock to 0.5.0
+  ([`915fc9b`](https://github.com/TigranAko/NeuroTest/commit/915fc9b5094bbfdc18beea182a4153363c03fb64))
+
+### Documentation
+
+- Replace API endpoints table to Swagger UI
+  ([`ce0a8ed`](https://github.com/TigranAko/NeuroTest/commit/ce0a8edeb0248971e3f321fae317bcfe21b5e161))
+
+- Simplify and group technologies
+  ([`b2f3e00`](https://github.com/TigranAko/NeuroTest/commit/b2f3e003bbcedcb2e0240b53471c05e95620bedc))
+
+- Simplify project structure with grouped icons
+  ([`187467e`](https://github.com/TigranAko/NeuroTest/commit/187467e1f972f7d4e4e41d70ef80c0a5f980cb7a))
+
+### Features
+
+- **alembic**: Add basic test tables (tests,questions,answers)
+  ([`273ec58`](https://github.com/TigranAko/NeuroTest/commit/273ec58c6e2e72af606d2fbe54e90e294f698a74))
+
+- **alembic**: Add foreign keys and relationships for test objects
+  ([`1107a29`](https://github.com/TigranAko/NeuroTest/commit/1107a299f2ce670fea44192a79397ac707d1eace))
+
+- **api**: Delete answer
+  ([`7ae18ab`](https://github.com/TigranAko/NeuroTest/commit/7ae18abefe28397a623e9903f7cc93c4a7a2487c))
+
+- **api**: Delete old methods for answers
+  ([`29ae1b9`](https://github.com/TigranAko/NeuroTest/commit/29ae1b9b42fe5176bae32c4761a17f63b6c832be))
+
+- **api**: Delete old methods for question
+  ([`4c006a5`](https://github.com/TigranAko/NeuroTest/commit/4c006a5dc88053436cf6c744dae099f82379d3a6))
+
+- **api**: Delete old methods for test
+  ([`2c7a1dc`](https://github.com/TigranAko/NeuroTest/commit/2c7a1dce8d6a0bdb3da9eab9f1b524094094de29))
+
+- **api**: Delete question with answers
+  ([`99aefcf`](https://github.com/TigranAko/NeuroTest/commit/99aefcfcd07fc9c0afcdea0862c26d095519b96f))
+
+- **api**: Delete test with questions and answers
+  ([`739a5e7`](https://github.com/TigranAko/NeuroTest/commit/739a5e719c2eb9213f6253f3be7c9c10b3c720b9))
+
+- **api**: Get answers quesion
+  ([`19f06d5`](https://github.com/TigranAko/NeuroTest/commit/19f06d501c6c0062e5908d7ab38d285d7a5d511f))
+
+- **api**: Get questions test
+  ([`8e33cb7`](https://github.com/TigranAko/NeuroTest/commit/8e33cb7a58ad679c8a1b5caf955b13380aa421d0))
+
+- **api**: Get tests
+  ([`d59dcaa`](https://github.com/TigranAko/NeuroTest/commit/d59dcaaced2891bc0e552fe4efc87abd9e426fae))
+
+- **api**: Import test from json file
+  ([`de46455`](https://github.com/TigranAko/NeuroTest/commit/de46455023af5202ece3d5ff5ea176b0f1f92dc1))
+
+- **models**: Add foreign keys and relationships for test object
+  ([`173b17a`](https://github.com/TigranAko/NeuroTest/commit/173b17a1b88926bf155525d2bbcf6b5d08eb955d))
+
+- **models**: Add test object (tests,questions,answers)
+  ([`07d979e`](https://github.com/TigranAko/NeuroTest/commit/07d979ed29dbb302ca299ecf632750c4b104eb18))
+
+
 ## v0.5.0 (2026-07-17)
 
 ### Chores
