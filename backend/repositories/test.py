@@ -37,10 +37,10 @@ class TestRepository:
     async def delete_one(
         self,
         test_id: UUID,
-    ) -> UUID | None:
+    ) -> UUID:
         stmt = (
             delete(self.model).where(self.model.id == test_id).returning(self.model.id)
         )
         test = await self.db.execute(stmt)
-        result = test.scalar_one_or_none()
+        result = test.scalar_one()
         return result

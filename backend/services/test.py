@@ -87,13 +87,15 @@ class TestService:
 
     async def delete_test(
         self,
+        user_id: UUID,
         test_id: UUID,
     ) -> dict:
+        test = await self.get_test(test_id)
+        if user_id != test.author_id:
+            raise HTTPException(403)
         answers_id = await self.answer.delete_by_test(test_id)
         questions_id = await self.question.delete_by_test(test_id)
-        test_id: UUID | None = await self.test.delete_one(test_id)
-        if test_id is None:
-            raise HTTPException(404, "Test not found")
+        test_id = await self.test.delete_one(test_id)
         await self.db.commit()
         return {
             "test_id": test_id,

@@ -45,6 +45,7 @@ async def read_tests(
 @router.delete("/{test_id}")
 async def delete_test(
     test_service: Annotated[TestService, Depends(get_test_service)],
+    user_id: Annotated[UUID, Depends(get_current_user_id)],
     test_id: UUID,
 ) -> dict:
-    return await test_service.delete_test(test_id)
+    return await test_service.delete_test(user_id, test_id)
