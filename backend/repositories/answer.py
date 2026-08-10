@@ -3,6 +3,7 @@ from uuid import UUID
 
 from models.answer import Answer
 from models.question import Question
+from models.test import Test
 from schemas.answer import AnswerCreate
 from sqlalchemy import ScalarResult, delete, insert, select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -35,6 +36,16 @@ class AnswerRepository:
         stmt = select(self.model).where(self.model.question_id == question_id)
         answer = await self.db.execute(stmt)
         return answer.scalars()
+
+    async def get_author_id(self, answer_id: UUID) -> UUID | None:
+        stmt = (
+            select(Test.author_id)
+            .join(Question, Question.test_id == Test.id)
+            .join(self.model, self.model.question_id == Question.id)
+            .where(self.model.id == answer_id)
+        )
+        answer = await self.db.execute(stmt)
+        return answer.scalar_one_or_none()
 
     async def delete_one(self, answer_id: UUID) -> UUID | None:
         stmt = (
