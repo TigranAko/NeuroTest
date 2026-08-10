@@ -37,7 +37,11 @@ class QuestionRepository:
         return answer.scalars()
 
     async def get_author_id(self, question_id: UUID) -> UUID | None:
-        stmt = select(Test.author_id).join(self.model, self.model.id == question_id)
+        stmt = (
+            select(Test.author_id)
+            .join(self.model, self.model.test_id == Test.id)
+            .where(self.model.id == question_id)
+        )
         answer = await self.db.execute(stmt)
         return answer.scalar_one_or_none()
 
