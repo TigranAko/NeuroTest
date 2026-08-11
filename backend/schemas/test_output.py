@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from pydantic import BaseModel
 
 
@@ -12,4 +14,5 @@ class QuestionOutput(BaseModel):
 
 
 class TestOutput(BaseModel):
+    author_id: UUID
     questions: list[QuestionOutput]

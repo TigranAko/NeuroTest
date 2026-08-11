@@ -25,21 +25,23 @@ class TestService:
 
     async def add_test(
         self,
+        author_id: UUID,
         test: TestCreate,
     ) -> UUID:
-        test_id = await self.test.add_one(test)
+        test_id = await self.test.add_one(test, author_id)
         await self.db.commit()
         return test_id
 
     async def import_test(
         self,
+        author_id: UUID,
         file: UploadFile,
     ) -> UUID:
         data = await self._get_json(file)
         test = data.copy()
         questions = test.pop("questions")
         tc = TestCreate(**test)
-        test_id = await self.test.add_one(tc)
+        test_id = await self.test.add_one(tc, author_id)
         for q in questions:
             answers = q.pop("answers")
             qc = QuestionCreate(text=q.get("question"))
@@ -85,13 +87,15 @@ class TestService:
 
     async def delete_test(
         self,
+        user_id: UUID,
         test_id: UUID,
     ) -> dict:
+        test = await self.get_test(test_id)
+        if user_id != test.author_id:
+            raise HTTPException(403)
         answers_id = await self.answer.delete_by_test(test_id)
         questions_id = await self.question.delete_by_test(test_id)
-        test_id: UUID | None = await self.test.delete_one(test_id)
-        if test_id is None:
-            raise HTTPException(404, "Test not found")
+        test_id = await self.test.delete_one(test_id)
         await self.db.commit()
         return {
             "test_id": test_id,

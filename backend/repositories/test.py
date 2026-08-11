@@ -15,8 +15,11 @@ class TestRepository:
     async def add_one(
         self,
         test: TestCreate,
+        author_id: UUID,
     ) -> UUID:
-        stmt = insert(self.model).values(**test.model_dump()).returning(self.model.id)
+        data = test.model_dump()
+        data["author_id"] = author_id
+        stmt = insert(self.model).values(**data).returning(self.model.id)
         user_id = await self.db.execute(stmt)
         result = user_id.scalar_one()
         return result
@@ -34,10 +37,10 @@ class TestRepository:
     async def delete_one(
         self,
         test_id: UUID,
-    ) -> UUID | None:
+    ) -> UUID:
         stmt = (
             delete(self.model).where(self.model.id == test_id).returning(self.model.id)
         )
         test = await self.db.execute(stmt)
-        result = test.scalar_one_or_none()
+        result = test.scalar_one()
         return result

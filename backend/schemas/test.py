@@ -12,6 +12,6 @@ class TestCreate(BaseModel):
 class TestResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: UUID
-    # TODO: user id
+    author_id: UUID
     # TODO: title
     # questions: list[QuestionResponse]

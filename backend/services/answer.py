@@ -18,10 +18,12 @@ class AnswerService:
 
     async def add_answer(
         self,
+        user_id: UUID,
         answer: AnswerCreate,
         question_id: UUID,
     ) -> UUID:
         answer_id = await self.repo.add_one(question_id, answer)
+        await self._verify_authorship(user_id, answer_id)
         await self.db.commit()
         return answer_id
 
@@ -49,13 +51,19 @@ class AnswerService:
 
     async def delete_answer(
         self,
+        user_id: UUID,
         answer_id: UUID,
     ) -> UUID:
+        await self._verify_authorship(user_id, answer_id)
         answer = await self.repo.delete_one(answer_id)
         if answer is None:
             raise HTTPException(404, "Answer not found")
         await self.db.commit()
         return answer
+
+    async def _verify_authorship(self, user_id: UUID, answer_id: UUID) -> None:
+        if user_id != await self.repo.get_author_id(answer_id):
+            raise HTTPException(403)
 
 
 def get_answer_service(

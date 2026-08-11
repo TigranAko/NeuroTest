@@ -20,12 +20,15 @@ class QuestionService:
 
     async def add_question(
         self,
+        user_id: UUID,
         test_id: UUID,
         question: QuestionCreate,
     ) -> UUID:
-        test_id = await self.question.add_one(test_id, question)
+        # TODO: verify test_id
+        question_id = await self.question.add_one(test_id, question)
+        await self._verify_authorship(user_id, question_id)
         await self.db.commit()
-        return test_id
+        return question_id
 
     async def get_question(
         self,
@@ -51,9 +54,11 @@ class QuestionService:
 
     async def delete_question(
         self,
+        user_id: UUID,
         question_id: UUID,
     ) -> dict[UUID, list[UUID]]:
         # ) -> QuestionResponse:
+        await self._verify_authorship(user_id, question_id)
         answers = await self.answer.delete_by_question(question_id)
         question_id: UUID | None = await self.question.delete_one(question_id)
         if question_id is None:
@@ -61,6 +66,10 @@ class QuestionService:
         await self.db.commit()
         question = {question_id: list(answers)}
         return question
+
+    async def _verify_authorship(self, user_id: UUID, question_id: UUID) -> None:
+        if user_id != await self.question.get_author_id(question_id):
+            raise HTTPException(403)
 
 
 def get_question_service(

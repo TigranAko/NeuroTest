@@ -2,6 +2,7 @@ from collections.abc import Sequence
 from uuid import UUID
 
 from models.question import Question
+from models.test import Test
 from schemas.question import QuestionCreate
 from sqlalchemy import ScalarResult, delete, insert, select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -34,6 +35,15 @@ class QuestionRepository:
         stmt = select(self.model).where(self.model.test_id == test_id)
         answer = await self.db.execute(stmt)
         return answer.scalars()
+
+    async def get_author_id(self, question_id: UUID) -> UUID | None:
+        stmt = (
+            select(Test.author_id)
+            .join(self.model, self.model.test_id == Test.id)
+            .where(self.model.id == question_id)
+        )
+        answer = await self.db.execute(stmt)
+        return answer.scalar_one_or_none()
 
     async def delete_one(
         self,
