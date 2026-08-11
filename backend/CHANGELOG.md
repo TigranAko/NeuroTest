@@ -2,6 +2,37 @@
 
 <!-- version list -->
 
+## v0.6.1 (2026-08-11)
+
+### Bug Fixes
+
+- **alembic**: Add author_id to tests
+  ([`eab041d`](https://github.com/TigranAko/NeuroTest/commit/eab041d494e5e905743dbe2b4bdc034e07114e6b))
+
+- **api**: Add author id for create test
+  ([`a7f4984`](https://github.com/TigranAko/NeuroTest/commit/a7f4984d0310418711f7331f3cff4ab48832c95d))
+
+- **api**: Verify authorship for create and delete answer
+  ([`e48d4a4`](https://github.com/TigranAko/NeuroTest/commit/e48d4a47ce46214d4eaefe348d9a059fef82268d))
+
+- **api**: Verify authorship for create and delete question
+  ([`9158f9b`](https://github.com/TigranAko/NeuroTest/commit/9158f9bf57f2c61f73f74786e41a19c95d066d25))
+
+- **api**: Verify authorship for deleting test
+  ([`cf9d881`](https://github.com/TigranAko/NeuroTest/commit/cf9d881420869509d569309f09b125c63123cde6))
+
+- **model**: Add author_id to tests
+  ([`6e60db7`](https://github.com/TigranAko/NeuroTest/commit/6e60db7dff3683055ec78ee9482be1a69e38a41f))
+
+- **repo**: Select author id with condition based on question id
+  ([`3d7d3db`](https://github.com/TigranAko/NeuroTest/commit/3d7d3db392837f5be7a289ffbe9986442fffc1e1))
+
+### Chores
+
+- **uv**: Update uv lock to 0.6.0
+  ([`2a76204`](https://github.com/TigranAko/NeuroTest/commit/2a762044a62ea6111e2199790a1cb6bef7e69a96))
+
+
 ## v0.6.0 (2026-08-08)
 
 ### Bug Fixes
