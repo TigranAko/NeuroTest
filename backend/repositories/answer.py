@@ -5,7 +5,7 @@ from models.answer import Answer
 from models.question import Question
 from models.test import Test
 from schemas.answer import AnswerCreate
-from sqlalchemy import ScalarResult, delete, insert, select
+from sqlalchemy import ScalarResult, delete, func, insert, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
@@ -20,9 +20,21 @@ class AnswerRepository:
         question_id: UUID,
         answer: AnswerCreate,
     ) -> UUID:
-        data = answer.model_dump()
-        data["question_id"] = question_id
-        stmt = insert(self.model).values(**data).returning(self.model.id)
+        position_subq = (
+            select(func.count())
+            .where(self.model.question_id == question_id)
+            .scalar_subquery()
+        )
+        stmt = (
+            insert(self.model)
+            .values(
+                text=answer.text,
+                isCorrect=answer.isCorrect,
+                question_id=question_id,
+                position=position_subq,
+            )
+            .returning(self.model.id)
+        )
         answer_id = await self.db.execute(stmt)
         result = answer_id.scalar_one()
         return result
