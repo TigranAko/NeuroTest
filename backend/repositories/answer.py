@@ -5,7 +5,7 @@ from models.answer import Answer
 from models.question import Question
 from models.test import Test
 from schemas.answer import AnswerCreate
-from sqlalchemy import ScalarResult, delete, func, insert, select
+from sqlalchemy import ScalarResult, delete, func, insert, select, Update, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
@@ -96,3 +96,19 @@ class AnswerRepository:
         )
         answer = await self.db.execute(stmt)
         return answer.scalars().all()
+
+    async def shift_positions(
+        self,
+        question_id: UUID,
+        from_position: int,
+        delta: int = -1,
+    ) -> None:
+        stmt = (
+            update(self.model)
+            .where(
+                self.model.question_id == question_id,
+                self.model.position >= from_position,
+            )
+            .values(position=self.model.position + delta)
+        )
+        await self.db.execute(stmt)
