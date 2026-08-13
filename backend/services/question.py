@@ -59,12 +59,14 @@ class QuestionService:
     ) -> dict[UUID, list[UUID]]:
         # ) -> QuestionResponse:
         await self._verify_authorship(user_id, question_id)
-        answers = await self.answer.delete_by_question(question_id)
-        question_id: UUID | None = await self.question.delete_one(question_id)
-        if question_id is None:
+        question = await self.question.get_by_id(question_id)
+        if question is None:
             raise HTTPException(404, "Question not found")
+        answers = await self.answer.delete_by_question(question_id)
+        await self.question.delete_one(question_id)
+        await self.question.shift_positions(question.test_id, question.position)
         await self.db.commit()
-        question = {question_id: list(answers)}
+        question = {question_id: list(answers)}  # TODO: Change output relust
         return question
 
     async def _verify_authorship(self, user_id: UUID, question_id: UUID) -> None:

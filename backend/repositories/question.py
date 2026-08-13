@@ -4,7 +4,7 @@ from uuid import UUID
 from models.question import Question
 from models.test import Test
 from schemas.question import QuestionCreate
-from sqlalchemy import ScalarResult, delete, func, insert, select
+from sqlalchemy import ScalarResult, delete, func, insert, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
@@ -75,3 +75,19 @@ class QuestionRepository:
         )
         answer = await self.db.execute(stmt)
         return answer.scalars().all()
+
+    async def shift_positions(
+        self,
+        test_id: UUID,
+        from_position: int,
+        delta: int = -1,
+    ) -> None:
+        stmt = (
+            update(self.model)
+            .where(
+                self.model.test_id == test_id,
+                self.model.position >= from_position,
+            )
+            .values(position=self.model.position + delta)
+        )
+        await self.db.execute(stmt)

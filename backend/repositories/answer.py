@@ -5,7 +5,7 @@ from models.answer import Answer
 from models.question import Question
 from models.test import Test
 from schemas.answer import AnswerCreate
-from sqlalchemy import ScalarResult, delete, func, insert, select, Update, update
+from sqlalchemy import ScalarResult, delete, func, insert, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
