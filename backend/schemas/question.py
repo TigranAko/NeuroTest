@@ -12,8 +12,8 @@ class QuestionCreate(BaseModel):
 
 class QuestionResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
-    text: str
     id: UUID
+    text: str
+    position: int
     # TODO:
-    # position: int
     # answers: list["Answer"]

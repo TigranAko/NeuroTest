@@ -55,11 +55,13 @@ class AnswerService:
         answer_id: UUID,
     ) -> UUID:
         await self._verify_authorship(user_id, answer_id)
-        answer = await self.repo.delete_one(answer_id)
+        answer = await self.repo.get_by_id(answer_id)
         if answer is None:
             raise HTTPException(404, "Answer not found")
+        await self.repo.delete_one(answer_id)
+        await self.repo.shift_positions(answer.question_id, answer.position)
         await self.db.commit()
-        return answer
+        return answer_id
 
     async def _verify_authorship(self, user_id: UUID, answer_id: UUID) -> None:
         if user_id != await self.repo.get_author_id(answer_id):
