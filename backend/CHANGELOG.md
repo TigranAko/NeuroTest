@@ -2,6 +2,40 @@
 
 <!-- version list -->
 
+## v0.6.2 (2026-08-15)
+
+### Bug Fixes
+
+- **alembic**: Add position to answers
+  ([`da89fd8`](https://github.com/TigranAko/NeuroTest/commit/da89fd845d3d1e9a3bf5623187de36e424c41198))
+
+- **alembic**: Add position to questions
+  ([`8017ea9`](https://github.com/TigranAko/NeuroTest/commit/8017ea9e63653818dc08d9774681e85233e53864))
+
+- **model**: Add position to answers
+  ([`d397a72`](https://github.com/TigranAko/NeuroTest/commit/d397a72b309331b5c37db357be9ea8a021fd6162))
+
+- **model**: Add position to questions
+  ([`7370849`](https://github.com/TigranAko/NeuroTest/commit/7370849d0002ea42b0cc8f090dcf08ae6d4fea36))
+
+- **repo**: Autocreate position for answers
+  ([`9204a1a`](https://github.com/TigranAko/NeuroTest/commit/9204a1a85bfff08dfc4bc5079bde23ff142b6bf4))
+
+- **repo**: Autocreate position for question
+  ([`549bd24`](https://github.com/TigranAko/NeuroTest/commit/549bd248104270263cee85a3b0ade17ca81278cd))
+
+- **repo**: Shift positions when delete one answer
+  ([`dcc1295`](https://github.com/TigranAko/NeuroTest/commit/dcc12958c49921431ea1433a7e68810c1af0d7f1))
+
+- **repo**: Shift positions when delete one question
+  ([`a3ca448`](https://github.com/TigranAko/NeuroTest/commit/a3ca44879e481c156a502d69388937836fd64b31))
+
+### Chores
+
+- **uv**: Update uv lock to 0.6.1
+  ([`f8d6494`](https://github.com/TigranAko/NeuroTest/commit/f8d6494875497c25bc9dd6c60d2fb85b29b101d4))
+
+
 ## v0.6.1 (2026-08-11)
 
 ### Bug Fixes
