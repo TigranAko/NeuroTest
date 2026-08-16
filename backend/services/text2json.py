@@ -82,6 +82,15 @@ class TextToJsonService:
                 return chunk_test
         print("ERROR: Не получилось обработать чанк\n\n", chunk_text)
 
+    def _delete_dublicate(self, all_questions, new_questions) -> None:
+        if (
+            all_questions != []
+            and all_questions[-1].question == new_questions[0].question
+        ):
+            print("\nУдаление дубликата вопроса при соединении чанков")
+            print(all_questions[-1], "\n", new_questions[0])
+            all_questions.pop()
+
     def parse_test(self, raw_text: str) -> Test:
         chunks = self._split_text(raw_text)
         all_questions = []
@@ -94,14 +103,11 @@ class TextToJsonService:
             chunk_test = self._try_parse_chunk(chunk, tail, last_question)
             new_questions = chunk_test.questions
             print("Новые вопросы", new_questions)
-            if (
-                all_questions != []
-                and all_questions[-1].question == new_questions[0].question
-            ):
-                print("\nУдаление дубликата вопроса при соединении чанков")
-                print(all_questions[-1], "\n", new_questions[0])
-                all_questions.pop()
+            self._delete_dublicate(
+                all_questions, new_questions
+            )  # all_questions is mutable (delete dublicate last question)
             all_questions.extend(new_questions)
+
             print(f"Добавлено {len(new_questions)} вопросов")
             chunk_lines = chunk.split("\n")
             tail = chunk_lines[-1]
