@@ -64,6 +64,24 @@ class TextToJsonService:
         )
         return spliter.split_text(text)
 
+    def _try_parse_chunk(
+        self,
+        chunk_text: str,
+        tail: str,
+        last_question_last_chunk: str | None,
+    ) -> list[Question]:
+        chunk_test = None
+        for retry_count in range(3):
+            print(f"\nОтправляется запрос {retry_count + 1}\n")
+            chunk_test = self.parse_chunk(
+                chunk_text,
+                tail,
+                last_question_last_chunk,
+            )  # TODO: Тут используется модель
+            if chunk_test is not None:
+                return chunk_test
+        print("ERROR: Не получилось обработать чанк\n\n", chunk_text)
+
     def parse_test(self, raw_text: str) -> Test:
         chunks = self._split_text(raw_text)
         all_questions = []
@@ -72,18 +90,8 @@ class TextToJsonService:
         for i, chunk in enumerate(chunks, 1):
             chunk = chunk.replace("\n\n", "\n")
             print(f"Чанк: {i}/{len(chunks)}\nДлина чанка {len(chunk)} символов")
-            chunk_test = None
-            for retry_count in range(3):
-                print(f"\nОтправляется запрос {retry_count + 1}\n")
-                chunk_test = self.parse_chunk(
-                    chunk,
-                    tail,
-                    last_question,
-                )  # TODO: Тут используется модель
-                if chunk_test is not None:
-                    break
-            else:
-                print("ERROR: Не получилось обработать чанк", i, chunk)
+
+            chunk_test = self._try_parse_chunk(chunk, tail, last_question)
             new_questions = chunk_test.questions
             print("Новые вопросы", new_questions)
             if (
