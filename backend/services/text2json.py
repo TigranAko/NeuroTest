@@ -54,12 +54,18 @@ chain = prompt | structured_llm
 
 
 class TextToJsonService:
-    def parse_test(self, raw_text: str) -> Test:
+    def _split_text(
+        self,
+        text: str,
+    ) -> list[str]:
         spliter = RecursiveCharacterTextSplitter(
             chunk_size=4000,
             separators=["\n\n", "\n", " ", ""],
         )
-        chunks = spliter.split_text(raw_text)
+        return spliter.split_text(text)
+
+    def parse_test(self, raw_text: str) -> Test:
+        chunks = self._split_text(raw_text)
         all_questions = []
         tail = ""
         last_question = ""
