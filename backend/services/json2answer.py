@@ -8,6 +8,7 @@ from langchain_core.output_parsers import PydanticOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_tavily import TavilySearch
 from schemas.test_output import QuestionOutput, TestOutput
+from services.file import FileService
 
 # ---------- Инструменты ----------
 search = TavilySearch(
@@ -84,6 +85,18 @@ class JsonToAnswerService:
             print(result, type(result))
             output_questions.append(result)
         return TestOutput(questions=output_questions, author_id=author_id)
+
+    async def create_json_answers(
+        self,
+        file_title: str,
+        file: FileService,
+        author_id: UUID,
+    ) -> TestOutput:
+        data = await file.reed_json(file_title + "_text")
+        answers: TestOutput = self.process_test(data, author_id=author_id)
+        # answers_str = answers.model_dump_json(indent=4)
+        await file.create_json(file_title + "_answers", answers)
+        return answers
 
 
 def get_json2answer_service():

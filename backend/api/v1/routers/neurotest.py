@@ -54,11 +54,7 @@ async def create_json_answers(
     user_id: Annotated[UUID, Depends(get_current_user_id)],
 ) -> TestOutput:
     """Создать JSON с ответами"""
-    data = await file.reed_json(file_title + "_text")
-    answers: TestOutput = json2answer.process_test(data, author_id=user_id)
-    # answers_str = answers.model_dump_json(indent=4)
-    await file.create_json(file_title + "_answers", answers)
-    return answers
+    return await json2answer.create_json_answers(file_title, file, user_id)
 
 
 @router.get("/files")
