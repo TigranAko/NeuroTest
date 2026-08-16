@@ -1,8 +1,11 @@
+from uuid import UUID
+
 from core.settings import settings
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openrouter import ChatOpenRouter
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from pydantic import BaseModel, Field
+from services.file import FileService
 
 
 class Answer(BaseModel):
@@ -110,6 +113,17 @@ class TextToJsonService:
             }
         )
         return result
+
+    async def create_json_without_answers(
+        self,
+        file_title: str,
+        file: FileService,
+        user_id: UUID,
+    ):
+        text = await file.get_text_docx(file_title)
+        questions_without_answers: Test = self.parse_test(text)
+        data = await file.create_json(file_title + "_text", questions_without_answers)
+        return data
 
 
 def get_text2json_service():

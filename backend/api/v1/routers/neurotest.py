@@ -10,7 +10,6 @@ from services.json2answer import (
 )
 from services.jwt import get_current_user_id
 from services.text2json import (
-    Test,
     TextToJsonService,
     get_text2json_service,
 )
@@ -44,11 +43,7 @@ async def create_json(
     user_id: Annotated[UUID, Depends(get_current_user_id)],
 ) -> CreateJson:
     """Создать JSON без ответов"""
-    # TODO: use user_id for create files
-    text = await file.get_text_docx(file_title)
-    questions_without_answers: Test = text2json.parse_test(text)
-    data = await file.create_json(file_title + "_text", questions_without_answers)
-    return data
+    return await text2json.create_json_without_answers(file_title, file, user_id)
 
 
 @router.post("/files/json_answer")
