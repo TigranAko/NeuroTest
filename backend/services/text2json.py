@@ -1,11 +1,21 @@
+from typing import Annotated
 from uuid import UUID
 
+from core.database import get_db
 from core.settings import settings
+from fastapi import Depends
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openrouter import ChatOpenRouter
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from pydantic import BaseModel, Field
+from repositories.answer import AnswerRepository
+from repositories.question import QuestionRepository
+from repositories.test import TestRepository
+from schemas.answer import AnswerCreate
+from schemas.question import QuestionCreate
+from schemas.test import TestCreate
 from services.file import FileService
+from sqlalchemy.ext.asyncio import AsyncSession
 
 
 class Answer(BaseModel):
@@ -54,6 +64,15 @@ chain = prompt | structured_llm
 
 
 class TextToJsonService:
+    def __init__(
+        self,
+        db: AsyncSession,
+    ):
+        self.db = db
+        self.test = TestRepository(db)
+        self.question = QuestionRepository(db)
+        self.answer = AnswerRepository(db)
+
     def _split_text(
         self,
         text: str,
@@ -139,12 +158,38 @@ class TextToJsonService:
         file_title: str,
         file: FileService,
         user_id: UUID,
-    ):
+    ) -> UUID:
         text = await file.get_text_docx(file_title)
         questions_without_answers: Test = self.parse_test(text)
-        data = await file.create_json(file_title + "_text", questions_without_answers)
-        return data
+        test_id = await self._save_test(questions_without_answers, user_id)
+        return test_id
+
+    async def _save_test(
+        self,
+        test: Test,
+        author_id: UUID,
+    ):
+        data = test.model_dump()
+        questions = data.pop("questions")
+        tc = TestCreate(**data)
+        test_id = await self.test.add_one(tc, author_id)
+        for q in questions:
+            answers = q.pop("answers")
+            qc = QuestionCreate(
+                text=q.get("question"),
+            )
+            question_id = await self.question.add_one(test_id, qc)
+            for a in answers:
+                ac = AnswerCreate(
+                    text=a["text"],
+                    isCorrect=False,
+                )
+                await self.answer.add_one(question_id, ac)
+        await self.db.commit()
+        return test_id
 
 
-def get_text2json_service():
-    return TextToJsonService()
+def get_text2json_service(
+    db: Annotated[AsyncSession, Depends(get_db)],
+):
+    return TextToJsonService(db)

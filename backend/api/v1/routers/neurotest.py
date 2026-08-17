@@ -41,7 +41,7 @@ async def create_json(
     text2json: Annotated[TextToJsonService, Depends(get_text2json_service)],
     file: Annotated[FileService, Depends(get_file_service)],
     user_id: Annotated[UUID, Depends(get_current_user_id)],
-) -> CreateJson:
+) -> UUID:
     """Создать JSON без ответов"""
     return await text2json.create_json_without_answers(file_title, file, user_id)
 
