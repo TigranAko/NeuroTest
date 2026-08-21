@@ -1,6 +1,6 @@
 from core.settings import settings
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_openrouter import ChatOpenRouter
+from langchain_openai import ChatOpenAI
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from pydantic import BaseModel, Field
 
@@ -20,7 +20,7 @@ class Test(BaseModel):
     questions: list[Question] = Field(description="Список всех вопросов теста")
 
 
-llm = ChatOpenRouter(
+llm = ChatOpenAI(
     api_key=settings.OPENROUTER_API_KEY,
     base_url="https://openrouter.ai/api/v1",
     model="openrouter/free",
