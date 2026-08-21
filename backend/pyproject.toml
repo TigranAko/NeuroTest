@@ -13,7 +13,6 @@ dependencies = [
     "langchain>=1.2.15",
     "langchain-cerebras>=0.8.2",
     "langchain-openai>=1.2.1",
-    "langchain-openrouter>=0.2.1",
     "langchain-tavily>=0.2.18",
     "langchain-text-splitters>=1.1.2",
     "psycopg[binary,pool]>=3.3.4",
