@@ -3,9 +3,9 @@ from typing import Literal
 from uuid import UUID
 
 from core.settings import settings
-from langchain_cerebras import ChatCerebras
 from langchain_core.output_parsers import PydanticOutputParser
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_openai import ChatOpenAI
 from langchain_tavily import TavilySearch
 from schemas.test_output import QuestionOutput, TestOutput
 
@@ -16,9 +16,10 @@ search = TavilySearch(
     tavily_api_key=settings.TAVILY_API_KEY.get_secret_value(),
 )
 
-llm = ChatCerebras(
+llm = ChatOpenAI(
+    base_url="https://api.cerebras.ai/v1/",
     api_key=settings.CEREBRAS_API_KEY,
-    model="gpt-oss-120b",
+    model="gpt-oss-120b",  # Add other models
     temperature=0,
     model_kwargs={"response_format": {"type": "json_object"}},
     timeout=180,
