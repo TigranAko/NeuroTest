@@ -975,19 +975,6 @@ wheels = [
 ]
 
 [[package]]
-name = "langchain-cerebras"
-version = "0.8.2"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "langchain-core" },
-    { name = "langchain-openai" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/64/d8/76356d5361b3dd6e1febcc62cc83acc01a88f7fca43b836d4e3a72434a37/langchain_cerebras-0.8.2.tar.gz", hash = "sha256:1594f87d08955a141269d48527d9a636827f6cb60167c447d8c5969eeaa9c8c7", size = 11267, upload-time = "2025-11-24T18:14:56.356Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/fc/f9/239509fccf433f7cb34f8d2cf15885e4eda5e04f1f3110da295543fbaec5/langchain_cerebras-0.8.2-py3-none-any.whl", hash = "sha256:ca956bd8906e4760d903d3b9c614913488a87e44ee61522fafd66267dfb6582f", size = 9961, upload-time = "2025-11-24T18:14:55.305Z" },
-]
-
-[[package]]
 name = "langchain-core"
 version = "1.3.2"
 source = { registry = "https://pypi.org/simple" }
@@ -1371,7 +1358,6 @@ dependencies = [
     { name = "docx2txt" },
     { name = "fastapi" },
     { name = "langchain" },
-    { name = "langchain-cerebras" },
     { name = "langchain-openai" },
     { name = "langchain-tavily" },
     { name = "langchain-text-splitters" },
@@ -1396,7 +1382,6 @@ requires-dist = [
     { name = "docx2txt", specifier = ">=0.9" },
     { name = "fastapi", specifier = ">=0.136.1" },
     { name = "langchain", specifier = ">=1.2.15" },
-    { name = "langchain-cerebras", specifier = ">=0.8.2" },
     { name = "langchain-openai", specifier = ">=1.2.1" },
     { name = "langchain-tavily", specifier = ">=0.2.18" },
     { name = "langchain-text-splitters", specifier = ">=1.1.2" },
