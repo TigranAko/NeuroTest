@@ -11,6 +11,14 @@ class LLMSettings(BaseSettings):
     TAVILY_API_KEY: SecretStr
     CEREBRAS_API_KEY: SecretStr
     OPENROUTER_API_KEY: SecretStr
+    USE_LOCAL_LLM: bool = False
+    LOCAL_LLM_HOST: str | None
+    LOCAL_LLM_PORT: int | None
+    LOCAL_LLM_MODEL: str | None
+
+    @property
+    def LOCAL_LLM_BASE_URL(self) -> str:
+        return f"http://{self.LOCAL_LLM_HOST}:{self.LOCAL_LLM_PORT}/v1"
 
 
 class AuthSettings(BaseSettings):

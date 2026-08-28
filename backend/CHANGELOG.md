@@ -2,6 +2,34 @@
 
 <!-- version list -->
 
+## v0.7.0 (2026-08-28)
+
+### Chores
+
+- **env**: Add variables for local llm
+  ([`53bab55`](https://github.com/TigranAko/NeuroTest/commit/53bab55a4415bac4c86c5d5370ee60f6f76d3473))
+
+- **uv**: Add langchain-openai
+  ([`3f81ca2`](https://github.com/TigranAko/NeuroTest/commit/3f81ca25941ca7599b8e5debd660751e49771423))
+
+- **uv**: Remove langchaib-cerebras
+  ([`0f1bf8c`](https://github.com/TigranAko/NeuroTest/commit/0f1bf8ca27c5901d5459e3ee987c2278aa51d9de))
+
+- **uv**: Remove langchain-openrouter
+  ([`bd39949`](https://github.com/TigranAko/NeuroTest/commit/bd399498bb84235e56335740dfd04760452112f8))
+
+- **uv**: Update uv lock to 0.6.2
+  ([`a47ce09`](https://github.com/TigranAko/NeuroTest/commit/a47ce09b964e88e19d54fd979d70f22a39753142))
+
+### Features
+
+- **env**: Add settings for local llm
+  ([`57ddb38`](https://github.com/TigranAko/NeuroTest/commit/57ddb38c6aa7322fca5f9fff5371f1d42664d0c2))
+
+- **llm**: Add support for local LLM provider
+  ([`f5e2259`](https://github.com/TigranAko/NeuroTest/commit/f5e225944d9887d7e1a96e048a981a2419796c9f))
+
+
 ## v0.6.2 (2026-08-15)
 
 ### Bug Fixes

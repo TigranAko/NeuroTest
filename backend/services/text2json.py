@@ -5,7 +5,7 @@ from core.database import get_db
 from core.settings import settings
 from fastapi import Depends
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_openrouter import ChatOpenRouter
+from langchain_openai import ChatOpenAI
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from pydantic import BaseModel, Field
 from repositories.answer import AnswerRepository
@@ -33,14 +33,26 @@ class Test(BaseModel):
     questions: list[Question] = Field(description="Список всех вопросов теста")
 
 
-llm = ChatOpenRouter(
-    api_key=settings.OPENROUTER_API_KEY,
-    base_url="https://openrouter.ai/api/v1",
-    model="openrouter/free",
-    temperature=0.1,
-    max_retries=3,
-    timeout=2 * 60 * 1000,  # две минуты
-)
+def get_llm_chat():
+    if settings.USE_LOCAL_LLM:
+        return ChatOpenAI(
+            api_key="No api key",
+            base_url=settings.LOCAL_LLM_BASE_URL,
+            model=settings.LOCAL_LLM_MODEL,
+            temperature=0.1,
+            max_retries=3,
+        )
+    return ChatOpenAI(
+        api_key=settings.OPENROUTER_API_KEY,
+        base_url="https://openrouter.ai/api/v1",
+        model="openrouter/free",
+        temperature=0.1,
+        max_retries=3,
+        timeout=2 * 60 * 1000,  # две минуты
+    )
+
+
+llm = get_llm_chat()
 
 structured_llm = llm.with_structured_output(Test)
 
