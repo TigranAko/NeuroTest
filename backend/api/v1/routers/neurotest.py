@@ -48,13 +48,12 @@ async def create_json(
 
 @router.post("/files/json_answer")
 async def create_json_answers(
-    file_title: str,
+    test_id: UUID,
     json2answer: Annotated[JsonToAnswerService, Depends(get_json2answer_service)],
-    file: Annotated[FileService, Depends(get_file_service)],
     user_id: Annotated[UUID, Depends(get_current_user_id)],
-) -> TestOutput:
+) -> UUID:
     """Создать JSON с ответами"""
-    return await json2answer.create_json_answers(file_title, file, user_id)
+    return await json2answer.create_json_answers(test_id, user_id)
 
 
 @router.get("/files")
