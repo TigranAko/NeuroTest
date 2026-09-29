@@ -1,9 +1,8 @@
-from typing import Annotated, Literal
+from typing import Annotated
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, UploadFile
-from schemas.test_output import TestOutput
-from services.file import CreateJson, DownloadFile, FileService, get_file_service
+from services.file import DownloadFile, FileService, get_file_service
 from services.json2answer import (
     JsonToAnswerService,
     get_json2answer_service,
