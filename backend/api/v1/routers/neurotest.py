@@ -56,10 +56,9 @@ async def create_json_answers(
     return await json2answer.create_json_answers(test_id, user_id)
 
 
-@router.get("/files")
+@router.get("/files/docx")
 async def get_files(
     file: Annotated[FileService, Depends(get_file_service)],
-    file_type: Literal["docx", "text", "answer"] = "docx",
 ) -> list[str]:
-    """Получить список файлов по типу"""
-    return await file.get_files(file_type)
+    """Получить список файлов по расширению docx (получение названий файлов для исходного текста тестов)"""
+    return await file.get_files_docx()

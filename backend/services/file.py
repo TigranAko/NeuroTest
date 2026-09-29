@@ -62,22 +62,12 @@ class FileService:
             data = json.loads(data)
         return data
 
-    async def get_files(
+    async def get_files_docx(
         self,
-        file_type: Literal["docx", "text", "answer"],
     ) -> list[str]:
-        """Получить список файлов по расширению"""
+        """Получить список файлов по расширению docx"""
         dir = Path("files/")  # TODO: Need async read
-        extensions_data = {
-            "docx": ".docx",
-            "text": "_text.json",
-            "answer": "_answers.json",
-        }
-        return [
-            item.name
-            for item in dir.iterdir()
-            if item.name.endswith(extensions_data[file_type])
-        ]
+        return [item.name for item in dir.iterdir() if item.name.endswith(".docx")]
 
     async def get_text_docx(self, file_title):
         # TODO: need add to reed files with another extensions
