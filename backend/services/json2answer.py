@@ -1,13 +1,22 @@
 from time import sleep
-from typing import Literal
+from typing import Annotated, Literal
 from uuid import UUID
 
+from core.database import get_db
 from core.settings import settings
+from fastapi import Depends
 from langchain_core.output_parsers import PydanticOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from langchain_tavily import TavilySearch
+from repositories.answer import AnswerRepository
+from repositories.question import QuestionRepository
+from repositories.test import TestRepository
+from schemas.answer import AnswerCreate
+from schemas.question import QuestionCreate
+from schemas.test import TestCreate
 from schemas.test_output import QuestionOutput, TestOutput
+from sqlalchemy.ext.asyncio import AsyncSession
 
 # ---------- Инструменты ----------
 search = TavilySearch(
@@ -65,6 +74,15 @@ prompt = ChatPromptTemplate.from_messages(
 
 
 class JsonToAnswerService:
+    def __init__(
+        self,
+        db: AsyncSession,
+    ):
+        self.db = db
+        self.test = TestRepository(db)
+        self.question = QuestionRepository(db)
+        self.answer = AnswerRepository(db)
+
     def process_single_questions(
         self,
         question_text: str,
@@ -99,6 +117,58 @@ class JsonToAnswerService:
             output_questions.append(result)
         return TestOutput(questions=output_questions, author_id=author_id)
 
+    async def create_json_answers(
+        self,
+        test_id: UUID,
+        author_id: UUID,
+    ) -> UUID:
+        # data = await file.reed_json(file_title + "_text")
+        # READ TEST , need optimize
+        data = {"questions": []}
+        questions = list(await self.question.get_by_test(test_id))
+        for question in questions:
+            new_question = {
+                "question": question.text,
+                "answers": [],
+            }
+            answers = list(await self.answer.get_by_question(question.id))
+            for answer in answers:
+                new_question["answers"].append({"text": answer.text})
+            data["questions"].append(new_question)
 
-def get_json2answer_service():
-    return JsonToAnswerService()
+        answers: TestOutput = self.process_test(data, author_id=author_id)
+        # answers_str = answers.model_dump_json(indent=4)
+        test_id = await self._save_test(answers, author_id)
+        # await file.create_json(file_title + "_answers", answers)
+        return test_id
+
+    async def _save_test(
+        self,
+        test: TestOutput,
+        author_id: UUID,
+    ):
+        data = test.model_dump()
+        questions = data.pop("questions")
+        tc = TestCreate(**data)
+        # TODO: update test and no recreate dublicate test
+        test_id = await self.test.add_one(tc, author_id)
+        for q in questions:
+            answers = q.pop("answers")
+            qc = QuestionCreate(
+                text=q.get("question"),
+            )
+            question_id = await self.question.add_one(test_id, qc)
+            for a in answers:
+                ac = AnswerCreate(
+                    text=a["text"],
+                    isCorrect=a["isCorrect"],
+                )
+                await self.answer.add_one(question_id, ac)
+        await self.db.commit()
+        return test_id
+
+
+def get_json2answer_service(
+    db: Annotated[AsyncSession, Depends(get_db)],
+):
+    return JsonToAnswerService(db)

@@ -1,16 +1,14 @@
-from typing import Annotated, Literal
+from typing import Annotated
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, UploadFile
-from schemas.test_output import TestOutput
-from services.file import CreateJson, DownloadFile, FileService, get_file_service
+from services.file import DownloadFile, FileService, get_file_service
 from services.json2answer import (
     JsonToAnswerService,
     get_json2answer_service,
 )
 from services.jwt import get_current_user_id
 from services.text2json import (
-    Test,
     TextToJsonService,
     get_text2json_service,
 )
@@ -42,34 +40,24 @@ async def create_json(
     text2json: Annotated[TextToJsonService, Depends(get_text2json_service)],
     file: Annotated[FileService, Depends(get_file_service)],
     user_id: Annotated[UUID, Depends(get_current_user_id)],
-) -> CreateJson:
+) -> UUID:
     """Создать JSON без ответов"""
-    # TODO: use user_id for create files
-    text = await file.get_text_docx(file_title)
-    questions_without_answers: Test = text2json.parse_test(text)
-    data = await file.create_json(file_title + "_text", questions_without_answers)
-    return data
+    return await text2json.create_json_without_answers(file_title, file, user_id)
 
 
 @router.post("/files/json_answer")
 async def create_json_answers(
-    file_title: str,
+    test_id: UUID,
     json2answer: Annotated[JsonToAnswerService, Depends(get_json2answer_service)],
-    file: Annotated[FileService, Depends(get_file_service)],
     user_id: Annotated[UUID, Depends(get_current_user_id)],
-) -> TestOutput:
+) -> UUID:
     """Создать JSON с ответами"""
-    data = await file.reed_json(file_title + "_text")
-    answers: TestOutput = json2answer.process_test(data, author_id=user_id)
-    # answers_str = answers.model_dump_json(indent=4)
-    await file.create_json(file_title + "_answers", answers)
-    return answers
+    return await json2answer.create_json_answers(test_id, user_id)
 
 
-@router.get("/files")
+@router.get("/files/docx")
 async def get_files(
     file: Annotated[FileService, Depends(get_file_service)],
-    file_type: Literal["docx", "text", "answer"] = "docx",
 ) -> list[str]:
-    """Получить список файлов по типу"""
-    return await file.get_files(file_type)
+    """Получить список файлов по расширению docx (получение названий файлов для исходного текста тестов)"""
+    return await file.get_files_docx()

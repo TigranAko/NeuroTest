@@ -1,17 +1,19 @@
 services:
   fastapi:
     build: ./backend/
-    container_name: fastapi-nt
+    container_name: fastapi-nt-dev
     ports:
       - "8000:8000"
     env_file:
       - .env
     depends_on:
       - db
-    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - ./backend:/app
   db:
     image: postgres:18-alpine
-    container_name: postgres-nt
+    container_name: postgres-nt-dev
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
