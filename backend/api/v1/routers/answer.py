@@ -2,7 +2,7 @@ from typing import Annotated
 from uuid import UUID
 
 from fastapi import APIRouter, Depends
-from schemas.answer import AnswerCreate, AnswerResponse
+from schemas.answer import AnswerCreate, AnswerResponse, AnswerUpdate
 from services.answer import AnswerService, get_answer_service
 from services.jwt import get_current_user_id
 
@@ -38,7 +38,7 @@ async def read_answer(
     return await question_service.get_answer(answer_id)
 
 
-@router.patch("/answers/{answer_id}")
+@router.put("/answers/{answer_id}")
 async def edit_answer(
     question_service: Annotated[AnswerService, Depends(get_answer_service)],
     user_id: Annotated[UUID, Depends(get_current_user_id)],
@@ -46,6 +46,16 @@ async def edit_answer(
     answer_id: UUID,
 ) -> UUID:
     return await question_service.edit_answer(user_id, answer, answer_id)
+
+
+@router.patch("/answers/{answer_id}")
+async def partial_edit_answer(
+    question_service: Annotated[AnswerService, Depends(get_answer_service)],
+    user_id: Annotated[UUID, Depends(get_current_user_id)],
+    answer: AnswerUpdate,
+    answer_id: UUID,
+) -> UUID:
+    return await question_service.partial_edit_answer(user_id, answer, answer_id)
 
 
 @router.delete("/answers/{answer_id}")

@@ -4,7 +4,7 @@ from uuid import UUID
 from core.database import get_db
 from fastapi import Depends, HTTPException
 from repositories.answer import AnswerRepository
-from schemas.answer import AnswerCreate, AnswerResponse
+from schemas.answer import AnswerCreate, AnswerResponse, AnswerUpdate
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
@@ -57,6 +57,17 @@ class AnswerService:
     ) -> UUID:
         await self._verify_authorship(user_id, answer_id)
         answer_id = await self.repo.edit_one(answer_id, answer)
+        await self.db.commit()
+        return answer_id
+
+    async def partial_edit_answer(
+        self,
+        user_id: UUID,
+        answer: AnswerUpdate,
+        answer_id: UUID,
+    ) -> UUID:
+        await self._verify_authorship(user_id, answer_id)
+        answer_id = await self.repo.partial_edit_one(answer_id, answer)
         await self.db.commit()
         return answer_id
 
