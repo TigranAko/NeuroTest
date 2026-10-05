@@ -52,6 +52,17 @@ class QuestionService:
             questions.append(QuestionResponse.model_validate(question))
         return questions
 
+    async def edit_question(
+        self,
+        user_id: UUID,
+        question_id: UUID,
+        question: QuestionCreate,
+    ) -> UUID:
+        await self._verify_authorship(user_id, question_id)
+        question_id = await self.question.edit_one(question_id, question)
+        await self.db.commit()
+        return question_id
+
     async def delete_question(
         self,
         user_id: UUID,

@@ -51,6 +51,22 @@ class QuestionRepository:
         answer = await self.db.execute(stmt)
         return answer.scalar_one_or_none()
 
+    async def edit_one(
+        self,
+        question_id: UUID,
+        question: QuestionCreate,
+    ) -> UUID:
+        data = question.model_dump()
+        stmt = (
+            update(self.model)
+            .where(self.model.id == question_id)
+            .values(data)
+            .returning(self.model.id)
+        )
+        user_id = await self.db.execute(stmt)
+        result = user_id.scalar_one()
+        return result
+
     async def delete_one(
         self,
         question_id: UUID,

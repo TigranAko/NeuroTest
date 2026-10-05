@@ -38,6 +38,16 @@ async def read_question(
     return await question_service.get_question(question_id)
 
 
+@router.put("/questions/{question_id}")
+async def edit_question(
+    question_service: Annotated[QuestionService, Depends(get_question_service)],
+    user_id: Annotated[UUID, Depends(get_current_user_id)],
+    question: QuestionCreate,
+    question_id: UUID,
+) -> UUID:
+    return await question_service.edit_question(user_id, question_id, question)
+
+
 @router.delete("/questions/{question_id}")
 async def delete_question(
     question_service: Annotated[QuestionService, Depends(get_question_service)],
