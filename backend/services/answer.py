@@ -49,6 +49,17 @@ class AnswerService:
             answers.append(AnswerResponse.model_validate(answer))
         return answers
 
+    async def edit_answer(
+        self,
+        user_id: UUID,
+        answer: AnswerCreate,
+        answer_id: UUID,
+    ) -> UUID:
+        await self._verify_authorship(user_id, answer_id)
+        answer_id = await self.repo.edit_one(answer_id, answer)
+        await self.db.commit()
+        return answer_id
+
     async def delete_answer(
         self,
         user_id: UUID,

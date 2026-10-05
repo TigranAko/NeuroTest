@@ -38,6 +38,16 @@ async def read_answer(
     return await question_service.get_answer(answer_id)
 
 
+@router.patch("/answers/{answer_id}")
+async def edit_answer(
+    question_service: Annotated[AnswerService, Depends(get_answer_service)],
+    user_id: Annotated[UUID, Depends(get_current_user_id)],
+    answer: AnswerCreate,
+    answer_id: UUID,
+) -> UUID:
+    return await question_service.edit_answer(user_id, answer, answer_id)
+
+
 @router.delete("/answers/{answer_id}")
 async def delete_answer(
     question_service: Annotated[AnswerService, Depends(get_answer_service)],
