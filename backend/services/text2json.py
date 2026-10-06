@@ -90,7 +90,7 @@ class TextToJsonService:
         text: str,
     ) -> list[str]:
         spliter = RecursiveCharacterTextSplitter(
-            chunk_size=4000,
+            chunk_size=settings.SPLIT_CHUNK_SIZE,
             separators=["\n\n", "\n", " ", ""],
         )
         return spliter.split_text(text)
