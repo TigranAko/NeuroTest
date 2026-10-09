@@ -13,5 +13,6 @@ class Test(Base):
     __tablename__ = "tests"
     id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
     author_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"))
+    title: Mapped[str] = mapped_column()
     questions: Mapped[list["Question"]] = relationship(back_populates="test")
     author: Mapped["User"] = relationship(back_populates="tests")
