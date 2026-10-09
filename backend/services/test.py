@@ -39,6 +39,7 @@ class TestService:
     ) -> UUID:
         data = await self._get_json(file)
         test = data.copy()
+        test["title"] = file.filename
         questions = test.pop("questions")
         tc = TestCreate(**test)
         test_id = await self.test.add_one(tc, author_id)
