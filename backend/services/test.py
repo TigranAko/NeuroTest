@@ -86,6 +86,19 @@ class TestService:
             tests.append(TestResponse.model_validate(test))
         return tests
 
+    async def edit_test(
+        self,
+        user_id: UUID,
+        test_id: UUID,
+        test: TestCreate,
+    ) -> UUID:
+        test_for_authorship = await self.get_test(test_id)  # TODO need optimize
+        if user_id != test_for_authorship.author_id:
+            raise HTTPException(403)
+        test_id = await self.test.edit_one(test_id, test)
+        await self.db.commit()
+        return test_id
+
     async def delete_test(
         self,
         user_id: UUID,

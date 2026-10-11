@@ -42,6 +42,16 @@ async def read_tests(
     return await test_service.get_tests()
 
 
+@router.put("/tests/{test_id}")
+async def edit_test(
+    test_service: Annotated[TestService, Depends(get_test_service)],
+    user_id: Annotated[UUID, Depends(get_current_user_id)],
+    test: TestCreate,
+    test_id: UUID,
+) -> UUID:
+    return await test_service.edit_test(user_id, test_id, test)
+
+
 @router.delete("/{test_id}")
 async def delete_test(
     test_service: Annotated[TestService, Depends(get_test_service)],
