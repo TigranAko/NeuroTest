@@ -173,16 +173,18 @@ class TextToJsonService:
     ) -> UUID:
         text = await file.get_text_docx(file_title)
         questions_without_answers: Test = self.parse_test(text)
-        test_id = await self._save_test(questions_without_answers, user_id)
+        test_id = await self._save_test(questions_without_answers, user_id, file_title)
         return test_id
 
     async def _save_test(
         self,
         test: Test,
         author_id: UUID,
+        title: str,
     ):
         data = test.model_dump()
         questions = data.pop("questions")
+        data["title"] = title
         tc = TestCreate(**data)
         test_id = await self.test.add_one(tc, author_id)
         for q in questions:
