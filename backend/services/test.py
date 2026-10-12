@@ -86,6 +86,15 @@ class TestService:
             tests.append(TestResponse.model_validate(test))
         return tests
 
+    async def get_author_tests(self, author_id) -> list[TestResponse]:
+        data = await self.test.get_by_author(author_id)
+        if data is None:
+            raise HTTPException(404, "Author not found")
+        tests: list[TestResponse] = []
+        for test in data:
+            tests.append(TestResponse.model_validate(test))
+        return tests
+
     async def edit_test(
         self,
         user_id: UUID,

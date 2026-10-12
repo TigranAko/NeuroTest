@@ -29,6 +29,14 @@ class TestRepository:
         test = await self.db.execute(stmt)
         return test.scalar_one_or_none()
 
+    async def get_by_author(
+        self,
+        author_id: UUID,
+    ) -> ScalarResult[Test]:
+        stmt = select(self.model).where(self.model.author_id == author_id)
+        test = await self.db.execute(stmt)
+        return test.scalars()
+
     async def get_tests(self) -> ScalarResult[Test]:
         stmt = select(self.model)
         answer = await self.db.execute(stmt)
