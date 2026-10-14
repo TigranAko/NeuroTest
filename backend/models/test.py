@@ -5,11 +5,13 @@ from core.database import Base
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
+from models import TimestampMixin
+
 if TYPE_CHECKING:
     from models import Question, User
 
 
-class Test(Base):
+class Test(Base, TimestampMixin):
     __tablename__ = "tests"
     id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
     author_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"))
