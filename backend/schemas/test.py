@@ -1,3 +1,4 @@
+from datetime import datetime
 from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict
@@ -13,4 +14,6 @@ class TestResponse(BaseModel):
     id: UUID
     author_id: UUID
     title: str
+    created_at: datetime
+    updated_at: datetime
     # questions: list[QuestionResponse]
