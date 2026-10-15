@@ -2,7 +2,7 @@ from typing import Annotated
 from uuid import UUID
 
 from fastapi import APIRouter, Depends
-from schemas.question import QuestionCreate, QuestionResponse
+from schemas.question import QuestionCreate, QuestionResponse, QuestionUpdate
 from services.jwt import get_current_user_id
 from services.question import QuestionService, get_question_service
 
@@ -43,6 +43,16 @@ async def edit_question(
     question_service: Annotated[QuestionService, Depends(get_question_service)],
     user_id: Annotated[UUID, Depends(get_current_user_id)],
     question: QuestionCreate,
+    question_id: UUID,
+) -> UUID:
+    return await question_service.edit_question(user_id, question_id, question)
+
+
+@router.patch("/questions/{question_id}")
+async def partial_edit_question(
+    question_service: Annotated[QuestionService, Depends(get_question_service)],
+    user_id: Annotated[UUID, Depends(get_current_user_id)],
+    question: QuestionUpdate,
     question_id: UUID,
 ) -> UUID:
     return await question_service.edit_question(user_id, question_id, question)
