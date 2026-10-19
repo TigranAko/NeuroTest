@@ -1,5 +1,7 @@
+from sqlalchemy.orm import selectinload
 from uuid import UUID
 
+from models.question import Question
 from models.test import Test
 from schemas.test import TestCreate
 from sqlalchemy import ScalarResult, delete, insert, select, update
@@ -68,3 +70,12 @@ class TestRepository:
         test = await self.db.execute(stmt)
         result = test.scalar_one()
         return result
+
+    async def export(self, test_id: UUID) -> Test | None:
+        stmt = (
+            select(self.model)
+            .where(self.model.id == test_id)
+            .options(selectinload(self.model.questions).selectinload(Question.answers))
+        )
+        test = await self.db.execute(stmt)
+        return test.scalar_one_or_none()

@@ -1,3 +1,4 @@
+from fastapi.responses import Response
 from typing import Annotated
 from uuid import UUID
 
@@ -25,6 +26,14 @@ async def import_test(
     test: UploadFile,
 ) -> UUID:
     return await test_service.import_test(user_id, test)
+
+
+@router.get("/export")
+async def export_test(
+    test_service: Annotated[TestService, Depends(get_test_service)],
+    test_id: UUID,
+) -> Response:
+    return await test_service.export_test(test_id)
 
 
 @router.get("/author/me")

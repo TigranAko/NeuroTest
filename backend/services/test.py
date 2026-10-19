@@ -1,15 +1,18 @@
+from urllib.parse import quote
 import json
 from typing import Annotated
 from uuid import UUID
 
 from core.database import get_db
 from fastapi import Depends, HTTPException, UploadFile
+from fastapi.responses import Response
 from repositories.answer import AnswerRepository
 from repositories.question import QuestionRepository
 from repositories.test import TestRepository
 from schemas.answer import AnswerCreate
 from schemas.question import QuestionCreate
 from schemas.test import TestCreate, TestResponse
+from schemas.test_json import TestJson
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
@@ -52,6 +55,23 @@ class TestService:
                 await self.answer.add_one(question_id, ac)
         await self.db.commit()
         return test_id
+
+    async def export_test(
+        self,
+        test_id: UUID,
+    ) -> Response:
+
+        test = await self.test.export(test_id)
+        if test is None:
+            raise HTTPException(404, "Test not found")
+        body = TestJson.model_validate(test).model_dump_json(indent=4)
+        filename = f"{test.title}.json"
+        disposition = f"attachment; filename*=UTF-8''{quote(filename)}"
+        return Response(
+            content=body,
+            media_type="application/json",
+            headers={"Content-Disposition": disposition},
+        )
 
     async def _get_json(
         self,
