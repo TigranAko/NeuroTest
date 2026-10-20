@@ -2,6 +2,94 @@
 
 <!-- version list -->
 
+## v0.8.0 (2026-10-20)
+
+### Bug Fixes
+
+- Partially update the question instead of completely updating it
+  ([`d0e9346`](https://github.com/TigranAko/NeuroTest/commit/d0e9346b2247a6c862544a4705404cfa362f554f))
+
+- **api**: Remove the duplicate /tests in the put endpoint
+  ([`f246c2d`](https://github.com/TigranAko/NeuroTest/commit/f246c2d6b20251491f6343d6e6c3849f04925aee))
+
+- **docker**: Correct PYTHONUNBUFFERED typo
+  ([`f7f0d1a`](https://github.com/TigranAko/NeuroTest/commit/f7f0d1a82284fa9a5b7383225954f10f3589d0ce))
+
+### Chores
+
+- **ci**: Update python-semantic-release to v10.7.9
+  ([`6195d67`](https://github.com/TigranAko/NeuroTest/commit/6195d6765d75230c24ed4f24594b85985271d8e7))
+
+- **docker**: Add docker-compose.dev.yml for local development
+  ([`fea82ce`](https://github.com/TigranAko/NeuroTest/commit/fea82ce6bcd991356d4cb1427e30daf4927a4b34))
+
+- **env**: Add SPLIT_CHUNK_SIZE config variable
+  ([`4ad8adc`](https://github.com/TigranAko/NeuroTest/commit/4ad8adcdeddae6611c1b8127cb51a3e47b354952))
+
+- **uv**: Update uv lock to 0.6.2
+  ([`ed5b3ee`](https://github.com/TigranAko/NeuroTest/commit/ed5b3eeba80d583949d757aae91825fce2251eb1))
+
+- **uv**: Update uv lock to 0.7.0
+  ([`13b6a61`](https://github.com/TigranAko/NeuroTest/commit/13b6a617c81df2268f244b55e1be558188f829cb))
+
+### Code Style
+
+- **api**: Change user_id to author_id for read tests
+  ([`2490da7`](https://github.com/TigranAko/NeuroTest/commit/2490da738883f56ea250072ba197b8576ecaafa7))
+
+### Documentation
+
+- Remove infrastructure from project structure
+  ([`6d34772`](https://github.com/TigranAko/NeuroTest/commit/6d34772dc52ee636be90d9bb91b216721c7e1457))
+
+- Remove infrastructure from project structure
+  ([`29f9d71`](https://github.com/TigranAko/NeuroTest/commit/29f9d712b55611b2dea109083c148692cfabf0c1))
+
+### Features
+
+- **alembic**: Add timestamp for table tests
+  ([`15f0323`](https://github.com/TigranAko/NeuroTest/commit/15f0323f812ce6388eb1832a7e87026e831689f6))
+
+- **alembic**: Add title to tests
+  ([`074103e`](https://github.com/TigranAko/NeuroTest/commit/074103e3eba60373c22aaf73e51b4b1027429e32))
+
+- **api**: Add endpoint for full update the answer
+  ([`05a21b2`](https://github.com/TigranAko/NeuroTest/commit/05a21b23b351216cd4f7ac2d2f28a6bb9136bd28))
+
+- **api**: Add endpoint for get tests by author id
+  ([`2073d63`](https://github.com/TigranAko/NeuroTest/commit/2073d630d1335320c062dbffb6fe41156c1c3256))
+
+- **api**: Add endpoint for partial update question
+  ([`a8e7ab1`](https://github.com/TigranAko/NeuroTest/commit/a8e7ab1ee26d62c2ff90051f244cb59dd01656e0))
+
+- **api**: Add endpoint for partial update the answer
+  ([`8b310b9`](https://github.com/TigranAko/NeuroTest/commit/8b310b90b62c86fded4da5370e63040255938267))
+
+- **api**: Add endpoint for update test
+  ([`1986d9c`](https://github.com/TigranAko/NeuroTest/commit/1986d9c4965dca5ce8c5142898d62aa5b1c1a326))
+
+- **api**: Add endpoint for update the question
+  ([`4f24c8c`](https://github.com/TigranAko/NeuroTest/commit/4f24c8cb0a10709000ef85c3dd5950db38d952df))
+
+- **api**: Add test title automatically from file title
+  ([`ba84b89`](https://github.com/TigranAko/NeuroTest/commit/ba84b89a78839f04931267f69159f8c41081fc6a))
+
+- **models**: Add timestamp for tests
+  ([`a230261`](https://github.com/TigranAko/NeuroTest/commit/a230261414f83fc12fc21d7567af69c91e7ecbcd))
+
+- **models**: Add title to tests
+  ([`c415385`](https://github.com/TigranAko/NeuroTest/commit/c4153852588df8b3003b2623301866fcb1ad0221))
+
+- **schema**: Add title to test and use title for manual create test
+  ([`e2976eb`](https://github.com/TigranAko/NeuroTest/commit/e2976eb272211e9de89918a93dba61c51e527505))
+
+- **schemas**: Add timestamp for schema TestResponse
+  ([`14e9e74`](https://github.com/TigranAko/NeuroTest/commit/14e9e74850dc909cf242e7f0fb6718e91e354bfc))
+
+- **test**: Add JSON export endpoint
+  ([`ad3d232`](https://github.com/TigranAko/NeuroTest/commit/ad3d232de22027fa0c7427c4ac97815002c51f38))
+
+
 ## v0.7.0 (2026-08-28)
 
 ### Chores
