@@ -39,17 +39,17 @@ async def export_test(
 @router.get("/author/me")
 async def read_my_tests(
     test_service: Annotated[TestService, Depends(get_test_service)],
-    user_id: Annotated[UUID, Depends(get_current_user_id)],
+    author_id: Annotated[UUID, Depends(get_current_user_id)],
 ) -> list[TestResponse]:
-    return await test_service.get_author_tests(user_id)
+    return await test_service.get_author_tests(author_id)
 
 
 @router.get("/author/{author_id}")
 async def read_author_tests(
     test_service: Annotated[TestService, Depends(get_test_service)],
-    user_id: UUID,
+    author_id: UUID,
 ) -> list[TestResponse]:
-    return await test_service.get_author_tests(user_id)
+    return await test_service.get_author_tests(author_id)
 
 
 @router.get("/{test_id}")
