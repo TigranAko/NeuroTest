@@ -55,7 +55,7 @@ async def partial_edit_question(
     question: QuestionUpdate,
     question_id: UUID,
 ) -> UUID:
-    return await question_service.edit_question(user_id, question_id, question)
+    return await question_service.partial_edit_question(user_id, question_id, question)
 
 
 @router.delete("/questions/{question_id}")

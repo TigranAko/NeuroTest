@@ -70,7 +70,7 @@ class QuestionRepository:
     async def partial_edit_one(
         self,
         question_id: UUID,
-        question: QuestionCreate,
+        question: QuestionUpdate,
     ) -> UUID:
         data = question.model_dump(exclude_unset=True)
         stmt = (

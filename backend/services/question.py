@@ -63,7 +63,7 @@ class QuestionService:
         await self.db.commit()
         return question_id
 
-    async def paetial_edit_question(
+    async def partial_edit_question(
         self,
         user_id: UUID,
         question_id: UUID,
