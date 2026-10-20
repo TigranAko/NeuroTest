@@ -5,7 +5,7 @@ from core.database import get_db
 from fastapi import Depends, HTTPException
 from repositories.answer import AnswerRepository
 from repositories.question import QuestionRepository
-from schemas.question import QuestionCreate, QuestionResponse
+from schemas.question import QuestionCreate, QuestionResponse, QuestionUpdate
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
@@ -51,6 +51,28 @@ class QuestionService:
         for question in data:
             questions.append(QuestionResponse.model_validate(question))
         return questions
+
+    async def edit_question(
+        self,
+        user_id: UUID,
+        question_id: UUID,
+        question: QuestionCreate,
+    ) -> UUID:
+        await self._verify_authorship(user_id, question_id)
+        question_id = await self.question.edit_one(question_id, question)
+        await self.db.commit()
+        return question_id
+
+    async def partial_edit_question(
+        self,
+        user_id: UUID,
+        question_id: UUID,
+        question: QuestionUpdate,
+    ) -> UUID:
+        await self._verify_authorship(user_id, question_id)
+        question_id = await self.question.partial_edit_one(question_id, question)
+        await self.db.commit()
+        return question_id
 
     async def delete_question(
         self,

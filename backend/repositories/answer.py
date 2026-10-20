@@ -4,7 +4,7 @@ from uuid import UUID
 from models.answer import Answer
 from models.question import Question
 from models.test import Test
-from schemas.answer import AnswerCreate
+from schemas.answer import AnswerCreate, AnswerUpdate
 from sqlalchemy import ScalarResult, delete, func, insert, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -58,6 +58,46 @@ class AnswerRepository:
         )
         answer = await self.db.execute(stmt)
         return answer.scalar_one_or_none()
+
+    async def edit_one(
+        self,
+        answer_id: UUID,
+        answer: AnswerCreate,
+    ) -> UUID:
+        # position_subq = (
+        #     insert(func.count())
+        #     .where(self.model.question_id == question_id)
+        #     .scalar_subquery()
+        # )
+        stmt = (
+            update(self.model)
+            .where(self.model.id == answer_id)
+            .values(
+                text=answer.text,
+                isCorrect=answer.isCorrect,
+                # question_id=question_id,
+                # position=position_subq,
+            )
+            .returning(self.model.id)
+        )
+        answer_id = await self.db.execute(stmt)
+        result = answer_id.scalar_one()
+        return result
+
+    async def partial_edit_one(
+        self,
+        answer_id: UUID,
+        answer: AnswerUpdate,
+    ) -> UUID:
+        stmt = (
+            update(self.model)
+            .where(self.model.id == answer_id)
+            .values(answer.model_dump(exclude_unset=True))
+            .returning(self.model.id)
+        )
+        answer_id = await self.db.execute(stmt)
+        result = answer_id.scalar_one()
+        return result
 
     async def delete_one(self, answer_id: UUID) -> UUID | None:
         stmt = (

@@ -10,6 +10,10 @@ class QuestionCreate(BaseModel):
     # position: int
 
 
+class QuestionUpdate(QuestionCreate):  # partial
+    text: str | None = None
+
+
 class QuestionResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: UUID

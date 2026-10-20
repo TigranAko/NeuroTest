@@ -1,17 +1,19 @@
+from datetime import datetime
 from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict
 
 
 class TestCreate(BaseModel):
-    pass
+    title: str
     # questions: list[QuestionCreate]
-    # TODO: title
 
 
 class TestResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: UUID
     author_id: UUID
-    # TODO: title
+    title: str
+    created_at: datetime
+    updated_at: datetime
     # questions: list[QuestionResponse]

@@ -2,6 +2,7 @@ from typing import Annotated
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, UploadFile
+from fastapi.responses import Response
 from schemas.test import TestCreate, TestResponse
 from services.jwt import get_current_user_id
 from services.test import TestService, get_test_service
@@ -27,6 +28,30 @@ async def import_test(
     return await test_service.import_test(user_id, test)
 
 
+@router.get("/export")
+async def export_test(
+    test_service: Annotated[TestService, Depends(get_test_service)],
+    test_id: UUID,
+) -> Response:
+    return await test_service.export_test(test_id)
+
+
+@router.get("/author/me")
+async def read_my_tests(
+    test_service: Annotated[TestService, Depends(get_test_service)],
+    author_id: Annotated[UUID, Depends(get_current_user_id)],
+) -> list[TestResponse]:
+    return await test_service.get_author_tests(author_id)
+
+
+@router.get("/author/{author_id}")
+async def read_author_tests(
+    test_service: Annotated[TestService, Depends(get_test_service)],
+    author_id: UUID,
+) -> list[TestResponse]:
+    return await test_service.get_author_tests(author_id)
+
+
 @router.get("/{test_id}")
 async def read_test(
     test_service: Annotated[TestService, Depends(get_test_service)],
@@ -40,6 +65,16 @@ async def read_tests(
     test_service: Annotated[TestService, Depends(get_test_service)],
 ) -> list[TestResponse]:
     return await test_service.get_tests()
+
+
+@router.put("/{test_id}")
+async def edit_test(
+    test_service: Annotated[TestService, Depends(get_test_service)],
+    user_id: Annotated[UUID, Depends(get_current_user_id)],
+    test: TestCreate,
+    test_id: UUID,
+) -> UUID:
+    return await test_service.edit_test(user_id, test_id, test)
 
 
 @router.delete("/{test_id}")

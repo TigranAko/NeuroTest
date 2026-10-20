@@ -11,6 +11,7 @@ class LLMSettings(BaseSettings):
     TAVILY_API_KEY: SecretStr
     CEREBRAS_API_KEY: SecretStr
     OPENROUTER_API_KEY: SecretStr
+    SPLIT_CHUNK_SIZE: int = 4000
     USE_LOCAL_LLM: bool = False
     LOCAL_LLM_HOST: str | None
     LOCAL_LLM_PORT: int | None

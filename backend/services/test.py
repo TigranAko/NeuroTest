@@ -1,15 +1,18 @@
+from urllib.parse import quote
 import json
 from typing import Annotated
 from uuid import UUID
 
 from core.database import get_db
 from fastapi import Depends, HTTPException, UploadFile
+from fastapi.responses import Response
 from repositories.answer import AnswerRepository
 from repositories.question import QuestionRepository
 from repositories.test import TestRepository
 from schemas.answer import AnswerCreate
 from schemas.question import QuestionCreate
 from schemas.test import TestCreate, TestResponse
+from schemas.test_json import TestJson
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
@@ -39,6 +42,7 @@ class TestService:
     ) -> UUID:
         data = await self._get_json(file)
         test = data.copy()
+        test["title"] = file.filename
         questions = test.pop("questions")
         tc = TestCreate(**test)
         test_id = await self.test.add_one(tc, author_id)
@@ -51,6 +55,23 @@ class TestService:
                 await self.answer.add_one(question_id, ac)
         await self.db.commit()
         return test_id
+
+    async def export_test(
+        self,
+        test_id: UUID,
+    ) -> Response:
+
+        test = await self.test.export(test_id)
+        if test is None:
+            raise HTTPException(404, "Test not found")
+        body = TestJson.model_validate(test).model_dump_json(indent=4)
+        filename = f"{test.title}.json"
+        disposition = f"attachment; filename*=UTF-8''{quote(filename)}"
+        return Response(
+            content=body,
+            media_type="application/json",
+            headers={"Content-Disposition": disposition},
+        )
 
     async def _get_json(
         self,
@@ -84,6 +105,28 @@ class TestService:
         for test in data:
             tests.append(TestResponse.model_validate(test))
         return tests
+
+    async def get_author_tests(self, author_id) -> list[TestResponse]:
+        data = await self.test.get_by_author(author_id)
+        if data is None:
+            raise HTTPException(404, "Author not found")
+        tests: list[TestResponse] = []
+        for test in data:
+            tests.append(TestResponse.model_validate(test))
+        return tests
+
+    async def edit_test(
+        self,
+        user_id: UUID,
+        test_id: UUID,
+        test: TestCreate,
+    ) -> UUID:
+        test_for_authorship = await self.get_test(test_id)  # TODO need optimize
+        if user_id != test_for_authorship.author_id:
+            raise HTTPException(403)
+        test_id = await self.test.edit_one(test_id, test)
+        await self.db.commit()
+        return test_id
 
     async def delete_test(
         self,
