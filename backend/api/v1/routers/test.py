@@ -1,8 +1,8 @@
-from fastapi.responses import Response
 from typing import Annotated
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, UploadFile
+from fastapi.responses import Response
 from schemas.test import TestCreate, TestResponse
 from services.jwt import get_current_user_id
 from services.test import TestService, get_test_service
@@ -67,7 +67,7 @@ async def read_tests(
     return await test_service.get_tests()
 
 
-@router.put("/tests/{test_id}")
+@router.put("/{test_id}")
 async def edit_test(
     test_service: Annotated[TestService, Depends(get_test_service)],
     user_id: Annotated[UUID, Depends(get_current_user_id)],
