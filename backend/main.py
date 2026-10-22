@@ -34,25 +34,31 @@ async def add_request_id(
     started_at = perf_counter()
     try:
         logger.info(
-            "Запрос начат: %s %s",
-            request.method,
-            request.url.path,
+            "Запрос начат",
+            extra={
+                "method": request.method,
+                "path": request.url.path,
+            },
         )
         response = await call_next(request)
     except Exception:
         duration_ms = (perf_counter() - started_at) * 1000
         logger.exception(
-            "Запрос завершён с необработанным исключением: duration_ms=%.1f",
-            duration_ms,
+            "Запрос завершён с необработанным исключением",
+            extra={
+                "duration_ms": round(duration_ms, 2),
+            },
         )
         raise
     else:
         duration_ms = (perf_counter() - started_at) * 1000
         response.headers["X-Request-ID"] = request_id
         logger.info(
-            "Запрос завершён: status=%s duration_ms=%.1f",
-            response.status_code,
-            duration_ms,
+            "Запрос завершён",
+            extra={
+                "duration_ms": round(duration_ms, 2),
+                "status_code": response.status_code,
+            },
         )
         return response
     finally:

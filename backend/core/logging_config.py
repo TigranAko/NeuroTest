@@ -1,4 +1,3 @@
-import copy
 import json
 import logging
 from contextvars import ContextVar
@@ -11,7 +10,6 @@ class RequestContextFilter(logging.Filter):
     """Добавляет текущий request_id к LogRecord"""
 
     def filter(self, record: logging.LogRecord) -> logging.LogRecord:
-        # record = copy.copy(record)
         record.request_id = request_id_var.get()
         return record
 
@@ -29,6 +27,14 @@ class JsonFormatter(logging.Formatter):
         }
         if record.exc_info:
             payload["exception"] = self.formatException(record.exc_info)
+        if hasattr(record, "method"):
+            payload["method"] = record.method
+        if hasattr(record, "path"):
+            payload["path"] = record.path
+        if hasattr(record, "status_code"):
+            payload["status_code"] = record.status_code
+        if hasattr(record, "duration_ms"):
+            payload["duration_ms"] = record.duration_ms
         return json.dumps(payload, ensure_ascii=False, default=str)
 
 
