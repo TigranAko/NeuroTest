@@ -46,3 +46,8 @@ def configure_logging() -> None:
     root_logger = logging.getLogger()
     root_logger.setLevel(logging.INFO)
     root_logger.addHandler(handler)
+    for name in ("uvicorn", "uvicorn.access"):
+        uvicorn_logger = logging.getLogger(name)
+        for uvicorn_handler in tuple(uvicorn_logger.handlers):
+            uvicorn_logger.removeHandler(uvicorn_handler)
+        uvicorn_logger.propagate = True
