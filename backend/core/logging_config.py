@@ -28,16 +28,6 @@ class JsonFormatter(logging.Formatter):
         }
         if record.exc_info:
             payload["exception"] = self.formatException(record.exc_info)
-        # TODO: Need delete ...
-        if hasattr(record, "method"):
-            payload["method"] = record.method
-        if hasattr(record, "path"):
-            payload["path"] = record.path
-        if hasattr(record, "status_code"):
-            payload["status_code"] = record.status_code
-        if hasattr(record, "duration_ms"):
-            payload["duration_ms"] = record.duration_ms
-        # TODO: ... Need delete
         return json.dumps(payload, ensure_ascii=False, default=str)
 
 

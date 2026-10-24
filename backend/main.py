@@ -36,8 +36,10 @@ async def add_request_id(
         logger.info(
             "Запрос начат",
             extra={
-                "method": request.method,
-                "path": request.url.path,
+                "meta": {
+                    "method": request.method,
+                    "path": request.url.path,
+                },
             },
         )
         response = await call_next(request)
@@ -46,7 +48,9 @@ async def add_request_id(
         logger.exception(
             "Запрос завершён с необработанным исключением",
             extra={
-                "duration_ms": round(duration_ms, 2),
+                "meta": {
+                    "duration_ms": round(duration_ms, 2),
+                },
             },
         )
         raise
@@ -56,8 +60,10 @@ async def add_request_id(
         logger.info(
             "Запрос завершён",
             extra={
-                "duration_ms": round(duration_ms, 2),
-                "status_code": response.status_code,
+                "meta": {
+                    "duration_ms": round(duration_ms, 2),
+                    "status_code": response.status_code,
+                },
             },
         )
         return response
