@@ -34,7 +34,7 @@ async def add_request_id(
     started_at = perf_counter()
     try:
         logger.info(
-            "Запрос начат",
+            "Request started",
             extra={
                 "meta": {
                     "method": request.method,
@@ -46,7 +46,7 @@ async def add_request_id(
     except Exception:
         duration_ms = (perf_counter() - started_at) * 1000
         logger.exception(
-            "Запрос завершён с необработанным исключением",
+            "Request failed with unhandled exception",
             extra={
                 "meta": {
                     "duration_ms": round(duration_ms, 2),
@@ -58,7 +58,7 @@ async def add_request_id(
         duration_ms = (perf_counter() - started_at) * 1000
         response.headers["X-Request-ID"] = request_id
         logger.info(
-            "Запрос завершён",
+            "Request finished",
             extra={
                 "meta": {
                     "duration_ms": round(duration_ms, 2),
