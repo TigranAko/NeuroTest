@@ -1,3 +1,4 @@
+import logging
 from typing import Annotated
 from uuid import UUID
 
@@ -13,6 +14,7 @@ from services.jwt import jwt_service
 from sqlalchemy.ext.asyncio import AsyncSession
 
 ph = PasswordHasher()
+logger = logging.getLogger(__name__)
 
 
 class AuthService:
@@ -27,7 +29,19 @@ class AuthService:
         self,
         user: UserCreate,
     ) -> UserResponse:
+        logger.info(
+            "Registering new user",
+            extra={
+                "meta": {"username": user.username},
+            },
+        )
         if await self.users_repo.get_by_username(user.username) is not None:
+            logger.warning(
+                "Registration failed: username already exists",
+                extra={
+                    "meta": {"username": user.username},
+                },
+            )
             raise HTTPException(
                 401,
                 "User with this username already created, please change username",
@@ -37,6 +51,15 @@ class AuthService:
         user_id = await self.users_repo.add_one(user)
         await self.db.commit()
         user_db = UserDB.model_validate(await self.users_repo.get_by_id(user_id))
+        logger.info(
+            "User registered successfully",
+            extra={
+                "meta": {
+                    "user_id": str(user_id),
+                    "username": user.username,
+                },
+            },
+        )
         return UserResponse(**user_db.model_dump(exclude={"password"}))
 
     async def login(
@@ -44,13 +67,31 @@ class AuthService:
         response: Response,
         form_data: Annotated[OAuth2PasswordRequestForm, Depends],
     ):
+        logger.info(
+            "Login attempt",
+            extra={
+                "meta": {"username": form_data.username},
+            },
+        )
         user = await self.users_repo.get_by_username(form_data.username)
         if user is None:
+            logger.warning(
+                "Login failed: user not found",
+                extra={
+                    "meta": {"username": form_data.username},
+                },
+            )
             raise HTTPException(401, "User Not Found")
         user = UserDB.model_validate(user)
         try:
             ph.verify(user.password, form_data.password)
         except VerificationError:
+            logger.warning(
+                "Login failed: invalid password",
+                extra={
+                    "meta": {"username": user.username},
+                },
+            )
             raise HTTPException(401, "User Not Found")
 
         access = jwt_service.create_access_token(user.id)
@@ -72,6 +113,15 @@ class AuthService:
         #     samesite="strict",
         #     max_age=settings.auth_access_expire_minutes * 60,
         # )
+        logger.info(
+            "Login successful",
+            extra={
+                "meta": {
+                    "user_id": str(user.id),
+                    "username": user.username,
+                },
+            },
+        )
         return {"access_token": access, "token_type": "Bearer"}
         # return UserResponse(
         #     username=user.username,
@@ -85,12 +135,14 @@ class AuthService:
     ):
         refresh_token = request.cookies.get("refresh_token")
         if not refresh_token:
+            logger.warning("Refresh failed: token missing")
             raise HTTPException(401, detail="Refresh token missing")
 
         user_id = jwt_service.verify_token(refresh_token, allowed_types=["refresh"])
         if user_id is None:
             # Удаляем битый cookie
             response.delete_cookie("refresh_token")
+            logger.warning("Refresh failed: invalid or expired token")
             raise HTTPException(401, detail="Invalid or expired refresh token")
 
         # Ротация: выдаём новую пару (старый refresh продолжает жить до истечения, но клиент его заменит)
@@ -104,6 +156,14 @@ class AuthService:
             samesite="strict",
             max_age=settings.auth_refresh_expire_days * 86400,
         )
+        logger.info(
+            "Token refreshed successfully",
+            extra={
+                "meta": {
+                    "user_id": str(user_id),
+                },
+            },
+        )
         return {"access_token": new_access, "token_type": "Bearer"}
 
     async def logout(
@@ -113,6 +173,14 @@ class AuthService:
     ):
         response.delete_cookie("refresh_token")
         # Access сам истечёт через 15 минут
+        logger.info(
+            "User logged out",
+            extra={
+                "meta": {
+                    "user_id": str(user_id),
+                },
+            },
+        )
         return {"ok": True}
 
     async def me(
@@ -121,8 +189,24 @@ class AuthService:
     ):
         user = await self.users_repo.get_by_id(user_id)
         if user is None:
+            logger.warning(
+                "User not found for /me",
+                extra={
+                    "meta": {
+                        "user_id": str(user_id),
+                    },
+                },
+            )
             raise HTTPException(401, "User Not Found")
         user_db = UserDB.model_validate(user)
+        logger.info(
+            "Fetching user profile",
+            extra={
+                "meta": {
+                    "user_id": str(user_id),
+                },
+            },
+        )
         return UserResponse(**user_db.model_dump(exclude={"password"}))
 
 
