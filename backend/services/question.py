@@ -99,17 +99,6 @@ class QuestionService:
             },
         )
         data = await self.question.get_by_test(test_id)
-        if data is None:
-            # TODO:  data is a list
-            logger.warning(
-                "Questions not found",
-                extra={
-                    "meta": {
-                        "test_id": str(test_id),
-                    },
-                },
-            )
-            raise HTTPException(404, "Question not found")
         questions: list[QuestionResponse] = []
         for question in data:
             questions.append(QuestionResponse.model_validate(question))

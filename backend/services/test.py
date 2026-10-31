@@ -160,11 +160,6 @@ class TestService:
     ) -> list[TestResponse]:
         logger.info("Fetching all tests")
         data = await self.test.get_tests()
-        if data is None:
-            logger.warning(
-                "Test not found",
-            )
-            raise HTTPException(404, "Test not found")
         tests: list[TestResponse] = []
         for test in data:
             tests.append(TestResponse.model_validate(test))
@@ -177,12 +172,6 @@ class TestService:
             extra={"meta": {"author_id": str(author_id)}},
         )
         data = await self.test.get_by_author(author_id)
-        if data is None:
-            logger.warning(
-                "Author not found",
-                extra={"meta": {"author_id": str(author_id)}},
-            )
-            raise HTTPException(404, "Author not found")
         tests: list[TestResponse] = []
         for test in data:
             tests.append(TestResponse.model_validate(test))

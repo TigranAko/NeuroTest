@@ -42,8 +42,6 @@ class AnswerService:
         question_id: UUID,
     ) -> list[AnswerResponse]:
         data = await self.repo.get_by_question(question_id)
-        if data is None:
-            raise HTTPException(404, "Answer not found")
         answers: list[AnswerResponse] = []
         for answer in data:
             answers.append(AnswerResponse.model_validate(answer))
