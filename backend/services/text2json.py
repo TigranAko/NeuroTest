@@ -1,3 +1,4 @@
+import logging
 from typing import Annotated
 from uuid import UUID
 
@@ -16,6 +17,8 @@ from schemas.question import QuestionCreate
 from schemas.test import TestCreate
 from services.file import FileService
 from sqlalchemy.ext.asyncio import AsyncSession
+
+logger = logging.getLogger(__name__)
 
 
 class Answer(BaseModel):
@@ -93,7 +96,16 @@ class TextToJsonService:
             chunk_size=settings.SPLIT_CHUNK_SIZE,
             separators=["\n\n", "\n", " ", ""],
         )
-        return spliter.split_text(text)
+        chunks = spliter.split_text(text)
+        logger.debug(
+            "Text split into chunks",
+            extra={
+                "meta": {
+                    "count_chunks": len(chunks),
+                },
+            },
+        )
+        return chunks
 
     def _try_parse_chunk(
         self,
@@ -103,50 +115,107 @@ class TextToJsonService:
     ) -> list[Question]:
         chunk_test = None
         for retry_count in range(3):
-            print(f"\nОтправляется запрос {retry_count + 1}\n")
+            logger.debug(
+                "Parsing chunk attempt",
+                extra={
+                    "meta": {
+                        "attempt": retry_count + 1,
+                    },
+                },
+            )
             chunk_test = self.parse_chunk(
                 chunk_text,
                 tail,
                 last_question_last_chunk,
             )  # TODO: Тут используется модель
             if chunk_test is not None:
+                logger.debug(
+                    "Chunk parsed successfully",
+                    extra={
+                        "meta": {
+                            "count_questions": len(chunk_test),
+                        },
+                    },
+                )
                 return chunk_test
-        print("ERROR: Не получилось обработать чанк\n\n", chunk_text)
+        logger.warning(
+            "Failed to parse chunk after 3 attempts",
+            extra={
+                "meta": {
+                    "chunk_length": len(chunk_text),
+                },
+            },
+        )
 
     def _delete_dublicate(self, all_questions, new_questions) -> None:
+        logger.debug(
+            "Try to find duplicate question",
+            extra={
+                "meta": {
+                    "last_question_length": len(all_questions),
+                    "new_questions_length": len(new_questions),
+                },
+            },
+        )
         if (
             all_questions != []
             and all_questions[-1].question == new_questions[0].question
         ):
-            print("\nУдаление дубликата вопроса при соединении чанков")
-            print(all_questions[-1], "\n", new_questions[0])
+            logger.debug(
+                "Deleting duplicate question",
+                extra={
+                    "meta": {
+                        "duplicate_question_text": new_questions[0].question,
+                    },
+                },
+            )
             all_questions.pop()
 
     def parse_test(self, raw_text: str) -> Test:
+        logger.debug(
+            "Starting parse test",
+            extra={
+                "meta": {
+                    "text_length": len(raw_text),
+                },
+            },
+        )
         chunks = self._split_text(raw_text)
         all_questions = []
         tail = ""
         last_question = ""
         for i, chunk in enumerate(chunks, 1):
             chunk = chunk.replace("\n\n", "\n")
-            print(f"Чанк: {i}/{len(chunks)}\nДлина чанка {len(chunk)} символов")
 
             chunk_test = self._try_parse_chunk(chunk, tail, last_question)
             new_questions = chunk_test.questions
-            print("Новые вопросы", new_questions)
             self._delete_dublicate(
                 all_questions, new_questions
             )  # all_questions is mutable (delete dublicate last question)
             all_questions.extend(new_questions)
 
-            print(f"Добавлено {len(new_questions)} вопросов")
             chunk_lines = chunk.split("\n")
             tail = chunk_lines[-1]
-            print("Последния  строка", tail)
             last_question = all_questions[-1].model_dump_json()
-            print("Последний  вопрос", last_question)
-        print()
-        print(all_questions)
+            logger.debug(
+                "Chunk fully processed",
+                extra={
+                    "meta": {
+                        "chunk_length": len(chunk),
+                        "current_chunk": i,
+                        "count_chunks": len(chunks),
+                        "count_new_questions": len(new_questions),
+                    },
+                },
+            )
+        logger.debug(
+            "Test parsed successfully",
+            extra={
+                "meta": {
+                    "count_all_questions": len(all_questions),
+                },
+            },
+        )
         test = Test(questions=all_questions)
         return test
 
@@ -156,12 +225,34 @@ class TextToJsonService:
         tail: str,
         last_question_last_chunk: str | None,
     ) -> list[Question]:
+        logger.debug(
+            "Starting LLM call",
+            extra={
+                "meta": {
+                    "last_question": last_question_last_chunk,
+                    "tail": tail,
+                    "chunk_text": chunk_text,
+                },
+            },
+        )
         result = chain.invoke(
             {
                 "first_question": last_question_last_chunk,
                 "previous_tail": tail,
                 "current_chunk": chunk_text,
             }
+        )
+        logger.debug(
+            "LLM called",
+            extra={
+                "meta": {
+                    "last_question": last_question_last_chunk,
+                    "tail": tail,
+                    "chunk_text": chunk_text,
+                    "input_tokens": result.usage_metadata.get("input_tokens"),
+                    "output_tokens": result.usage_metadata.get("output_tokens"),
+                },
+            },
         )
         return result
 
@@ -171,9 +262,27 @@ class TextToJsonService:
         file: FileService,
         user_id: UUID,
     ) -> UUID:
+        logger.info(
+            "Creating test by docx file without answers",
+            extra={
+                "meta": {
+                    "user_id": str(user_id),
+                    "file_title": file_title,
+                },
+            },
+        )
         text = await file.get_text_docx(file_title)
         questions_without_answers: Test = self.parse_test(text)
         test_id = await self._save_test(questions_without_answers, user_id, file_title)
+        logger.info(
+            "Test created by docx file without answers",
+            extra={
+                "meta": {
+                    "user_id": str(user_id),
+                    "test_id": str(test_id),
+                },
+            },
+        )
         return test_id
 
     async def _save_test(
@@ -182,6 +291,15 @@ class TextToJsonService:
         author_id: UUID,
         title: str,
     ):
+        logger.debug(
+            "Starting save test",
+            extra={
+                "meta": {
+                    "author_id": str(author_id),
+                    "title": title,
+                },
+            },
+        )
         data = test.model_dump()
         questions = data.pop("questions")
         data["title"] = title
@@ -200,6 +318,16 @@ class TextToJsonService:
                 )
                 await self.answer.add_one(question_id, ac)
         await self.db.commit()
+        logger.debug(
+            "Test saved successfully",
+            extra={
+                "meta": {
+                    "author_id": str(author_id),
+                    "title": title,
+                    "test_id": str(test_id),
+                },
+            },
+        )
         return test_id
 
 
