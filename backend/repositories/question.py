@@ -1,3 +1,4 @@
+import logging
 from collections.abc import Sequence
 from uuid import UUID
 
@@ -6,6 +7,8 @@ from models.test import Test
 from repositories.base import BaseRepository
 from schemas.question import QuestionCreate, QuestionUpdate
 from sqlalchemy import ScalarResult, delete, func, insert, select, update
+
+logger = logging.getLogger(__name__)
 
 
 class QuestionRepository(BaseRepository[Question, QuestionCreate, QuestionUpdate]):
@@ -16,6 +19,15 @@ class QuestionRepository(BaseRepository[Question, QuestionCreate, QuestionUpdate
         test_id: UUID,
         question: QuestionCreate,
     ) -> UUID:
+        logger.debug(
+            "Create object by id",
+            extra={
+                "meta": {
+                    "test_id": str(test_id),
+                    "class": self.__class__.__name__,
+                },
+            },
+        )
         data = question.model_dump()
         position_subq = (
             select(func.count()).where(self.model.test_id == test_id).scalar_subquery()
@@ -30,11 +42,29 @@ class QuestionRepository(BaseRepository[Question, QuestionCreate, QuestionUpdate
         return result
 
     async def get_by_test(self, test_id: UUID) -> ScalarResult[Question]:
+        logger.debug(
+            "Fetch object by test id",
+            extra={
+                "meta": {
+                    "test_id": str(test_id),
+                    "class": self.__class__.__name__,
+                },
+            },
+        )
         stmt = select(self.model).where(self.model.test_id == test_id)
         answer = await self.db.execute(stmt)
         return answer.scalars()
 
     async def get_author_id(self, question_id: UUID) -> UUID | None:
+        logger.debug(
+            "Fetch author id by question id",
+            extra={
+                "meta": {
+                    "question_id": str(question_id),
+                    "class": self.__class__.__name__,
+                },
+            },
+        )
         stmt = (
             select(Test.author_id)
             .join(self.model, self.model.test_id == Test.id)
@@ -47,6 +77,15 @@ class QuestionRepository(BaseRepository[Question, QuestionCreate, QuestionUpdate
         self,
         test_id: UUID,
     ) -> Sequence[UUID]:
+        logger.debug(
+            "Delete object by test id",
+            extra={
+                "meta": {
+                    "test_id": str(test_id),
+                    "class": self.__class__.__name__,
+                },
+            },
+        )
         stmt = (
             delete(self.model)
             .where(self.model.test_id == test_id)
@@ -61,6 +100,17 @@ class QuestionRepository(BaseRepository[Question, QuestionCreate, QuestionUpdate
         from_position: int,
         delta: int = -1,
     ) -> None:
+        logger.debug(
+            "Shift positions by test id",
+            extra={
+                "meta": {
+                    "test_id": str(test_id),
+                    "from_position": from_position,
+                    "delta": delta,
+                    "class": self.__class__.__name__,
+                },
+            },
+        )
         stmt = (
             update(self.model)
             .where(
