@@ -1,3 +1,4 @@
+import logging
 from typing import Generic, TypeVar
 from uuid import UUID
 
@@ -5,6 +6,8 @@ from core.database import Base
 from pydantic import BaseModel
 from sqlalchemy import delete, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
+
+logger = logging.getLogger(__name__)
 
 # from sqlalchemy import ScalarResult, delete, insert, select, update
 ModelType = TypeVar("ModelType", bound=Base)
@@ -31,6 +34,15 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     #     return result
 
     async def get_by_id(self, obj_id: UUID) -> ModelType | None:
+        logger.debug(
+            "Get object by id",
+            extra={
+                "meta": {
+                    "obj_id": obj_id,
+                    "class": self.__class__.__name__,
+                },
+            },
+        )
         stmt = select(self.model).where(self.model.id == obj_id)
         obj = await self.db.execute(stmt)
         return obj.scalar_one_or_none()
@@ -45,6 +57,15 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         obj_id: UUID,
         obj: CreateSchemaType,
     ) -> UUID:
+        logger.debug(
+            "Edit object by id",
+            extra={
+                "meta": {
+                    "obj_id": obj_id,
+                    "class": self.__class__.__name__,
+                },
+            },
+        )
         data = obj.model_dump()
         stmt = (
             update(self.model)
@@ -61,6 +82,15 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         obj_id: UUID,
         obj: UpdateSchemaType,
     ) -> UUID:
+        logger.debug(
+            "Partial edit object by id",
+            extra={
+                "meta": {
+                    "obj_id": obj_id,
+                    "class": self.__class__.__name__,
+                },
+            },
+        )
         stmt = (
             update(self.model)
             .where(self.model.id == obj_id)
@@ -75,6 +105,15 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         self,
         obj_id: UUID,
     ) -> UUID:
+        logger.debug(
+            "Delete object by id",
+            extra={
+                "meta": {
+                    "obj_id": obj_id,
+                    "class": self.__class__.__name__,
+                },
+            },
+        )
         stmt = (
             delete(self.model).where(self.model.id == obj_id).returning(self.model.id)
         )
