@@ -7,14 +7,10 @@ from models.test import Test
 from repositories.base import BaseRepository
 from schemas.answer import AnswerCreate, AnswerUpdate
 from sqlalchemy import ScalarResult, delete, func, insert, select, update
-from sqlalchemy.ext.asyncio import AsyncSession
 
 
 class AnswerRepository(BaseRepository[Answer, AnswerCreate, AnswerUpdate]):
     model = Answer
-
-    def __init__(self, db: AsyncSession):
-        self.db = db
 
     async def add_one(
         self,

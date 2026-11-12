@@ -6,14 +6,10 @@ from models.test import Test
 from repositories.base import BaseRepository
 from schemas.question import QuestionCreate, QuestionUpdate
 from sqlalchemy import ScalarResult, delete, func, insert, select, update
-from sqlalchemy.ext.asyncio import AsyncSession
 
 
 class QuestionRepository(BaseRepository[Question, QuestionCreate, QuestionUpdate]):
     model = Question
-
-    def __init__(self, db: AsyncSession):
-        self.db = db
 
     async def add_one(
         self,

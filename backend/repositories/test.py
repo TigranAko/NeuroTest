@@ -5,15 +5,11 @@ from models.test import Test
 from repositories.base import BaseRepository
 from schemas.test import TestCreate, TestUpdate
 from sqlalchemy import ScalarResult, insert, select
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 
-class TestRepositor(BaseRepository[Test, TestCreate, TestUpdate]):
+class TestRepository(BaseRepository[Test, TestCreate, TestUpdate]):
     model = Test
-
-    def __init__(self, db: AsyncSession):
-        self.db = db
 
     async def add_one(
         self,
