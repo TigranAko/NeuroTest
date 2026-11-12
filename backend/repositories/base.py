@@ -38,7 +38,7 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             "Get object by id",
             extra={
                 "meta": {
-                    "obj_id": obj_id,
+                    "obj_id": str(obj_id),
                     "class": self.__class__.__name__,
                 },
             },
@@ -61,7 +61,7 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             "Edit object by id",
             extra={
                 "meta": {
-                    "obj_id": obj_id,
+                    "obj_id": str(obj_id),
                     "class": self.__class__.__name__,
                 },
             },
@@ -86,7 +86,7 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             "Partial edit object by id",
             extra={
                 "meta": {
-                    "obj_id": obj_id,
+                    "obj_id": str(obj_id),
                     "class": self.__class__.__name__,
                 },
             },
@@ -109,7 +109,7 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             "Delete object by id",
             extra={
                 "meta": {
-                    "obj_id": obj_id,
+                    "obj_id": str(obj_id),
                     "class": self.__class__.__name__,
                 },
             },
