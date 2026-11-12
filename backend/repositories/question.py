@@ -3,12 +3,13 @@ from uuid import UUID
 
 from models.question import Question
 from models.test import Test
+from repositories.base import BaseRepository
 from schemas.question import QuestionCreate, QuestionUpdate
 from sqlalchemy import ScalarResult, delete, func, insert, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
-class QuestionRepository:
+class QuestionRepository(BaseRepository[Question, QuestionCreate, QuestionUpdate]):
     model = Question
 
     def __init__(self, db: AsyncSession):
@@ -32,11 +33,6 @@ class QuestionRepository:
         result = user_id.scalar_one()
         return result
 
-    async def get_by_id(self, question_id: UUID) -> Question | None:
-        stmt = select(self.model).where(self.model.id == question_id)
-        test = await self.db.execute(stmt)
-        return test.scalar_one_or_none()
-
     async def get_by_test(self, test_id: UUID) -> ScalarResult[Question]:
         stmt = select(self.model).where(self.model.test_id == test_id)
         answer = await self.db.execute(stmt)
@@ -50,51 +46,6 @@ class QuestionRepository:
         )
         answer = await self.db.execute(stmt)
         return answer.scalar_one_or_none()
-
-    async def edit_one(
-        self,
-        question_id: UUID,
-        question: QuestionCreate,
-    ) -> UUID:
-        data = question.model_dump()
-        stmt = (
-            update(self.model)
-            .where(self.model.id == question_id)
-            .values(data)
-            .returning(self.model.id)
-        )
-        user_id = await self.db.execute(stmt)
-        result = user_id.scalar_one()
-        return result
-
-    async def partial_edit_one(
-        self,
-        question_id: UUID,
-        question: QuestionUpdate,
-    ) -> UUID:
-        data = question.model_dump(exclude_unset=True)
-        stmt = (
-            update(self.model)
-            .where(self.model.id == question_id)
-            .values(data)
-            .returning(self.model.id)
-        )
-        user_id = await self.db.execute(stmt)
-        result = user_id.scalar_one()
-        return result
-
-    async def delete_one(
-        self,
-        question_id: UUID,
-    ) -> UUID | None:
-        stmt = (
-            delete(self.model)
-            .where(self.model.id == question_id)
-            .returning(self.model.id)
-        )
-        user_id = await self.db.execute(stmt)
-        result = user_id.scalar_one_or_none()
-        return result
 
     async def delete_by_test(
         self,
