@@ -242,6 +242,7 @@ class TextToJsonService:
                 "current_chunk": chunk_text,
             }
         )
+        usage = getattr(result, "usage_metadata", {})
         logger.debug(
             "LLM called",
             extra={
@@ -249,8 +250,8 @@ class TextToJsonService:
                     "last_question": last_question_last_chunk,
                     "tail": tail,
                     "chunk_text": chunk_text,
-                    "input_tokens": result.usage_metadata.get("input_tokens"),
-                    "output_tokens": result.usage_metadata.get("output_tokens"),
+                    "input_tokens": usage.get("input_tokens"),
+                    "output_tokens": usage.get("output_tokens"),
                 },
             },
         )
