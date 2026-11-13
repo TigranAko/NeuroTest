@@ -2,6 +2,7 @@ import json
 import logging
 from contextvars import ContextVar
 from datetime import UTC, datetime
+from core.settings import log_settings
 
 request_id_var: ContextVar[str] = ContextVar("request_id", default="-")
 
@@ -37,7 +38,7 @@ def configure_logging() -> None:
     handler.addFilter(RequestContextFilter())
     handler.setFormatter(JsonFormatter())
     root_logger = logging.getLogger()
-    root_logger.setLevel(logging.INFO)
+    root_logger.setLevel(log_settings.LOG_LEVEL)
     root_logger.addHandler(handler)
     for name in ("uvicorn", "uvicorn.access"):
         uvicorn_logger = logging.getLogger(name)
