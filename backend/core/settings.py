@@ -1,3 +1,5 @@
+from typing import Literal
+
 from pydantic import SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -51,6 +53,25 @@ class DBSettings(BaseSettings):
         return f"postgresql+psycopg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
 
 
+class LogSettings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file="../.env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
+    LOG_LEVEL: Literal[
+        "CRITICAL",
+        "FATAL",
+        "ERROR",
+        "WARN",
+        "WARNING",
+        "INFO",
+        "DEBUG",
+        "NOTSET",
+    ]
+
+
+log_settings = LogSettings()
 db_settings = DBSettings()
 auth_settings = AuthSettings()
 settings = LLMSettings()
