@@ -2,6 +2,92 @@
 
 <!-- version list -->
 
+## v0.9.0 (2026-11-15)
+
+### Bug Fixes
+
+- **services**: Drop unreachable None checks
+  ([`6f9cb89`](https://github.com/TigranAko/NeuroTest/commit/6f9cb89e39f46f220ba73df8c82050d471b056a5))
+
+- **text2json**: Handle missing usage_metadata safely
+  ([`50ce914`](https://github.com/TigranAko/NeuroTest/commit/50ce914c2879112158b060862bb90a07901bc31f))
+
+### Chores
+
+- **logging**: Translate log messages to english
+  ([`ebc94a2`](https://github.com/TigranAko/NeuroTest/commit/ebc94a293bd55169db35a2f34db9334cdb2ff124))
+
+### Features
+
+- **core**: Make log level configurable via LOG_LEVEL env var
+  ([`ba97b32`](https://github.com/TigranAko/NeuroTest/commit/ba97b32385314d19ca890645599f61915acdabe6))
+
+- **logging**: Add basic logging configuration module
+  ([`c03c56b`](https://github.com/TigranAko/NeuroTest/commit/c03c56b71d953c750fb564f98607fd00f97aa3c6))
+
+- **logging**: Add debug logs to answer repository
+  ([`eca6518`](https://github.com/TigranAko/NeuroTest/commit/eca65187ce7f77814f7513b73a9a4b7a6dd33240))
+
+- **logging**: Add debug logs to base repository
+  ([`2b136ba`](https://github.com/TigranAko/NeuroTest/commit/2b136ba5cc6460113709b0d47ec18b692d725d28))
+
+- **logging**: Add debug logs to question repository
+  ([`6d392f4`](https://github.com/TigranAko/NeuroTest/commit/6d392f4a0d9a1e1dc5b9f87844bdd35bae888616))
+
+- **logging**: Add debug logs to test repository
+  ([`6796d36`](https://github.com/TigranAko/NeuroTest/commit/6796d361bcfdead4a8502140042e25f09b0b5aa7))
+
+- **logging**: Add debug logs to user repository
+  ([`3940617`](https://github.com/TigranAko/NeuroTest/commit/3940617948f355be9da1e0370f31c3718cf417fe))
+
+- **logging**: Add logs to answer service
+  ([`59ea926`](https://github.com/TigranAko/NeuroTest/commit/59ea9263b590be9b66e197482aa808d830afc12f))
+
+- **logging**: Add logs to authentication flow
+  ([`6d9cc37`](https://github.com/TigranAko/NeuroTest/commit/6d9cc376772746f59c4c4c6e91652d001fc24375))
+
+- **logging**: Add logs to file service
+  ([`4cc252b`](https://github.com/TigranAko/NeuroTest/commit/4cc252b21a62efb07bd0e91fc46db826263bada8))
+
+- **logging**: Add logs to LLM pipeline services
+  ([`533d3e4`](https://github.com/TigranAko/NeuroTest/commit/533d3e46697d0d82764ad7d49454ff7b41e2ab8d))
+
+- **logging**: Add logs to question service
+  ([`4a02ec0`](https://github.com/TigranAko/NeuroTest/commit/4a02ec0f0b2864ac0b0f281de552fe84bac61eba))
+
+- **logging**: Add logs to test service
+  ([`f4c5800`](https://github.com/TigranAko/NeuroTest/commit/f4c58001ef6bf79a9ee979d14769132837543506))
+
+- **logging**: Add meta dictionary support to JsonFormatter
+  ([`c3c90da`](https://github.com/TigranAko/NeuroTest/commit/c3c90da0f9e6736dd59c02f2eac837da068d259f))
+
+- **logging**: Integrate request_id middleware in fastapi
+  ([`30839d4`](https://github.com/TigranAko/NeuroTest/commit/30839d4af351940174ef80452bd944497ba5fb99))
+
+### Refactoring
+
+- **logging**: Cast uuid to string in base repository logs
+  ([`f4065e9`](https://github.com/TigranAko/NeuroTest/commit/f4065e9e679631eb313be7949aeaaa99e5e30a81))
+
+- **logging**: Emit structured request fields in JSON logs via extra
+  ([`e97bcab`](https://github.com/TigranAko/NeuroTest/commit/e97bcab6fba5422dfabebfb79113b5928d8b157d))
+
+- **logging**: Migrate middleware to use meta dict and cleanup formatter
+  ([`7bb6f25`](https://github.com/TigranAko/NeuroTest/commit/7bb6f25738b96a2edf3cfd412256b1de055d4e86))
+
+- **logging**: Remove uvicorn handlers and enable propagation
+  ([`7c549cf`](https://github.com/TigranAko/NeuroTest/commit/7c549cfae7631aa05ee096ca46bbf4be2e54ba87))
+
+- **models**: Extract UUID primary key into Base
+  ([`6c72b79`](https://github.com/TigranAko/NeuroTest/commit/6c72b7910e7d1f07e6138248695c5b6f8faeffde))
+
+- **repositories**: Add generic BaseRepository for shared operations
+  ([`6fa1ae2`](https://github.com/TigranAko/NeuroTest/commit/6fa1ae2c0da0bc220b8f5e30d9d84e8b6d197d06))
+
+- **repositories**: Remove redundant __init__ in subclasses
+  ([`8652737`](https://github.com/TigranAko/NeuroTest/commit/86527375541bd9a3052f5f561207ae8ceb4de470))
+
+
 ## v0.8.0 (2026-10-20)
 
 ### Bug Fixes
