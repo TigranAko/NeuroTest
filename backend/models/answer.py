@@ -1,5 +1,5 @@
 from typing import TYPE_CHECKING
-from uuid import UUID, uuid4
+from uuid import UUID
 
 from core.database import Base
 from sqlalchemy import ForeignKey, UniqueConstraint
@@ -11,7 +11,6 @@ if TYPE_CHECKING:
 
 class Answer(Base):
     __tablename__ = "answers"
-    id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
     question_id: Mapped[UUID] = mapped_column(ForeignKey("questions.id"))
     text: Mapped[str] = mapped_column()
     isCorrect: Mapped[bool] = mapped_column(default=False)

@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime, timedelta, timezone
 from typing import Any, Literal
 from uuid import UUID
@@ -7,6 +8,8 @@ from core.settings import auth_settings as settings
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from jwt.exceptions import PyJWTError
+
+logger = logging.getLogger(__name__)
 
 
 class JWTService:
@@ -24,6 +27,15 @@ class JWTService:
         expires_delta: timedelta,
         token_type: Literal["access", "refresh"],
     ) -> str:
+        logger.debug(
+            "Creating token",
+            extra={
+                "meta": {
+                    "user_id": str(user_id),
+                    "token_type": token_type,
+                },
+            },
+        )
         now = datetime.now(timezone.utc)
         payload = {
             "sub": str(user_id),
@@ -65,6 +77,9 @@ class JWTService:
                 options={"require": ["exp", "iat", "sub", "type"]},
             )
         except PyJWTError:
+            logger.warning(
+                "Token decoding failed",
+            )
             return None
 
     def verify_token(
@@ -76,10 +91,27 @@ class JWTService:
         if not payload:
             return None
         if payload.get("type") not in allowed_types:
+            logger.warning(
+                "Token type mismatch",
+                extra={
+                    "meta": {
+                        "expected": allowed_types,
+                        "got": payload.get("type"),
+                    },
+                },
+            )
             return None
         try:
             return UUID(payload["sub"])
         except (KeyError, ValueError):
+            logger.warning(
+                "Invalid user id in token",
+                extra={
+                    "meta": {
+                        "sub": payload.get("sub"),
+                    },
+                },
+            )
             return None
 
 

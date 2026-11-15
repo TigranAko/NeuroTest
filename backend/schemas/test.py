@@ -9,6 +9,10 @@ class TestCreate(BaseModel):
     # questions: list[QuestionCreate]
 
 
+class TestUpdate(BaseModel):
+    title: str | None
+
+
 class TestResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: UUID

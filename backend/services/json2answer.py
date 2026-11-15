@@ -1,3 +1,4 @@
+import logging
 from time import sleep
 from typing import Annotated, Literal
 from uuid import UUID
@@ -18,6 +19,7 @@ from schemas.test import TestCreate
 from schemas.test_output import QuestionOutput, TestOutput
 from sqlalchemy.ext.asyncio import AsyncSession
 
+logger = logging.getLogger(__name__)
 # ---------- Инструменты ----------
 search = TavilySearch(
     max_results=2,
@@ -88,12 +90,39 @@ class JsonToAnswerService:
         question_text: str,
         answers: list[dict[Literal["text"], str]],
     ) -> QuestionOutput:
+        logger.debug(
+            "Running Tavily search",
+            extra={
+                "meta": {
+                    "question_length": len(question_text),
+                    "answers_count": len(answers),
+                },
+            },
+        )
         formatted_answers = "\n".join(
             f"{i}) {a.get('text')}" for i, a in enumerate(answers, 1)
         )
         search_results = search.invoke(question_text)
-        print(search_results, type(search_results))
+        results = search_results.get("results", [])
+        if not results:
+            logger.warning(
+                "Tavily search returned no results",
+                extra={
+                    "meta": {
+                        "question_length": len(question_text),
+                        "answers_count": len(answers),
+                    },
+                },
+            )
         search_text = "\n".join(r["content"] for r in search_results.get("results"))
+        logger.debug(
+            "Tavily search completed",
+            extra={
+                "meta": {
+                    "results_count": len(results),
+                },
+            },
+        )
 
         chain = prompt | llm | parser
         result = chain.invoke(
@@ -104,17 +133,63 @@ class JsonToAnswerService:
                 "format_instructions": parser.get_format_instructions(),
             }
         )
+        usage = getattr(result, "usage_metadata", {})
+        logger.info(
+            "LLM chain processed question",
+            extra={
+                "meta": {
+                    "question_length": len(question_text),
+                    "answers_count": len(answers),
+                    "input_tokens": usage.get("input_tokens"),
+                    "output_tokens": usage.get("output_tokens"),
+                }
+            },
+        )
         return result
 
     def process_test(self, input: dict, author_id: UUID) -> TestOutput:
+        logger.info(
+            "Starting test processing",
+            extra={
+                "meta": {
+                    "author_id": str(author_id),
+                },
+            },
+        )
         questions_data = input["questions"]
         output_questions = []
         for idx, q in enumerate(questions_data):
-            print(f"Вопрос {idx + 1}/{len(questions_data)}...")
+            logger.debug(
+                "Processing question",
+                extra={
+                    "meta": {
+                        "current": idx,
+                        "total": len(questions_data),
+                    },
+                },
+            )
             sleep(2)
             result = self.process_single_questions(q["question"], q["answers"])
-            print(result, type(result))
-            output_questions.append(result)
+            if result:
+                output_questions.append(result)
+            else:
+                logger.warning(
+                    "Empty result for question",
+                    extra={
+                        "meta": {
+                            "question_index": idx,
+                        },
+                    },
+                )
+        logger.info(
+            "Test processing finished",
+            extra={
+                "meta": {
+                    "author_id": str(author_id),
+                    "processed_questions": len(output_questions),
+                },
+            },
+        )
         return TestOutput(questions=output_questions, author_id=author_id)
 
     async def create_json_answers(
@@ -122,6 +197,15 @@ class JsonToAnswerService:
         test_id: UUID,
         author_id: UUID,
     ) -> UUID:
+        logger.info(
+            "Creating test with answers by postgres",
+            extra={
+                "meta": {
+                    "author_id": str(author_id),
+                    "test_id": str(test_id),
+                },
+            },
+        )
         # data = await file.reed_json(file_title + "_text")
         # READ TEST , need optimize
         data = {"questions": []}
@@ -140,6 +224,15 @@ class JsonToAnswerService:
         # answers_str = answers.model_dump_json(indent=4)
         test_id = await self._save_test(answers, author_id)
         # await file.create_json(file_title + "_answers", answers)
+        logger.info(
+            "Test created with answers",
+            extra={
+                "meta": {
+                    "author_id": str(author_id),
+                    "test_id": str(test_id),
+                },
+            },
+        )
         return test_id
 
     async def _save_test(
@@ -147,6 +240,14 @@ class JsonToAnswerService:
         test: TestOutput,
         author_id: UUID,
     ):
+        logger.debug(
+            "Starting save test",
+            extra={
+                "meta": {
+                    "author_id": str(author_id),
+                },
+            },
+        )
         data = test.model_dump()
         questions = data.pop("questions")
         tc = TestCreate(**data)
@@ -165,6 +266,15 @@ class JsonToAnswerService:
                 )
                 await self.answer.add_one(question_id, ac)
         await self.db.commit()
+        logger.debug(
+            "Test saved successfully",
+            extra={
+                "meta": {
+                    "author_id": str(author_id),
+                    "test_id": str(test_id),
+                },
+            },
+        )
         return test_id
 
 
